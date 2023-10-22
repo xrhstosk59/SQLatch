@@ -1,6 +1,9 @@
 import styles from '../styles/blockly.module.css';
 
-export default function Blockly() {
+import Blockly from 'blockly';
+
+export default function BlocklyWorkspace() {
+
     return (
         <div className={styles.container}>
             

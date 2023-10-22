@@ -21,7 +21,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "components/blockly/customblock.js"  ],
   "exclude": [
     "node_modules"
   ]

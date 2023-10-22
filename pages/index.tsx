@@ -3,7 +3,7 @@ import Head from 'next/head';
 
 /* Our Components */
 import Navbar from '../components/navbar';
-import Blockly from '../components/blockly';
+import BlocklyWorkspace from '../components/blockly-workspace';
 import Guide from '../components/guide';
 import SQLiteOutput from '../components/sqliteoutput';
 
@@ -18,7 +18,7 @@ export default function Home() {
             <div className={styles.topcontainer}>
                 <Navbar />
                 <div className={styles.midcontainer}>
-                    <Blockly />
+                    <BlocklyWorkspace />
                     <Guide />
                 </div>
                 <SQLiteOutput />

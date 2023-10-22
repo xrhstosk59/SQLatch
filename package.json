@@ -4,9 +4,9 @@
     },
     "dependencies": {
         "@sqlite.org/sqlite-wasm": "^3.43.2-build1",
+        "blockly": "^10.2.2",
         "next": "^13.5.4",
         "react": "^18.2.0",
-        "react-blockly": "^8.1.0",
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
