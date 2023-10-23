@@ -15,5 +15,12 @@
         "@types/node": "20.8.6",
         "@types/react": "18.2.28",
         "typescript": "5.2.2"
-    }
+    },
+
+    "browser": {
+        "fs": false,
+        "os": false,
+        "path": false
+      }
+      
 }
