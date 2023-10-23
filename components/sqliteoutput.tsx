@@ -3,7 +3,7 @@ import styles from '../styles/sqliteoutput.module.css';
 import sqlite3InitModule from '@sqlite.org/sqlite-wasm';
 export default function SQLiteOutput() {
     const [db, setDb] = useState<any>(null)
-    const [rows,setRows] =useState<any>([]);
+    const [rows, setRows] = useState<any>([]);
     let needsSetup = true
     useEffect(() => {
         async function setupDB() {
@@ -62,7 +62,8 @@ export default function SQLiteOutput() {
 
     return (
         <div className={styles.container}>
-            {rows.join("\n")}
+            <table><tbody>{rows.map((row) => <tr>{row.map((col) => <td>{col}</td>)}</tr>)}</tbody>
+            </table>
         </div>
     )
 }
