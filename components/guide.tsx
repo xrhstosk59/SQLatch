@@ -1,5 +1,6 @@
 import styles from '../styles/guide.module.css';
 import showdown from "showdown";
+import parse from 'html-react-parser';
 
 export default function Guide() {
     var converter = new showdown.Converter();
@@ -10,8 +11,8 @@ export default function Guide() {
          ' - works in the server and in the browser';
     let html = converter.makeHtml(md);
 
-    const parse = require('html-react-parser');
-    var out = parse(html); // React.createElement('p', {}, 'Hello, World!')
+
+    var out = parse(html);
    
     return (
         <div className={styles.container}>
