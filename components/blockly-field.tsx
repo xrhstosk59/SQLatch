@@ -6,7 +6,7 @@ import Blockly from "blockly";
 
 
 export default function BlocklyField() {
-    const blocklyDiv = useRef();
+    const blocklyDiv = useRef(null);
     const toolbox = {
         kind: "flyoutToolbox",
         contents: [
@@ -20,7 +20,7 @@ export default function BlocklyField() {
             },
         ],
     };
-    let primaryWorkspace = useRef();
+    let primaryWorkspace = useRef(null);
 
     Blockly.Blocks["select"] = {
         init: function () {
@@ -76,7 +76,7 @@ export default function BlocklyField() {
 
     return (
         <div className={styles.container}>
-            <div ref={blocklyDiv} id="blocklyDiv" />
+            <div className={styles.container_blockly} ref={blocklyDiv} id="blocklyDiv" />
         </div>
     )
 }
