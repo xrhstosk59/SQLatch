@@ -46,11 +46,10 @@ export default function BlocklyField() {
     };
 
     const SQL = new Blockly.Generator("SQL");
-    SQL.ORDER_NONE = 0;
     SQL["select"] = function (block) {
-        var columns = SQL.valueToCode(block, "COLUMNS", SQL.ORDER_NONE);
+        var columns = SQL.valueToCode(block, "COLUMNS", 0);
         console.log(columns);
-        var table = SQL.valueToCode(block, "TABLE", SQL.ORDER_NONE);
+        var table = SQL.valueToCode(block, "TABLE", 0);
         console.log(table);
         var code = "SELECT " + columns + " FROM " + table;
         console.log(code);
@@ -58,7 +57,7 @@ export default function BlocklyField() {
     };
     SQL["text"] = function (block) {
         const textValue = block.getFieldValue('TEXT');
-        return [textValue, SQL.ORDER_NONE];
+        return [textValue, 0];
     };
 
 
@@ -71,7 +70,9 @@ export default function BlocklyField() {
 
     useEffect(() => {
         primaryWorkspace.current = Blockly.inject(blocklyDiv.current, { toolbox: toolbox });
+        primaryWorkspace.current.addChangeListener(generateCode);
     }, [primaryWorkspace, toolbox, blocklyDiv]);
+
 
 
     return (
