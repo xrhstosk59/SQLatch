@@ -1,19 +1,34 @@
 import styles from '../styles/guide.module.css';
 import showdown from "showdown";
 import parse from 'html-react-parser';
-import {readFileSync} from "fs";
+import { useEffect, useState } from 'react';
 
 export default function Guide() {
-    var converter = new showdown.Converter();
-    var md = fs.readFileSync(process.cwd() + '/MDGuides/test.md', {encoding: 'utf-8',});
-    let html = converter.makeHtml(md);
+    const [content, setContent] = useState<JSX.Element[] | null>(null); // Explicitly define the type
 
+    useEffect(() => {
+        const fetchMarkdown = async () => {
+            try {
+                const response = await fetch('/MDGuides/test.md');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const md = await response.text();
+                const converter = new showdown.Converter();
+                const html = converter.makeHtml(md);
+                const out:JSX.Element = parse(html) ; // Explicitly typecast to Element
+                setContent(out)
+            } catch (error) {
+                console.error('Error fetching or parsing Markdown:', error);
+            }
+        };
 
-    var out = parse(html);
-   
+        fetchMarkdown();
+    }, []);
+
     return (
         <div className={styles.container}>
             {out}
         </div>
-    )
+    );
 }
