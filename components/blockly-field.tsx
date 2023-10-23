@@ -4,6 +4,11 @@ import React from 'react';
 import { useEffect, useRef } from 'react';
 import Blockly from "blockly";
 
+const SQL = new Blockly.Generator("SQL");
+
+export function generateCodeFromWorkspace(): string {
+    return SQL.workspaceToCode();
+}
 
 export default function BlocklyField() {
     const blocklyDiv = useRef(null);
@@ -45,14 +50,10 @@ export default function BlocklyField() {
         },
     };
 
-    const SQL = new Blockly.Generator("SQL");
     SQL["select"] = function (block) {
         var columns = SQL.valueToCode(block, "COLUMNS", 0);
-        console.log(columns);
         var table = SQL.valueToCode(block, "TABLE", 0);
-        console.log(table);
         var code = "SELECT " + columns + " FROM " + table;
-        console.log(code);
         return code;
     };
     SQL["text"] = function (block) {
@@ -60,17 +61,8 @@ export default function BlocklyField() {
         return [textValue, 0];
     };
 
-
-    const generateCode = () => {
-        var code = SQL.workspaceToCode(
-            primaryWorkspace.current
-        );
-        console.log(code);
-    }
-
     useEffect(() => {
         primaryWorkspace.current = Blockly.inject(blocklyDiv.current, { toolbox: toolbox });
-        primaryWorkspace.current.addChangeListener(generateCode);
     }, [primaryWorkspace, toolbox, blocklyDiv]);
 
 
