@@ -1,19 +1,27 @@
 import styles from '../styles/guide.module.css';
 import showdown from "showdown";
-import parse from 'html-react-parser';
 import { useEffect, useState } from 'react';
 
 export default function Guide() {
+    const [md, setMd] = useState('');
 
-    const md =`### Η συντακτική δομή της SELECT είναι η εξής:
-         SELECT column1, column2, ...
-         FROM table_name`;
+    useEffect(() => {
+        const fetchMd = async () => {
+            try {
+                const response = await fetch('/MDGuides/test.md');
+                const text = await response.text();
+                setMd(text);
+            } catch (error) {
+                console.error('Error fetching the file: ', error);
+            }
+        };
+        fetchMd();
+    }, []);
+
     const converter = new showdown.Converter();
     const html = converter.makeHtml(md);
-    const out = parse(html)
+
     return (
-        <div className={styles.container}>
-            {out}
-        </div>
+        <div className={styles.container} dangerouslySetInnerHTML={{ __html: html }} />
     );
 }
