@@ -8,7 +8,9 @@ import BlocklyField from '../components/blockly-field';
 import Guide from '../components/guide';
 import SQLiteOutput from '../components/sqliteoutput';
 
-import styles from '../styles/home.module.css';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 export default function Home() {
     return (
@@ -17,15 +19,19 @@ export default function Home() {
                 <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png"></link>
                 <title>SQLatch - POC</title>
             </Head>
-            <div className={styles.topcontainer}>
+            <>
                 <Navbar />
                 <RuntimeControls />
-                <div className={styles.midcontainer}>
-                    <BlocklyField />
-                    <Guide />
-                </div>
-                <SQLiteOutput />
-            </div>
+                <Container fluid='true'>
+                    <Row>
+                        <Col xs={8}><BlocklyField /></Col>
+                        <Col><Guide /></Col>
+                    </Row>
+                    <Row>
+                        <Col><SQLiteOutput /></Col>
+                    </Row>
+                </Container>
+            </>
         </>
     );
 }

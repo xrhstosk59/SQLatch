@@ -1,9 +1,0 @@
-.topcontainer {
-    display: flex;
-    flex-direction: column;
-}
-
-.midcontainer {
-    display: flex;
-    flex-direction: row;
-}

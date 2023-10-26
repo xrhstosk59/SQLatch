@@ -68,8 +68,6 @@ export default function BlocklyField() {
 
 
     return (
-        <div className={styles.container}>
-            <div className={styles.container_blockly} ref={blocklyDiv} id="blocklyDiv" />
-        </div>
+        <div className={styles.container} ref={blocklyDiv} id="blocklyDiv" />
     )
 }

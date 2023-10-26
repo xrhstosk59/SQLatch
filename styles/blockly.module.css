@@ -1,9 +1,6 @@
 .container {
     border: 2px solid black;
-    width: 75%;
-    height: 600px;
-}
-.container_blockly {
+
     width: 100%;
-    height: 600px;
+    height: 70vh;
 }
