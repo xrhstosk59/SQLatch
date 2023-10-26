@@ -1,4 +1,4 @@
-import sqlite3InitModule, { Database, Sqlite3Static } from '@sqlite.org/sqlite-wasm';
+import sqlite3InitModule, { Database, SQLite3Error, Sqlite3Static } from '@sqlite.org/sqlite-wasm';
 
 let recentResult: any;
 let activeDB: Database;
@@ -14,7 +14,7 @@ export const useSQL = () => {
             try {
                 setupDB(sqlite3);
             } catch (err) {
-                console.log(err.name, err.message);
+                console.log(err.message);
             }
         });
     }
@@ -27,7 +27,7 @@ export const useSQL = () => {
             queryDB('CREATE TABLE IF NOT EXISTS t(a,b)');
             queryDB('INSERT INTO t(a,b) VALUES (1,2),(3,4)');
         } catch (err) {
-            console.log('SQLite: ', err.name, err.message);
+            console.log(err.message);
             activeDB.close();
         }
     };
@@ -37,7 +37,8 @@ export const useSQL = () => {
             console.log('SQLite: ', query);
             recentResult = activeDB.exec(query, { returnValue: 'resultRows' });
         } catch (err){
-            console.log('SQLite: ', err.name, err.message);
+            console.log(err.message);
+            alert(err.message.split(':').slice(2, err.message.length));
         }
     };
 
