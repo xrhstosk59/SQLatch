@@ -1,10 +1,13 @@
 import styles from '../styles/sqliteoutput.module.css';
+import Table from 'react-bootstrap/Table';
+
+import { SqlValue } from '@sqlite.org/sqlite-wasm';
 import { useSQL } from '../modules/SQLite';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
 export default function SQLiteOutput() {
-    const [outputDB, setOutputDB] = useState();
+    const [outputDB, setOutputDB] = useState<SqlValue[][]>([]);
     const useDB = useSQL();
 
     useEffect(() => {
@@ -21,9 +24,30 @@ export default function SQLiteOutput() {
 
     return (
         <div className={styles.container}>
-            {/* <table><tbody>{rows.map((row, index) => <tr key={index}>{row.map((col,index) => <td key = {index}>{col}</td>)}</tr>)}</tbody>
-            </table> */}
-            {outputDB}
+            <Table responsive striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>a</th>
+                        <th>b</th>
+                        <th>c</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {outputDB.map((row, rowIndex) => (
+                        <tr key={rowIndex}>
+                            <td key={rowIndex*100}>
+                                {rowIndex}
+                            </td>
+                            {row.map((cell, cellIndex) => (
+                                <td key={cellIndex}>
+                                    {String(cell)}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
         </div>
     )
 }

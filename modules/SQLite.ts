@@ -1,10 +1,9 @@
-import sqlite3InitModule, { Database, SQLite3Error, Sqlite3Static } from '@sqlite.org/sqlite-wasm';
+import sqlite3InitModule, { Database, SQLite3Error, SqlValue, Sqlite3Static } from '@sqlite.org/sqlite-wasm';
 
-let recentResult: any;
+let recentResult: SqlValue[][];
 let activeDB: Database;
 
 export const useSQL = () => {
-
     const initSQL = () => {
         console.log('SQLite: Initializing SQLite3 module...');
         sqlite3InitModule({
@@ -24,8 +23,8 @@ export const useSQL = () => {
             console.log('SQLite: Initializing DB...');
             activeDB = new sqlite3.oo1.DB();
 
-            queryDB('CREATE TABLE IF NOT EXISTS t(a,b)');
-            queryDB('INSERT INTO t(a,b) VALUES (1,2),(3,4)');
+            queryDB('CREATE TABLE IF NOT EXISTS t(a,b,c)');
+            queryDB('INSERT INTO t(a,b,c) VALUES (1,2,3),(4,5,6),(4,5,6),(4,5,6),(4,5,6),(4,5,6)');
         } catch (err) {
             console.log(err.message);
             activeDB.close();
@@ -42,7 +41,7 @@ export const useSQL = () => {
         }
     };
 
-    const getResultDB = (): any => {
+    const getResultDB = (): SqlValue[][] => {
         return recentResult;
     }
 

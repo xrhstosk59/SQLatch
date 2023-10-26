@@ -1,10 +1,8 @@
 import styles from '../styles/guide.module.css';
-import showdown from "showdown";
-import { useEffect, useState,useRef  } from 'react';
+import showdown from 'showdown';
+import { useEffect, useState, useRef } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
-
-
 
 export default function Guide() {
     const [md, setMd] = useState('');
@@ -16,13 +14,9 @@ export default function Guide() {
             const response = await fetch('/MDGuides/' + Guides[idxRef.current]);
             const text = await response.text();
             setMd(text);
-            
-            
         } catch (error) {
             console.error('Error fetching the file: ', error);
-
         }
-        
     };
 
     const loadNextGuide = () => {
@@ -41,7 +35,6 @@ export default function Guide() {
         }
     };
 
-    
     useEffect(() => {
         fetchMd();
     }, []);
