@@ -1,13 +1,20 @@
-import Link from "next/link";
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
-import styles from '../styles/navbar.module.css';
-
-export default function Navbar() {
+export default function NavBar() {
     return (
-        <div className={styles.navbar}>
-            <Link className={styles.navlink} href='/'>Αρχείο</Link>
-            <Link className={styles.navlink} href='/'>Ρυθμίσεις</Link>
-            <Link className={styles.navlink} href='/'>Κοινοποίηση</Link>
-        </div>
+        <Navbar style={{padding: '10px'}} sticky="top" bg="light" data-bs-theme="light">
+            <Navbar.Brand href="">SQLatch</Navbar.Brand>
+            <Nav>
+                <NavDropdown title="Αρχείο" id="basic-nav-dropdown">
+                    <NavDropdown.Item href="">Αποθήκευση</NavDropdown.Item>
+                    <NavDropdown.Item href="">Φόρτωση</NavDropdown.Item>
+                    <NavDropdown.Item href="">Έξοδος</NavDropdown.Item>
+                </NavDropdown>
+                <Nav.Link href="">Ρυθμίσεις</Nav.Link>
+                <Nav.Link href="">Κοινοποίηση</Nav.Link>
+            </Nav>
+        </Navbar>
     )
 }

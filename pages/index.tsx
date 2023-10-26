@@ -2,7 +2,7 @@
 import Head from 'next/head';
 
 /* Our Components */
-import Navbar from '../components/navbar';
+import NavBar from '../components/navbar';
 import RuntimeControls from '../components/runtime-controls';
 import BlocklyField from '../components/blockly-field';
 import Guide from '../components/guide';
@@ -20,7 +20,7 @@ export default function Home() {
                 <title>SQLatch - POC</title>
             </Head>
             <>
-                <Navbar />
+                <NavBar />
                 <RuntimeControls />
                 <Container fluid='true'>
                     <Row>
