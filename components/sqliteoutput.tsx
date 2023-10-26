@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 
 export default function SQLiteOutput() {
-    const [outputDB, setOutputDB] = useState<SqlValue[][]>([]);
+    const [outputDB, setOutputDB] = useState<object[]>([]);
     const useDB = useSQL();
 
     useEffect(() => {
@@ -28,22 +28,16 @@ export default function SQLiteOutput() {
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>a</th>
-                        <th>b</th>
-                        <th>c</th>
+                        {outputDB[0] != null && Object.keys(outputDB[0]).map((column,colIndex) => <th key={colIndex}>{column}</th>)}
                     </tr>
                 </thead>
                 <tbody>
-                    {outputDB.map((row, rowIndex) => (
+                    {outputDB[0] != null && outputDB.map((row, rowIndex) => (
                         <tr key={rowIndex}>
-                            <td key={rowIndex*100}>
+                            <td key={rowIndex * 100}>
                                 {rowIndex}
                             </td>
-                            {row.map((cell, cellIndex) => (
-                                <td key={cellIndex}>
-                                    {String(cell)}
-                                </td>
-                            ))}
+                            {Object.values(row).map((value,valueIndex) => <td key={valueIndex}>{value}</td> )}
                         </tr>
                     ))}
                 </tbody>

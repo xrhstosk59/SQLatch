@@ -1,6 +1,6 @@
 import sqlite3InitModule, { Database, SQLite3Error, SqlValue, Sqlite3Static } from '@sqlite.org/sqlite-wasm';
 
-let recentResult: SqlValue[][];
+let recentResult: object[];
 let activeDB: Database;
 
 export const useSQL = () => {
@@ -34,14 +34,15 @@ export const useSQL = () => {
     const queryDB = (query: string) => {
         try {
             console.log('SQLite: ', query);
-            recentResult = activeDB.exec(query, { returnValue: 'resultRows' });
+            recentResult = activeDB.exec(query, {rowMode:"object", returnValue: 'resultRows' });
+            console.log(recentResult);
         } catch (err){
             console.log(err.message);
             alert(err.message.split(':').slice(2, err.message.length));
         }
     };
 
-    const getResultDB = (): SqlValue[][] => {
+    const getResultDB = (): object[] => {
         return recentResult;
     }
 
