@@ -1,6 +1,7 @@
 import styles from '../styles/runtime-controls.module.css';
 import { generateCodeFromWorkspace } from './blockly-field';
 import { useSQL } from '../modules/SQLite';
+import Button from 'react-bootstrap/Button'
 
 export default function RuntimeControls() {
     const useDB = useSQL();
@@ -14,7 +15,7 @@ export default function RuntimeControls() {
 
     return (
         <div className={styles.container}>
-            <button className={styles.run} onClick={onClickRun}>RUN</button>
+            <Button variant="success" onClick={onClickRun}>RUN</Button>
         </div>
     )
 }
