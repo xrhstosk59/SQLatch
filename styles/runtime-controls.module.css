@@ -13,14 +13,3 @@
 
     border-bottom: 2px solid black;
 }
-
-.run {
-    color: black;
-    text-decoration: none;
-    padding: 10px;
-    border-radius: 8px;
-}
-
-.run:hover {
-    background-color: #eeeeee;
-}
