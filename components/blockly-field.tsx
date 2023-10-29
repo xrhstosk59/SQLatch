@@ -23,6 +23,10 @@ export default function BlocklyField() {
                 kind: "block",
                 type: "select",
             },
+            {
+                kind: "block",
+                type: "where",
+            }
         ],
     };
     let primaryWorkspace = useRef(null);
@@ -30,34 +34,67 @@ export default function BlocklyField() {
     Blockly.Blocks["select"] = {
         init: function () {
             this.jsonInit({
-                type: "select",
-                message0: "select %1 from %2",
-                args0: [
-                    {
-                        type: "input_value",
-                        name: "COLUMNS",
-                    },
-                    {
-                        type: "input_value",
-                        name: "TABLE",
-                    },
+                "type": "select",
+                "message0": "SELECT %1 FROM %2  %3",
+                "args0": [
+                  {
+                    "type": "input_value",
+                    "name": "COLUMNS",
+                    "check": "String"
+                  },
+                  {
+                    "type": "input_value",
+                    "name": "TABLE",
+                    "check": "String"
+                  },
+                  {
+                    "type": "input_statement",
+                    "name": "PARAMETERS",
+                    
+                  }
                 ],
-                inputsInline: true,
-                colour: 230,
-                tooltip: "",
-                helpUrl: "",
-            });
+                "inputsInline": false,
+                "colour": 230,
+                "tooltip": "",
+                "helpUrl": ""
+              });
+        },
+    };
+
+    Blockly.Blocks["where"] = {
+        init: function () {
+            this.jsonInit({
+                "type": "where",
+                "message0": "WHERE %1",
+                "args0": [
+                  {
+                    "type": "input_value",
+                    "name": "where"
+                  }
+                ],
+                "previousStatement": null,
+                "nextStatement": null,
+                "colour": 230,
+                "tooltip": "",
+                "helpUrl": ""
+              });
         },
     };
 
     SQL["select"] = function (block) {
         var columns = SQL.valueToCode(block, "COLUMNS", 0);
         var table = SQL.valueToCode(block, "TABLE", 0);
-        var code = "SELECT " + columns + " FROM " + table;
+        var parameters =  SQL.statementToCode(block, 'where') || " ";
+        console.log(parameters);
+        var code = "SELECT " + columns + " FROM " + table + parameters;
         return code;
     };
     SQL["text"] = function (block) {
         const textValue = block.getFieldValue('TEXT');
+        return [textValue, 0];
+    };
+    SQL["where"] = function (block) {
+        const textValue = block.getFieldValue('where');
         return [textValue, 0];
     };
 
