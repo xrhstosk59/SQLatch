@@ -35,29 +35,29 @@ export default function BlocklyField() {
         init: function () {
             this.jsonInit({
                 "type": "select",
-                "message0": "SELECT %1 FROM %2  %3",
+                "message0": "SELECT %1 FROM %2 %3",
                 "args0": [
-                  {
-                    "type": "input_value",
-                    "name": "COLUMNS",
-                    "check": "String"
-                  },
-                  {
-                    "type": "input_value",
-                    "name": "TABLE",
-                    "check": "String"
-                  },
-                  {
-                    "type": "input_statement",
-                    "name": "PARAMETERS",
-                    
-                  }
+                    {
+                        "type": "input_value",
+                        "name": "COLUMNS",
+                        "check": "String"
+                    },
+                    {
+                        "type": "input_value",
+                        "name": "TABLE",
+                        "check": "String"
+                    },
+                    {
+                        "type": "input_statement",
+                        "name": "PARAMETERS",
+                    }
                 ],
+
                 "inputsInline": false,
                 "colour": 230,
                 "tooltip": "",
                 "helpUrl": ""
-              });
+            });
         },
     };
 
@@ -67,34 +67,35 @@ export default function BlocklyField() {
                 "type": "where",
                 "message0": "WHERE %1",
                 "args0": [
-                  {
-                    "type": "input_value",
-                    "name": "where"
-                  }
+                    {
+                        "type": "input_value",
+                        "name": "CONDITION",
+                        "check": "String"
+                    }
                 ],
                 "previousStatement": null,
                 "nextStatement": null,
                 "colour": 230,
                 "tooltip": "",
                 "helpUrl": ""
-              });
+            });
         },
     };
 
     SQL["select"] = function (block) {
         var columns = SQL.valueToCode(block, "COLUMNS", 0);
         var table = SQL.valueToCode(block, "TABLE", 0);
-        var parameters =  SQL.statementToCode(block, 'where') || " ";
-        console.log(parameters);
-        var code = "SELECT " + columns + " FROM " + table + parameters;
+        var parameters = SQL.statementToCode(block, "PARAMETERS") || " ";
+        var code = 'SELECT ' + columns + ' FROM ' + table + parameters + ';';
+        return code;
+    };
+    SQL["where"] = function (block) {
+        const textValue = SQL.valueToCode(block, 'CONDITION', 0);
+        var code = 'WHERE ' + textValue;
         return code;
     };
     SQL["text"] = function (block) {
         const textValue = block.getFieldValue('TEXT');
-        return [textValue, 0];
-    };
-    SQL["where"] = function (block) {
-        const textValue = block.getFieldValue('where');
         return [textValue, 0];
     };
 
