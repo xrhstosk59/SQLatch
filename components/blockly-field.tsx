@@ -13,23 +13,101 @@ export function generateCodeFromWorkspace(): string {
 export default function BlocklyField() {
     const blocklyDiv = useRef(null);
     const toolbox = {
-        kind: "flyoutToolbox",
-        contents: [
+        "kind": "categoryToolbox",
+        "contents": [
             {
-                kind: "block",
-                type: "text",
+                kind: "category",
+                name: "Main",
+                contents: [
+                    {
+                        kind: "block",
+                        type: "create",
+                    },
+                    {
+                        kind: "block",
+                        type: "select",
+                    }
+                ],
             },
             {
-                kind: "block",
-                type: "select",
+                kind: "category",
+                name: "Input",
+                contents: [
+                    {
+                        kind: "block",
+                        type: "text",
+                    }
+                ],
             },
             {
-                kind: "block",
-                type: "where",
+                kind: "category",
+                name: "Logic",
+                contents: [
+                    {
+                        kind: "block",
+                        type: "column",
+                    },                
+                    {
+                        kind: "block",
+                        type: "where",
+                    }
+                ],
             }
-        ],
+        ]
     };
     let primaryWorkspace = useRef(null);
+
+    Blockly.Blocks["create"] = {
+        init: function () {
+            this.jsonInit({
+                "type": "create",
+                "message0": "CREATE TABLE %1 %2",
+                "args0": [
+                    {
+                        "type": "input_value",
+                        "name": "TABLE",
+                        "check": "String"
+                    },
+                    {
+                        "type": "input_statement",
+                        "name": "COLUMNS",
+                    }
+                ],
+
+                "inputsInline": false,
+                "colour": 230,
+                "tooltip": "",
+                "helpUrl": ""
+            });
+        },
+    };
+
+    Blockly.Blocks["column"] = {
+        init: function () {
+            this.jsonInit({
+                "type": "col",
+                "message0": "COLUMN: %1 TYPE: %2",
+                "args0": [
+                    {
+                        "type": "input_value",
+                        "name": "COLUMN",
+                        "check": "String"
+                    },
+                    {
+                        "type": "input_value",
+                        "name": "TYPE",
+                        "check": "String"
+                    }
+                ],
+
+                "previousStatement": null,
+                "inputsInline": true,
+                "colour": 230,
+                "tooltip": "",
+                "helpUrl": ""
+            });
+        },
+    };
 
     Blockly.Blocks["select"] = {
         init: function () {
@@ -53,6 +131,7 @@ export default function BlocklyField() {
                     }
                 ],
 
+                "previousStatement": null,
                 "inputsInline": false,
                 "colour": 230,
                 "tooltip": "",
@@ -82,16 +161,32 @@ export default function BlocklyField() {
         },
     };
 
+    SQL["create"] = function (block) {
+        let table = SQL.valueToCode(block, 'TABLE', 0);
+        let columns = SQL.statementToCode(block, 'COLUMNS') || ' ';
+        if (columns != ' ') {
+            columns = '(' + columns + ')';
+        }
+
+        let code = 'CREATE TABLE ' + table + columns;
+        return code;
+    };
+    SQL["column"] = function (block) {
+        const textValue = SQL.valueToCode(block, 'COLUMN', 0);
+        let type = SQL.valueToCode(block, 'TYPE', 0);
+        let code = textValue + ' ' + type;
+        return code;
+    };
     SQL["select"] = function (block) {
-        var columns = SQL.valueToCode(block, "COLUMNS", 0);
-        var table = SQL.valueToCode(block, "TABLE", 0);
-        var parameters = SQL.statementToCode(block, "PARAMETERS") || " ";
-        var code = 'SELECT ' + columns + ' FROM ' + table + parameters + ';';
+        let columns = SQL.valueToCode(block, "COLUMNS", 0);
+        let table = SQL.valueToCode(block, "TABLE", 0);
+        let parameters = SQL.statementToCode(block, "PARAMETERS") || " ";
+        let code = 'SELECT ' + columns + ' FROM ' + table + parameters;
         return code;
     };
     SQL["where"] = function (block) {
         const textValue = SQL.valueToCode(block, 'CONDITION', 0);
-        var code = 'WHERE ' + textValue;
+        let code = 'WHERE ' + textValue;
         return code;
     };
     SQL["text"] = function (block) {
