@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 
 export default function Guide() {
     const [md, setMd] = useState('');
-    const Guides = ['test.md', 'test1.md'];
+    const Guides = ['1.md','test.md', 'test1.md'];
     const idxRef = useRef(0);
 
     const fetchMd = async () => {
