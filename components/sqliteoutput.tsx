@@ -1,7 +1,6 @@
 import styles from '../styles/sqliteoutput.module.css';
 import Table from 'react-bootstrap/Table';
 
-import { SqlValue } from '@sqlite.org/sqlite-wasm';
 import { useSQL } from '../modules/SQLite';
 import { useEffect } from 'react';
 import { useState } from 'react';
