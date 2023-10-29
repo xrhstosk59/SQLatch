@@ -1,0 +1,26 @@
+{
+    "type": "select",
+    "message0": "SELECT %1 FROM %2 %3",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "COLUMNS",
+            "check": "String"
+        },
+        {
+            "type": "input_value",
+            "name": "TABLE",
+            "check": "String"
+        },
+        {
+            "type": "input_statement",
+            "name": "PARAMETERS"
+        }
+    ],
+
+    "previousStatement": null,
+    "inputsInline": false,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+}

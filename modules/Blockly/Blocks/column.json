@@ -1,0 +1,23 @@
+{
+    "type": "col",
+    "message0": "COLUMN: %1 TYPE: %2",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "COLUMN",
+            "check": "String"
+        },
+        {
+            "type": "input_value",
+            "name": "TYPE",
+            "check": "String"
+        }
+    ],
+
+    "previousStatement": null,
+    "nextStatement": null,
+    "inputsInline": true,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+}

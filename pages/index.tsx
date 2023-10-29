@@ -30,7 +30,7 @@ export default function Home() {
                     <Row>
                         <Col></Col>
                         <Col><SQLiteOutput /></Col>
-                        <Col Style="color:white" >Connected to MySQL Server Successfully! IP: 82.142.69.101</Col>
+                        <Col></Col>
                     </Row>
                 </Container>
             </>

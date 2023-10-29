@@ -1,0 +1,43 @@
+{
+    "kind": "categoryToolbox",
+    "contents": [
+        {
+            "kind": "category",
+            "name": "Main",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "create"
+                },
+                {
+                    "kind": "block",
+                    "type": "select"
+                }
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Input",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Logic",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "column"
+                },
+                {
+                    "kind": "block",
+                    "type": "where"
+                }
+            ]
+        }
+    ]
+}

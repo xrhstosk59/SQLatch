@@ -1,0 +1,16 @@
+{
+    "type": "where",
+    "message0": "WHERE %1",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "CONDITION",
+            "check": "String"
+        }
+    ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+}
