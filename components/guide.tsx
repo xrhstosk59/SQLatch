@@ -8,7 +8,7 @@ import Container from 'react-bootstrap/Container';
 
 export default function Guide() {
     const [md, setMd] = useState('');
-    const Guides = ['1.md','test.md', 'test1.md'];
+    const Guides = ['1.md','select.md', 'test1.md'];
     const idxRef = useRef(0);
 
     const fetchMd = async () => {
