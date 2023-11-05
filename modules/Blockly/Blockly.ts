@@ -50,7 +50,7 @@ export const useBlockly = () => {
             onchange: function (e) {
                 if (this.workspace.isDragging()) return;
                 if (e.type !== Blockly.Events.BLOCK_MOVE) return;
-                if (!parentIsType(this,["create"])) { this.unplug()}
+                if (!parentIsType(this,["create","column"])) { this.unplug()}
             },
 
 
