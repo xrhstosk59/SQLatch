@@ -8,7 +8,7 @@ import Container from 'react-bootstrap/Container';
 
 export default function Guide() {
     const [md, setMd] = useState('');
-    const Guides = ['1.md','select.md', 'test1.md'];
+    const Guides = ['Lesson1/select.md', 'Tasks1/tasks.md'];
     const idxRef = useRef(0);
 
     const fetchMd = async () => {
@@ -47,7 +47,7 @@ export default function Guide() {
     return (
         <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }} className={styles.container}>
             <Accordion defaultActiveKey="0"><Accordion.Item eventKey="0">
-                <Accordion.Header>Guide</Accordion.Header>
+                <Accordion.Header>Μαθήματα</Accordion.Header>
                 <Accordion.Body className="d-flex justify-content-between">
                     <Button variant="secondary" onClick={loadPrevGuide}>Previous</Button>
                     <Button variant="success" onClick={loadNextGuide}>Next</Button>

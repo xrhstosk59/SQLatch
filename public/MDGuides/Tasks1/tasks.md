@@ -1,3 +1,5 @@
+## Ασκήσεις
+
 **Άσκηση 1 (PRIMARY KEY)**
 <details>
   <summary>Δημιουργήστε έναν πίνακα με το όνομα Φοιτητές που να περιέχει τα εξής
@@ -12,6 +14,8 @@ CREATE TABLE Φοιτητές (
 ΗμερομηνίαΓέννησης DATE
 );
 ```
+![Screenshot](MDGuides/Tasks1/images/first.png)
+
 </details>
 
 
