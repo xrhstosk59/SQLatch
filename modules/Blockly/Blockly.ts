@@ -8,29 +8,52 @@ import columnJSON from './Blocks/column.json';
 import toolboxJSON from './Blocks/toolbox.json';
 
 const SQL = new Blockly.Generator("SQL");
-
+function parentIsType (block:object , allowedTypes: string[]) {
+    let parentBlock = block.parentBlock_
+    if (!parentBlock) return;
+    return allowedTypes.includes(parentBlock.type);
+}
 export const useBlockly = () => {
 
     const initBlockly = () => {
+
         Blockly.Blocks["create"] = {
             init: function () {
                 this.jsonInit(createJSON);
             },
+
         };
         Blockly.Blocks["select"] = {
             init: function () {
                 this.jsonInit(selectJSON);
             },
+            onchange: function (e) {
+                if (this.workspace.isDragging()) return;
+                if (e.type !== Blockly.Events.BLOCK_MOVE) return;
+                if (parentIsType(this,["create","column"])) this.unplug()
+            }
         };
         Blockly.Blocks["where"] = {
             init: function () {
                 this.jsonInit(whereJSON);
+            },
+            onchange: function (e) {
+                if (this.workspace.isDragging()) return;
+                if (e.type !== Blockly.Events.BLOCK_MOVE) return;
+                if (!parentIsType(this,["select"])) { this.unplug()}
             },
         };
         Blockly.Blocks["column"] = {
             init: function () {
                 this.jsonInit(columnJSON);
             },
+            onchange: function (e) {
+                if (this.workspace.isDragging()) return;
+                if (e.type !== Blockly.Events.BLOCK_MOVE) return;
+                if (!parentIsType(this,["create"])) { this.unplug()}
+            },
+
+
         };
     };
 

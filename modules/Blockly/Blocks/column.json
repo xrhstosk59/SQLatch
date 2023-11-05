@@ -1,5 +1,5 @@
 {
-    "type": "col",
+    "type": "column",
     "message0": "COLUMN: %1 TYPE: %2",
     "args0": [
         {
