@@ -1,8 +1,10 @@
 import styles from '../styles/guide.module.css';
 import showdown from 'showdown';
 import { useEffect, useState, useRef } from 'react';
+
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
 
 export default function Guide() {
     const [md, setMd] = useState('');
@@ -43,7 +45,7 @@ export default function Guide() {
     const html = converter.makeHtml(md);
 
     return (
-        <div className={styles.container}>
+        <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }} className={styles.container}>
             <Accordion defaultActiveKey="0"><Accordion.Item eventKey="0">
                 <Accordion.Header>Guide</Accordion.Header>
                 <Accordion.Body className="d-flex justify-content-between">
@@ -51,9 +53,9 @@ export default function Guide() {
                     <Button variant="success" onClick={loadNextGuide}>Next</Button>
                 </Accordion.Body>
                 <Accordion.Body dangerouslySetInnerHTML={{ __html: html }}></Accordion.Body>
-
             </Accordion.Item>
-            </Accordion> </div>
+            </Accordion> 
+        </Container>
     );
 
 }

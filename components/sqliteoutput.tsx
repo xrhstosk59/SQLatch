@@ -1,5 +1,7 @@
 import styles from '../styles/sqliteoutput.module.css';
+
 import Table from 'react-bootstrap/Table';
+import Container from 'react-bootstrap/Container';
 
 import { useSQL } from '../modules/SQLite';
 import { useEffect } from 'react';
@@ -22,7 +24,7 @@ export default function SQLiteOutput() {
     }, [])
 
     return (
-        <div className={styles.container}>
+        <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }} className={styles.containersql}>
             <Table responsive striped bordered hover>
                 <thead>
                     <tr>
@@ -41,6 +43,6 @@ export default function SQLiteOutput() {
                     ))}
                 </tbody>
             </Table>
-        </div>
+        </Container>
     )
 }

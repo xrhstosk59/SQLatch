@@ -4,7 +4,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 export default function NavBar() {
     return (
-        <Navbar style={{padding: '10px'}} sticky="top" bg="light" data-bs-theme="light">
+        <Navbar style={{ paddingLeft: 20 }} bg="dark">
             <Navbar.Brand href="">SQLatch</Navbar.Brand>
             <Nav>
                 <NavDropdown title="Αρχείο" id="basic-nav-dropdown">

@@ -19,10 +19,10 @@ export default function Home() {
                 <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png"></link>
                 <title>SQLatch - POC</title>
             </Head>
-            <>
+            <Container className='h-100 bg-dark' data-bs-theme="dark" fluid style={{ paddingLeft: 0, paddingRight: 0 }}>
                 <NavBar />
                 <RuntimeControls />
-                <Container fluid='true'>
+                <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }}>
                     <Row>
                         <Col xs={8}><BlocklyField /></Col>
                         <Col><Guide /></Col>
@@ -33,7 +33,7 @@ export default function Home() {
                         <Col></Col>
                     </Row>
                 </Container>
-            </>
+            </Container>
         </>
     );
 }

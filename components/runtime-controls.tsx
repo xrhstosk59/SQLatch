@@ -1,7 +1,9 @@
 import styles from '../styles/runtime-controls.module.css';
 import { useBlockly } from '../modules/Blockly/Blockly';
 import { useSQL } from '../modules/SQLite';
+
 import Button from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container';
 
 export default function RuntimeControls() {
     const useDB = useSQL();
@@ -15,9 +17,9 @@ export default function RuntimeControls() {
     }
 
     return (
-        <div className={styles.container}>
+        <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }} className={styles.container}>
             <Button variant="success" onClick={onClickRun}>RUN</Button>
-        </div>
+        </Container>
     )
 }
 

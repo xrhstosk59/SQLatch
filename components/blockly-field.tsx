@@ -2,9 +2,11 @@ import styles from '../styles/blockly.module.css';
 
 import React from 'react';
 import { useEffect, useRef } from 'react';
-import Blockly from "blockly";
 
+import Blockly from "blockly";
 import { useBlockly } from '../modules/Blockly/Blockly';
+
+import Container from 'react-bootstrap/Container';
 
 export default function BlocklyField() {
     const useBL = useBlockly();
@@ -20,6 +22,6 @@ export default function BlocklyField() {
 
 
     return (
-        <div className={styles.container} ref={blocklyDiv} id="blocklyDiv" />
+        <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }} className={styles.container} ref={blocklyDiv} id="blocklyDiv" />
     )
 }
