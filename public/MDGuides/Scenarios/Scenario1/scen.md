@@ -1,4 +1,4 @@
-#Το μαγικό Βιβλίο
+# Το μαγικό Βιβλίο
 ![Sample Image](https://img.freepik.com/premium-vector/boy-wizard-dressed-magical-gear-vector-cartoon-young-child-cartoon-style_724548-16309.jpg?w=200)
 
 Ένα μαγικό βιβλίο περιέχει μία μεγάλη ποικιλία από μυστικά και μαγικές
@@ -7,17 +7,25 @@
 δεδομένων για να αποθηκέυσει τις συνταγές και να τις ανακαλύψει από την
 αρχή. Οι πίνακες που πρέπει να δημιουρηθούν περιλαμβάνουν:
 
--   **[Spells:]{.underline}** Περιέχει πληροφορίες για τα ξόρικα, όπως
-    **spells_id**, **name**, **description**.
+<span style="color:coral">-
+<span style="text-decoration:underline;">   **[Spells:]**</span>
+</span>Περιέχει πληροφορίες για τα ξόρικα, όπως
+ &nbsp;&nbsp;&nbsp;**spells\_id**, **name**, **description**.
 
--   **[Ingredients:]{.underline}** Περιέχει τα υλικά που
-    χρησιμοποιούνται στις συνταγές, όπως **ingredient_id**, **name**.
+<span style="color:coral">-
+<span style="text-decoration:underline;">   **[Ingredients:]**</span>
+</span>Περιέχει τα υλικά που
+    χρησιμοποιούνται &nbsp;&nbsp;&nbsp;στις συνταγές, όπως **ingredient\_id**, **name**.
 
--   **[SpellIngredients:]{.underline}** Περιέχει τις συνδέσεις μεταξύ
-    ξορκίων και υλικών, όπως **spell_id**, **ingredient_id**,
-    **quantity**.
+<span style="color:coral">-
+<span style="text-decoration:underline;">   **[SpellIngredients:]**</span>
+</span> Περιέχει τις συνδέσεις μεταξύ
+    ξορκίων &nbsp;&nbsp;&nbsp;και υλικών, όπως **spell_id**, **ingredient\_id**,
+   **quantity**.
 
-[Οι ασκήσεις περιλαμβάνουν: ]{.underline}
+<span style="color:aquamarine">
+<span style="text-decoration:underline;">**[Οι ασκήσεις περιλαμβάνουν: ]**</span>
+</span>
 
 1.  Εισαγωγή δεδομένων για ξόρκια και υλικά.
 
@@ -28,4 +36,4 @@
 
 4.  Ενημέρωση της περιγραφής ενός ξορκιού.
 
-5.  Διαγραφή ενός ξορκιού από το βιβλίο.
+5.  Διαγραφή ενός ξορκιού από το βιβλίο. 
