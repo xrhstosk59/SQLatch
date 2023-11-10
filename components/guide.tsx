@@ -1,67 +1,105 @@
 import styles from '../styles/guide.module.css';
-import showdown from 'showdown';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
+import { useGuide } from '../modules/Guide';
+
 export default function Guide() {
-    const [md, setMd] = useState('');
-    const Guides = ['Lesson1/theory.md', 'Lesson2/theory.md', 'Tasks1/tasks.md', 'Scenario1/scen.md'];
-    const idxRef = useRef(0);
 
-    const fetchMd = async () => {
-        try {
-            const response = await fetch('/MDGuides/' + Guides[idxRef.current]);
-            const text = await response.text();
-            setMd(text);
-        } catch (error) {
-            console.error('Error fetching the file: ', error);
+    const useRequest = useGuide();
+
+    /*
+        Types:
+            0 - Lessons/
+            1 - Tasks/
+            2 - Scenarios/
+    */
+
+    const LTS = [
+        ['Lesson1/theory.md', 'Lesson2/theory.md'],
+        ['Tasks1/tasks.md'],
+        ['Scenario1/scen.md']
+    ];
+
+    const [ idxState, setIdxState] = useState([0, 0, 0]);
+    const [ MDLessons, setMDLessons ] = useState();
+    const [ MDTasks, setMDTasks ] = useState();
+    const [ MDScenarios, setMDScenarios ] = useState();
+
+    const loadNextGuide = (type: number) => {
+        if (idxState[type] < LTS[type].length - 1) {
+            setIdxState(prevState => {
+                let newStates = [...prevState];
+                newStates[type] += 1;
+                return newStates;
+            });
         }
     };
 
-    const loadNextGuide = () => {
-        if (idxRef.current < Guides.length - 1) {
-            idxRef.current++;
-            console.log(idxRef.current);
-            fetchMd();
-        }
-    };
-
-    const loadPrevGuide = () => {
-        if (idxRef.current > 0) {
-            idxRef.current--;
-            console.log(idxRef.current);
-            fetchMd();
+    const loadPrevGuide = (type: number) => {
+        if (idxState[type] > 0) {
+            setIdxState(prevState => {
+                let newStates = [...prevState];
+                newStates[type] -= 1;
+                return newStates;
+            });
         }
     };
 
     useEffect(() => {
-        fetchMd();
-    }, []);
+        const setHTML = async () => {
+            let html = await useRequest.convertMd('/MDGuides/Lessons/' + LTS[0][idxState[0]]);
+            setMDLessons(html);
+        }
+        setHTML();
+    }, [idxState[0]]);
 
-    const converter = new showdown.Converter();
-    const html = converter.makeHtml(md);
+    useEffect(() => {
+        const setHTML = async () => {
+            let html = await useRequest.convertMd('/MDGuides/Tasks/' + LTS[1][idxState[1]]);
+            setMDTasks(html);
+        }
+        setHTML();
+    }, [idxState[1]]);
+
+    useEffect(() => {
+        const setHTML = async () => {
+            let html = await useRequest.convertMd('/MDGuides/Scenarios/' + LTS[2][idxState[2]]);
+            setMDScenarios(html);
+        }
+        setHTML();
+    }, [idxState[2]]);
 
     return (
         <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }} className={styles.container}>
             <Accordion defaultActiveKey="0"><Accordion.Item eventKey="0">
                 <Accordion.Header>Μαθήματα</Accordion.Header>
                 <Accordion.Body className="d-flex justify-content-between">
-                    <Button variant="secondary" onClick={loadPrevGuide}>Previous</Button>
-                    <Button variant="success" onClick={loadNextGuide}>Next</Button>
+                    <Button variant="secondary" onClick={() => { loadPrevGuide(0) }}>Previous</Button>
+                    <Button variant="success" onClick={() => { loadNextGuide(0) }}>Next</Button>
                 </Accordion.Body>
-                <Accordion.Body dangerouslySetInnerHTML={{ __html: html }}></Accordion.Body>
+                <Accordion.Body dangerouslySetInnerHTML={{ __html: MDLessons }}></Accordion.Body>
             </Accordion.Item>
 
             <Accordion.Item eventKey="1">
+                <Accordion.Header>Ασκήσεις</Accordion.Header>
+                <Accordion.Body className="d-flex justify-content-between">
+                    <Button variant="secondary" onClick={() => { loadPrevGuide(1) }}>Previous</Button>
+                    <Button variant="success" onClick={() => { loadNextGuide(1) }}>Next</Button>
+                </Accordion.Body>
+                <Accordion.Body dangerouslySetInnerHTML={{ __html: MDTasks }}></Accordion.Body>
+            </Accordion.Item>
+
+            <Accordion.Item eventKey="2">
                 <Accordion.Header>Σενάρια</Accordion.Header>
                 <Accordion.Body className="d-flex justify-content-between">
-                    <Button variant="secondary" onClick={loadPrevGuide}>Previous</Button>
-                    <Button variant="success" onClick={loadNextGuide}>Next</Button>
+                    <Button variant="secondary" onClick={() => { loadPrevGuide(2) }}>Previous</Button>
+                    <Button variant="success" onClick={() => { loadNextGuide(2) }}>Next</Button>
                 </Accordion.Body>
-                <Accordion.Body dangerouslySetInnerHTML={{ __html: html }}></Accordion.Body>
+                <Accordion.Body dangerouslySetInnerHTML={{ __html: MDScenarios }}></Accordion.Body>
             </Accordion.Item>
             </Accordion> 
         </Container>

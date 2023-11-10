@@ -32,7 +32,7 @@ VARCHAR(50)
 </span>
 );
 
-![Screenshot](MDGuides/Lesson2/images/first.png)
+![Screenshot](MDGuides/Lessons/Lesson2/images/first.png)
 
 Δημιουργία table με ξένο κλειδί, από τον προηγούμενο πίνακα:
 * <span style="color:aquamarine">

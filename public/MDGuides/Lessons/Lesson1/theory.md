@@ -25,7 +25,7 @@ SELECT
 FROM
 </span> employees;
 
-![Screenshot](MDGuides/Lesson1/images/first.png)
+![Screenshot](MDGuides/Lessons/Lesson1/images/first.png)
 
 Επιλογή συγκεκριμένων στηλών από έναν πίνακα:
 
@@ -35,7 +35,7 @@ SELECT
 FROM
 </span> employees;
 
-![Screenshot](MDGuides/Lesson1/images/second.png)
+![Screenshot](MDGuides/Lessons/Lesson1/images/second.png)
 
 Επιλογή με φίλτρο (π.χ., επιλογή όλων των υπαλλήλων που έχουν μισθό πάνω
 από 50000):
@@ -48,4 +48,4 @@ FROM
 50000
 </span>;
 
-![Screenshot](MDGuides/Lesson1/images/third.png)
+![Screenshot](MDGuides/Lessons/Lesson1/images/third.png)

@@ -14,7 +14,7 @@ CREATE TABLE Φοιτητές (
 ΗμερομηνίαΓέννησης DATE
 );
 ```
-![Screenshot](MDGuides/Tasks1/images/first.png)
+![Screenshot](MDGuides/Tasks/Tasks1/images/first.png)
 
 </details>
 
