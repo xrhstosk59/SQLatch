@@ -8,7 +8,7 @@ import Container from 'react-bootstrap/Container';
 
 export default function Guide() {
     const [md, setMd] = useState('');
-    const Guides = ['Lesson1/theory.md', 'Lesson2/theory.md', 'Tasks1/tasks.md'];
+    const Guides = ['Lesson1/theory.md', 'Lesson2/theory.md', 'Tasks1/tasks.md', 'Scenario1/scen.md'];
     const idxRef = useRef(0);
 
     const fetchMd = async () => {
@@ -54,8 +54,18 @@ export default function Guide() {
                 </Accordion.Body>
                 <Accordion.Body dangerouslySetInnerHTML={{ __html: html }}></Accordion.Body>
             </Accordion.Item>
+
+            <Accordion.Item eventKey="1">
+                <Accordion.Header>Σενάρια</Accordion.Header>
+                <Accordion.Body className="d-flex justify-content-between">
+                    <Button variant="secondary" onClick={loadPrevGuide}>Previous</Button>
+                    <Button variant="success" onClick={loadNextGuide}>Next</Button>
+                </Accordion.Body>
+                <Accordion.Body dangerouslySetInnerHTML={{ __html: html }}></Accordion.Body>
+            </Accordion.Item>
             </Accordion> 
         </Container>
     );
 
 }
+
