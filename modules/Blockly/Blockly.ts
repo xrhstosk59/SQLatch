@@ -8,7 +8,7 @@ import columnJSON from './Blocks/column.json';
 import toolboxJSON from './Blocks/toolbox.json';
 
 const SQL = new Blockly.Generator("SQL");
-function parentIsType (block:object , allowedTypes: string[]) {
+function parentIsType(block: Blockly.Block, allowedTypes: string[]) {
     let parentBlock = block.parentBlock_
     if (!parentBlock) return;
     return allowedTypes.includes(parentBlock.type);
@@ -30,7 +30,7 @@ export const useBlockly = () => {
             onchange: function (e) {
                 if (this.workspace.isDragging()) return;
                 if (e.type !== Blockly.Events.BLOCK_MOVE) return;
-                if (parentIsType(this,["create","column"])) this.unplug()
+                if (parentIsType(this, ["create", "column"])) this.unplug()
             }
         };
         Blockly.Blocks["where"] = {
@@ -40,7 +40,7 @@ export const useBlockly = () => {
             onchange: function (e) {
                 if (this.workspace.isDragging()) return;
                 if (e.type !== Blockly.Events.BLOCK_MOVE) return;
-                if (!parentIsType(this,["select"])) { this.unplug()}
+                if (!parentIsType(this, ["select"])) { this.unplug() }
             },
         };
         Blockly.Blocks["column"] = {
@@ -50,7 +50,7 @@ export const useBlockly = () => {
             onchange: function (e) {
                 if (this.workspace.isDragging()) return;
                 if (e.type !== Blockly.Events.BLOCK_MOVE) return;
-                if (!parentIsType(this,["create","column"])) { this.unplug()}
+                if (!parentIsType(this, ["create", "column"])) { this.unplug() }
             },
 
 
@@ -88,14 +88,17 @@ export const useBlockly = () => {
             return [textValue, 0];
         };
         // generate code for all blocks in statements
-        SQL.scrub_ = function(block, code, thisOnly) {
+        SQL.scrub_ = function (block, code, thisOnly) {
             const nextBlock =
                 block.nextConnection && block.nextConnection.targetBlock();
+
             if (nextBlock && !thisOnly) {
-              return code + ',\n' + SQL.blockToCode(nextBlock);
+                if (nextBlock.type == "column") {
+                    return code + ',' + SQL.blockToCode(nextBlock);
+                }
             }
             return code;
-          }; 
+        };
     };
 
     const getToolbox = () => {
