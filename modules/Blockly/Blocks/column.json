@@ -8,12 +8,28 @@
             "check": "String"
         },
         {
-            "type": "input_value",
+            "type": "field_dropdown",
             "name": "TYPE",
-            "check": "String"
+            "options": [
+                [
+                    "INTEGER",
+                    "INTEGER"
+                ],
+                [
+                    "REAL",
+                    "REAL"
+                ],
+                [
+                    "TEXT",
+                    "TEXT"
+                ],
+                [
+                    "BLOB",
+                    "BLOB"
+                ]
+            ]
         }
     ],
-
     "previousStatement": null,
     "nextStatement": null,
     "inputsInline": true,

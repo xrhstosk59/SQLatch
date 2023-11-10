@@ -79,7 +79,7 @@ export const useBlockly = () => {
         };
         SQL["column"] = function (block) {
             const textValue = SQL.valueToCode(block, 'COLUMN', 0);
-            let type = SQL.valueToCode(block, 'TYPE', 0);
+            let type = block.getFieldValue('TYPE');
             let code = textValue + ' ' + type;
             return code;
         };
