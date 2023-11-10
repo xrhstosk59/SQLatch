@@ -1,36 +1,59 @@
-Η εντολή "CREATE TABLE" χρησιμοποιείται στη διαχείριση βάσεων
+## 2. CREATE TABLE
+
+Η εντολή <span style="color:coral">
+CREATE TABLE
+</span> χρησιμοποιείται στη διαχείριση βάσεων
 δεδομένων για τη δημιουργία νέων πινάκων. Οι βασικές συντακτικές
 στοιχεία της εντολής περιλαμβάνουν το όνομα του πίνακα που θέλουμε να
 δημιουργήσουμε, τα ονόματα και τους τύπους δεδομένων των στηλών που θα
 περιέχει ο πίνακας, καθώς και προαιρετικούς περιορισμούς (constraints)
 όπως πρωτεύοντες και ξένα κλειδιά.
 
-Με την "CREATE TABLE" μπορούμε να ορίσουμε τη δομή της βάσης
+Με την <span style="color:coral">
+CREATE TABLE
+</span> μπορούμε να ορίσουμε τη δομή της βάσης
 δεδομένων μας, καθορίζοντας ποιες πληροφορίες θα αποθηκεύονται σε κάθε
 πίνακα και πώς θα συσχετίζονται μεταξύ τους. Αυτό δημιουργεί τη βάση για
 την αποθήκευση και την ανάκτηση δεδομένων στην εφαρμογή σας.
 
-*Παράδειγμα:
+Η <span style="color:coral">
+CREATE TABLE
+</span> έχει την ακόλουθη δομή:
 
-CREATE TABLE Ονομα_Πίνακα (
-
-Πεδίο1 ΤύποςΔεδομένων1,
-
-Πεδίο2 ΤύποςΔεδομένων2,
-
-\...
-
-ΠεδίοN ΤύποςN,
-
-CONSTRAINT Περιορισμός1,
-
-CONSTRAINT Περιορισμός2,
-
-\...
-
+Δημιουργία table με πρωτεύον κλειδί:
+* <span style="color:aquamarine">
+CREATE TABLE
+</span> Customers (
+    CustomerID <span style="color:aquamarine">
+INT
+</span> PRIMARY KEY,
+    CustomerName <span style="color:aquamarine">
+VARCHAR(50)
+</span>
 );
 
-Ο πίνακας αυτός ορίζει τη δομή του πίνακα με όνομα \"Ονομα_Πίνακα,\"
-περιλαμβάνοντας διάφορες στήλες με διάφορους τύπους δεδομένων. Επίσης,
-μπορούμε να προσθέσουμε περιορισμούς όπως πρωτεύοντες και ξένα κλειδιά
-για να καθορίσουμε τους κανόνες ακεραιότητας στη βάση δεδομένων μας.
+![Screenshot](MDGuides/Lesson2/images/first.png)
+
+Δημιουργία table με ξένο κλειδί, από τον προηγούμενο πίνακα:
+* <span style="color:aquamarine">
+CREATE TABLE
+</span> Orders (
+    OrderID <span style="color:aquamarine">
+INT
+</span> <span style="color:aquamarine">
+PRIMARY KEY
+</span>,
+    OrderDate <span style="color:aquamarine">
+DATE
+</span>,
+    CustomerID <span style="color:aquamarine">
+INT
+</span>,
+    <span style="color:aquamarine">
+FOREIGN KEY
+</span> (CustomerID) <span style="color:aquamarine">
+REFERENCES
+</span> Customers(CustomerID)
+);
+
+*photo coming soon*
