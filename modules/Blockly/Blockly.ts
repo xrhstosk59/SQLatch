@@ -58,32 +58,32 @@ export const useBlockly = () => {
     };
 
     const initGen = () => {
-        SQL["create"] = function (block) {
+        SQL.forBlock["create"] = function (block) {
             let table = SQL.valueToCode(block, 'TABLE', 0);
             let columns = SQL.statementToCode(block, 'COLUMNS') || ' ';
             if (columns != ' ') columns = '(' + columns + ')';
             let code = 'CREATE TABLE ' + table + columns;
             return code;
         };
-        SQL["select"] = function (block) {
+        SQL.forBlock["select"] = function (block) {
             let columns = SQL.valueToCode(block, "COLUMNS", 0);
             let table = SQL.valueToCode(block, "TABLE", 0);
             let parameters = SQL.statementToCode(block, "PARAMETERS") || " ";
             let code = 'SELECT ' + columns + ' FROM ' + table + parameters;
             return code;
         };
-        SQL["where"] = function (block) {
+        SQL.forBlock["where"] = function (block) {
             const textValue = SQL.valueToCode(block, 'CONDITION', 0);
             let code = 'WHERE ' + textValue;
             return code;
         };
-        SQL["column"] = function (block) {
+        SQL.forBlock["column"] = function (block) {
             const textValue = SQL.valueToCode(block, 'COLUMN', 0);
             let type = block.getFieldValue('TYPE');
             let code = textValue + ' ' + type;
             return code;
         };
-        SQL["text"] = function (block) {
+        SQL.forBlock["text"] = function (block) {
             const textValue = block.getFieldValue('TEXT');
             return [textValue, 0];
         };
