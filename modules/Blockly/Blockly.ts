@@ -87,6 +87,15 @@ export const useBlockly = () => {
             const textValue = block.getFieldValue('TEXT');
             return [textValue, 0];
         };
+        // generate code for all blocks in statements
+        SQL.scrub_ = function(block, code, thisOnly) {
+            const nextBlock =
+                block.nextConnection && block.nextConnection.targetBlock();
+            if (nextBlock && !thisOnly) {
+              return code + ',\n' + SQL.blockToCode(nextBlock);
+            }
+            return code;
+          }; 
     };
 
     const getToolbox = () => {
