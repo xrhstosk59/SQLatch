@@ -10,6 +10,7 @@ import {ContinuousToolbox,ContinuousFlyout,ContinuousMetrics} from '@blockly/con
 import DarkTheme from '@blockly/theme-dark';
 
 import Container from 'react-bootstrap/Container';
+import { Button } from 'react-bootstrap';
 
 export default function BlocklyField() {
     const useBL = useBlockly();
@@ -38,7 +39,15 @@ export default function BlocklyField() {
     }, [primaryWorkspace, useBL.getToolbox(), blocklyDiv]);
 
 
+    const saveshit = () => {
+        const state = Blockly.serialization.workspaces.save(primaryWorkspace.current);
+        console.log(state);
+    }
+
     return (
-        <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }} className={styles.container} ref={blocklyDiv} id="blocklyDiv" />
+        <Container>
+            <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }} className={styles.container} ref={blocklyDiv} id="blocklyDiv" />
+            <Button onClick={saveshit}>save</Button>
+        </Container>
     )
 }
