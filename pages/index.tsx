@@ -24,11 +24,10 @@ export default function Home() {
                 <RuntimeControls />
                 <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }}>
                     <Row>
-                        <Col xs={8}><BlocklyField /></Col>
+                        <Col xs={7}><BlocklyField /></Col>
                         <Col><Guide /></Col>
                     </Row>
                     <Row>
-                        <Col></Col>
                         <Col><SQLiteOutput /></Col>
                         <Col></Col>
                     </Row>

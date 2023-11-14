@@ -3,32 +3,6 @@
     "contents": [
         {
             "kind": "category",
-            "name": "All",
-            "contents": [
-                {
-                    "kind": "block",
-                    "type": "create"
-                },
-                {
-                    "kind": "block",
-                    "type": "select"
-                },
-                {
-                    "kind": "block",
-                    "type": "text"
-                },
-                {
-                    "kind": "block",
-                    "type": "column"
-                },
-                {
-                    "kind": "block",
-                    "type": "where"
-                }                
-            ]
-        },
-        {
-            "kind": "category",
             "name": "Main",
             "contents": [
                 {

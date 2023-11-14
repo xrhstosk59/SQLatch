@@ -6,6 +6,8 @@ import { useEffect, useRef } from 'react';
 import Blockly from "blockly";
 import { useBlockly } from '../modules/Blockly/Blockly';
 import {ZoomToFitControl} from '@blockly/zoom-to-fit';
+import {ContinuousToolbox,ContinuousFlyout,ContinuousMetrics} from '@blockly/continuous-toolbox';
+import DarkTheme from '@blockly/theme-dark';
 
 import Container from 'react-bootstrap/Container';
 
@@ -20,6 +22,12 @@ export default function BlocklyField() {
         useBL.initGen();
         primaryWorkspace.current = Blockly.inject(blocklyDiv.current, { 
             toolbox: useBL.getToolbox(), 
+            plugins: {
+                'toolbox': ContinuousToolbox,
+                'flyoutsVerticalToolbox': ContinuousFlyout,
+                'metricsManager': ContinuousMetrics,
+            },
+            theme: DarkTheme,
             zoom: {
                 controls: true,
             }
