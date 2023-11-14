@@ -3,10 +3,9 @@ import Head from 'next/head';
 
 /* Our Components */
 import NavBar from '../components/navbar';
-import RuntimeControls from '../components/runtime-controls';
+import SQLRuntimeControl from '../components/SQLRuntimeControl';
 import BlocklyField from '../components/blockly-field';
 import Guide from '../components/guide';
-import SQLiteOutput from '../components/sqliteoutput';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -21,16 +20,17 @@ export default function Home() {
             </Head>
             <Container className='wh-100 bg-dark' data-bs-theme="dark" fluid style={{ paddingLeft: 0, paddingRight: 0 }}>
                 <NavBar />
-                <RuntimeControls />
+                <SQLRuntimeControl />
                 <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }}>
                     <Row>
                         <Col xs={7}><BlocklyField /></Col>
                         <Col><Guide /></Col>
                     </Row>
-                    <Row>
+                    {/* <Row>
                         <Col><SQLiteOutput /></Col>
                         <Col></Col>
                     </Row>
+                    */}
                 </Container>
             </Container>
         </>
