@@ -13,15 +13,16 @@ function parentIsType(block: Blockly.Block, allowedTypes: string[]) {
     if (!parentBlock) return;
     return allowedTypes.includes(parentBlock.type);
 }
+
+let BLWorkspace: Blockly.Workspace;
+
 export const useBlockly = () => {
 
     const initBlockly = () => {
-
         Blockly.Blocks["create"] = {
             init: function () {
                 this.jsonInit(createJSON);
             },
-
         };
         Blockly.Blocks["select"] = {
             init: function () {
@@ -52,8 +53,6 @@ export const useBlockly = () => {
                 if (e.type !== Blockly.Events.BLOCK_MOVE) return;
                 if (!parentIsType(this, ["create", "column"])) { this.unplug() }
             },
-
-
         };
     };
 
@@ -101,18 +100,41 @@ export const useBlockly = () => {
         };
     };
 
+    const setWorkspace = (workspace: Blockly.Workspace) => {
+        BLWorkspace = workspace;
+    }
+
+    const setWorkspaceJSON = (state: object) => {
+        console.log('-- Blockly: Setting state --');
+        console.log(state);
+        Blockly.serialization.workspaces.load(state, BLWorkspace);
+    }
+
     const getToolbox = () => {
         return toolboxJSON;
     }
 
+    const getWorkspaceJSON = (): object => {
+        console.log('-- Blockly: Getting state --');
+        const state = Blockly.serialization.workspaces.save(BLWorkspace);
+        console.log(state);
+        return state;
+    }
+
     const runGen = (): string => {
-        return SQL.workspaceToCode();
+        console.log('-- Blockly: Running Generator --');
+        const code: string = SQL.workspaceToCode();
+        console.log(code);
+        return code;
     }
 
     return {
         initBlockly,
         initGen,
+        setWorkspace,
+        setWorkspaceJSON,
         getToolbox,
+        getWorkspaceJSON,
         runGen
     }
 }

@@ -24,9 +24,7 @@ export default function SQLRuntimeControl() {
     }
 
     const onClickRun = () => {
-        console.log('Executing...');
         const blocklyOut: string = useBL.runGen();
-        console.log(blocklyOut);
         useDB.queryDB(blocklyOut);
 
         showResult();

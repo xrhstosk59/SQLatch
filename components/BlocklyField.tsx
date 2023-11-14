@@ -33,21 +33,15 @@ export default function BlocklyField() {
                 controls: true,
             }
         });
+        useBL.setWorkspace(primaryWorkspace.current);
         const zoomToFit = new ZoomToFitControl(primaryWorkspace.current);
         zoomToFit.init();
 
     }, [primaryWorkspace, useBL.getToolbox(), blocklyDiv]);
 
-
-    const saveshit = () => {
-        const state = Blockly.serialization.workspaces.save(primaryWorkspace.current);
-        console.log(state);
-    }
-
     return (
         <Container>
             <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }} className={styles.container} ref={blocklyDiv} id="blocklyDiv" />
-            <Button onClick={saveshit}>save</Button>
         </Container>
     )
 }

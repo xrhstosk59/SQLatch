@@ -5,7 +5,7 @@ let activeDB: Database;
 
 export const useSQL = () => {
     const initSQL = () => {
-        console.log('SQLite: Initializing SQLite3 module...');
+        console.log('-- SQLite: Initializing module --');
         sqlite3InitModule({
             print: console.log,
             printErr: console.error,
@@ -20,7 +20,7 @@ export const useSQL = () => {
 
     const setupDB = (sqlite3: Sqlite3Static) => {
         try {
-            console.log('SQLite: Initializing DB...');
+            console.log('-- SQLite: Initializing DB --');
             activeDB = new sqlite3.oo1.DB();
 
             queryDB('CREATE TABLE IF NOT EXISTS t(a,b,c)');
@@ -37,7 +37,8 @@ export const useSQL = () => {
         }
         else {
             try {
-                console.log('SQLite: ', query);
+                console.log('-- SQLite: Querying --');
+                console.log(query);
                 recentResult = activeDB.exec(query, {rowMode:"object", returnValue: 'resultRows' });
                 console.log(recentResult);
             } catch (err){
