@@ -1,4 +1,4 @@
-/* Next components  */
+/* Next components   */
 import Head from 'next/head';
 
 /* Our Components */
