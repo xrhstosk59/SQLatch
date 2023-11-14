@@ -10,7 +10,6 @@ import {ContinuousToolbox,ContinuousFlyout,ContinuousMetrics} from '@blockly/con
 import DarkTheme from '@blockly/theme-dark';
 
 import Container from 'react-bootstrap/Container';
-import { Button } from 'react-bootstrap';
 
 export default function BlocklyField() {
     const useBL = useBlockly();
