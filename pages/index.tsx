@@ -2,10 +2,10 @@
 import Head from 'next/head';
 
 /* Our Components */
-import NavBar from '../components/navbar';
+import NavBar from '../components/Navbar';
 import SQLRuntimeControl from '../components/SQLRuntimeControl';
-import BlocklyField from '../components/blockly-field';
-import Guide from '../components/guide';
+import BlocklyField from '../components/BlocklyField';
+import Guide from '../components/Guide';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -26,7 +26,6 @@ export default function Home() {
                         <Col xs={7}><BlocklyField /></Col>
                         <Col><Guide /></Col>
                     </Row>
-                    
                 </Container>
             </Container>
         </>

@@ -1,4 +1,4 @@
-import styles from '../styles/runtime-controls.module.css';
+import styles from '../styles/runtimeControl.module.css';
 import { useBlockly } from '../modules/Blockly/Blockly';
 import { useSQL } from '../modules/SQLite';
 
