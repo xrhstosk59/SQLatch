@@ -18,7 +18,7 @@ export default function RuntimeControls() {
 
     return (
         <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }} className={styles.container}>
-            <Button variant="success" onClick={onClickRun}>RUN</Button>
+            <Button variant="success" onClick={onClickRun}>Εκτέλεση</Button>
         </Container>
     )
 }
