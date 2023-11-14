@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 
 import Blockly from "blockly";
 import { useBlockly } from '../modules/Blockly/Blockly';
+import {ZoomToFitControl} from '@blockly/zoom-to-fit';
 
 import Container from 'react-bootstrap/Container';
 
@@ -17,7 +18,15 @@ export default function BlocklyField() {
     useEffect(() => {
         useBL.initBlockly();
         useBL.initGen();
-        primaryWorkspace.current = Blockly.inject(blocklyDiv.current, { toolbox: useBL.getToolbox() });
+        primaryWorkspace.current = Blockly.inject(blocklyDiv.current, { 
+            toolbox: useBL.getToolbox(), 
+            zoom: {
+                controls: true,
+            }
+        });
+        const zoomToFit = new ZoomToFitControl(primaryWorkspace.current);
+        zoomToFit.init();
+
     }, [primaryWorkspace, useBL.getToolbox(), blocklyDiv]);
 
 
