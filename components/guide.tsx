@@ -21,7 +21,7 @@ export default function Guide() {
     const LTS = [
         ['Lesson1/theory.md', 'Lesson2/theory.md'],
         ['Tasks1/tasks.md'],
-        ['Scenario1/scen.md']
+        ['Scenario1/scen.md','Scenario2/scen2.md','Scenario3/scen3.md'  ]
     ];
 
     const [ idxState, setIdxState] = useState([0, 0, 0]);
@@ -78,8 +78,8 @@ export default function Guide() {
             <Accordion defaultActiveKey="0"><Accordion.Item eventKey="0">
                 <Accordion.Header>Μαθήματα</Accordion.Header>
                 <Accordion.Body className="d-flex justify-content-between">
-                    <Button variant="secondary" onClick={() => { loadPrevGuide(0) }}>Previous</Button>
-                    <Button variant="success" onClick={() => { loadNextGuide(0) }}>Next</Button>
+                    <Button variant="secondary" onClick={() => { loadPrevGuide(0) }}>Προηγούμενο</Button>
+                    <Button variant="success" onClick={() => { loadNextGuide(0) }}>Επόμενο</Button>
                 </Accordion.Body>
                 <Accordion.Body dangerouslySetInnerHTML={{ __html: MDLessons }}></Accordion.Body>
             </Accordion.Item>
@@ -87,8 +87,8 @@ export default function Guide() {
             <Accordion.Item eventKey="1">
                 <Accordion.Header>Ασκήσεις</Accordion.Header>
                 <Accordion.Body className="d-flex justify-content-between">
-                    <Button variant="secondary" onClick={() => { loadPrevGuide(1) }}>Previous</Button>
-                    <Button variant="success" onClick={() => { loadNextGuide(1) }}>Next</Button>
+                    <Button variant="secondary" onClick={() => { loadPrevGuide(1) }}>Προηγούμενο</Button>
+                    <Button variant="success" onClick={() => { loadNextGuide(1) }}>Επόμενο</Button>
                 </Accordion.Body>
                 <Accordion.Body dangerouslySetInnerHTML={{ __html: MDTasks }}></Accordion.Body>
             </Accordion.Item>
@@ -96,8 +96,8 @@ export default function Guide() {
             <Accordion.Item eventKey="2">
                 <Accordion.Header>Σενάρια</Accordion.Header>
                 <Accordion.Body className="d-flex justify-content-between">
-                    <Button variant="secondary" onClick={() => { loadPrevGuide(2) }}>Previous</Button>
-                    <Button variant="success" onClick={() => { loadNextGuide(2) }}>Next</Button>
+                    <Button variant="secondary" onClick={() => { loadPrevGuide(2) }}>Προηγούμενο</Button>
+                    <Button variant="success" onClick={() => { loadNextGuide(2) }}>Επόμενο</Button>
                 </Accordion.Body>
                 <Accordion.Body dangerouslySetInnerHTML={{ __html: MDScenarios }}></Accordion.Body>
             </Accordion.Item>

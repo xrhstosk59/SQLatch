@@ -3,6 +3,9 @@
         "dev": "next dev"
     },
     "dependencies": {
+        "@blockly/continuous-toolbox": "^5.0.8",
+        "@blockly/theme-dark": "^6.0.4",
+        "@blockly/zoom-to-fit": "^5.0.9",
         "@sqlite.org/sqlite-wasm": "^3.43.2-build1",
         "blockly": "^10.2.2",
         "bootstrap": "^5.3.2",

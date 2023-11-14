@@ -63,7 +63,7 @@ export const useBlockly = () => {
             let columns = SQL.statementToCode(block, 'COLUMNS') || ' ';
             if (columns != ' ') columns = '(' + columns + ')';
             let code = 'CREATE TABLE ' + table + columns;
-            return code;
+            return code + ';';
         };
         SQL.forBlock["select"] = function (block) {
             let columns = SQL.valueToCode(block, "COLUMNS", 0);
