@@ -26,11 +26,7 @@ export default function Home() {
                         <Col xs={7}><BlocklyField /></Col>
                         <Col><Guide /></Col>
                     </Row>
-                    {/* <Row>
-                        <Col><SQLiteOutput /></Col>
-                        <Col></Col>
-                    </Row>
-                    */}
+                    
                 </Container>
             </Container>
         </>
