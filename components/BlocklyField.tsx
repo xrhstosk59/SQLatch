@@ -30,6 +30,7 @@ export default function BlocklyField() {
             theme: DarkTheme,
             zoom: {
                 controls: true,
+                startScale:0.9
             }
         });
         useBL.setWorkspace(primaryWorkspace.current);

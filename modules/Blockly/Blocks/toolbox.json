@@ -3,7 +3,7 @@
     "contents": [
         {
             "kind": "category",
-            "name": "Main",
+            "name": "Ερωτήματα",
             "contents": [
                 {
                     "kind": "block",
@@ -17,7 +17,7 @@
         },
         {
             "kind": "category",
-            "name": "Input",
+            "name": "Είσοδος",
             "contents": [
                 {
                     "kind": "block",
@@ -27,11 +27,15 @@
         },
         {
             "kind": "category",
-            "name": "Logic",
+            "name": "Λογική",
             "contents": [
                 {
                     "kind": "block",
                     "type": "column"
+                },
+                {
+                    "kind": "block",
+                    "type": "constrain"
                 },
                 {
                     "kind": "block",

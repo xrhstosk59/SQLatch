@@ -6,10 +6,12 @@ import selectJSON from './Blocks/select.json';
 import whereJSON from './Blocks/where.json';
 import columnJSON from './Blocks/column.json';
 import toolboxJSON from './Blocks/toolbox.json';
+import constrainJSON from './Blocks/constrain.json';
 
 const SQL = new Blockly.Generator("SQL");
 function parentIsType(block: Blockly.Block, allowedTypes: string[]) {
-    let parentBlock = block.parentBlock_
+    //@ts-ignore Google recommended way
+    let parentBlock = block.parentBlock_ 
     if (!parentBlock) return;
     return allowedTypes.includes(parentBlock.type);
 }
@@ -24,6 +26,7 @@ export const useBlockly = () => {
                 this.jsonInit(createJSON);
             },
         };
+        
         Blockly.Blocks["select"] = {
             init: function () {
                 this.jsonInit(selectJSON);
@@ -55,6 +58,16 @@ export const useBlockly = () => {
             },
         };
     };
+    Blockly.Blocks["constrain"] = {
+        init: function () {
+            this.jsonInit(constrainJSON);
+        },
+        onchange: function (e) {
+            if (this.workspace.isDragging()) return;
+            if (e.type !== Blockly.Events.BLOCK_MOVE) return;
+            if (!parentIsType(this, ["column"])) { this.unplug() }
+        },
+    };
 
     const initGen = () => {
         SQL.forBlock["create"] = function (block) {
@@ -79,14 +92,21 @@ export const useBlockly = () => {
         SQL.forBlock["column"] = function (block) {
             const textValue = SQL.valueToCode(block, 'COLUMN', 0);
             let type = block.getFieldValue('TYPE');
-            let code = textValue + ' ' + type;
+            const constrain = SQL.valueToCode(block, 'CONSTRAIN', 0);
+            let code = textValue + ' ' + type+' '+ constrain;
             return code;
         };
         SQL.forBlock["text"] = function (block) {
             const textValue = block.getFieldValue('TEXT');
             return [textValue, 0];
         };
+        SQL.forBlock["constrain"] = function (block) {
+            const textValue = block.getFieldValue('CONSTRAIN');
+            console.log(textValue);
+            return [textValue, 0];
+        };
         // generate code for all blocks in statements
+        //@ts-ignore Google recommended way
         SQL.scrub_ = function (block, code, thisOnly) {
             const nextBlock =
                 block.nextConnection && block.nextConnection.targetBlock();

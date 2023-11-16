@@ -1,6 +1,6 @@
 {
     "type": "column",
-    "message0": "COLUMN: %1 TYPE: %2",
+    "message0": "COLUMN: %1 TYPE: %2 %3 CONSTRAIN: %4",
     "args0": [
         {
             "type": "input_value",
@@ -28,12 +28,20 @@
                     "BLOB"
                 ]
             ]
+        },
+        {
+            "type": "input_end_row"
+        },
+        {
+            "type": "input_value",
+            "name": "CONSTRAIN",
+            "check":"constrain"
         }
     ],
     "previousStatement": null,
     "nextStatement": null,
-    "inputsInline": true,
-    "colour": 230,
+    "inputsInline": false,
+    "colour": 200,
     "tooltip": "",
     "helpUrl": ""
 }
