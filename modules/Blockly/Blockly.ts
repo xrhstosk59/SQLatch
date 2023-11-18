@@ -26,7 +26,6 @@ export const useBlockly = () => {
                 this.jsonInit(createJSON);
             },
         };
-
         Blockly.Blocks["select"] = {
             init: function () {
                 this.jsonInit(selectJSON);
