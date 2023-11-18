@@ -2,6 +2,7 @@ import sqlite3InitModule, { Database, Sqlite3Static } from '@sqlite.org/sqlite-w
 
 let recentResult: object[];
 let activeDB: Database;
+let errors: any;
 
 export const useSQL = () => {
     const initSQL = () => {
@@ -43,7 +44,9 @@ export const useSQL = () => {
                 console.log(recentResult);
             } catch (err){
                 console.log(err.message);
-                alert(err.message.split(':').slice(2, err.message.length));
+                errors = err.message;
+                //alert(err.message.split(':').slice(2, err.message.length));
+                
             }
         }
     };
@@ -51,11 +54,15 @@ export const useSQL = () => {
     const getResultDB = (): object[] => {
         return recentResult;
     }
+    const getError = (): object[] => {
+        return errors;
+    }
 
     return {
         initSQL,
         setupDB,
         queryDB,
-        getResultDB
+        getResultDB,
+        getError
     }
 }
