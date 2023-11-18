@@ -75,7 +75,7 @@ export default function Guide() {
                 <Container>
                     <h2>Αρχική</h2>
                     <ul className={styles.link_list}>
-                        {LTS.map((_: string, valueIndex) => <li id={String(valueIndex)}><Link href='' className={styles.link} onClick={() => { setIdxState(valueIndex); setInHome(false); }}>{valueIndex + 1}. {LTSNames[valueIndex]}</Link></li>)}
+                        {LTS.map((_: string, valueIndex) => <li key={String(valueIndex)}><Link href='' className={styles.link} onClick={() => { setIdxState(valueIndex); setInHome(false); }}>{valueIndex + 1}. {LTSNames[valueIndex]}</Link></li>)}
                     </ul>
                 </Container>
             )}
