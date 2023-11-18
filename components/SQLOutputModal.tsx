@@ -16,7 +16,7 @@ export default function SQLOutputModal({show, onHide, error, output}) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {error != '' ? error : <></>}
+            <span style={{fontWeight: 'bold', color: 'red'}}> {error != '' ? error : <></>} </span>
                 <Table responsive striped bordered hover>
                     <thead>
                         <tr>
