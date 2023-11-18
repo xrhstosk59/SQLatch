@@ -7,12 +7,17 @@ import whereJSON from './Blocks/where.json';
 import columnJSON from './Blocks/column.json';
 import toolboxJSON from './Blocks/toolbox.json';
 import constrainJSON from './Blocks/constrain.json';
+import insertJSON from './Blocks/insert.json';
+import valueJSON from './Blocks/value.json';
+import columnNameJSON from './Blocks/column_name.json'
+
+
 
 const SQL = new Blockly.Generator("SQL");
 function parentIsType(block: Blockly.Block, allowedTypes: string[]) {
     //@ts-ignore Google recommended way
     let parentBlock = block.parentBlock_ 
-    if (!parentBlock) return;
+    if (!parentBlock) return false;
     return allowedTypes.includes(parentBlock.type);
 }
 
@@ -67,6 +72,31 @@ export const useBlockly = () => {
             if (!parentIsType(this, ["column"])) { this.unplug() }
         },
     };
+    Blockly.Blocks["insert"] = {
+        init: function () {
+            this.jsonInit(insertJSON);
+        }
+    };
+    Blockly.Blocks["value"] = {
+        init: function () {
+            this.jsonInit(valueJSON);
+        },
+        onchange: function (e) {
+            if (this.workspace.isDragging()) return;
+            if (e.type !== Blockly.Events.BLOCK_MOVE) return;
+            if (!parentIsType(this, ["insert","value"])) { this.unplug() }
+        },
+    };
+    Blockly.Blocks["column_name"] = {
+        init: function () {
+            this.jsonInit(columnNameJSON);
+        },
+        onchange: function (e) {
+            if (this.workspace.isDragging()) return;
+            if (e.type !== Blockly.Events.BLOCK_MOVE) return;
+            if (!parentIsType(this, ["insert","column_name"])) { this.unplug() }
+        },
+    };
 
     const initGen = () => {
         SQL.forBlock["create"] = function (block) {
@@ -74,6 +104,15 @@ export const useBlockly = () => {
             let columns = SQL.statementToCode(block, 'COLUMNS') || ' ';
             if (columns != ' ') columns = '(' + columns + ')';
             let code = 'CREATE TABLE ' + table + columns;
+            return code + ';';
+        };
+        SQL.forBlock["insert"] = function (block) {
+            let table = SQL.valueToCode(block, 'TABLE', 0);
+            let columns = SQL.statementToCode(block, 'COLUMNS') || ' ';
+            let values = SQL.statementToCode(block, 'VALUES') || ' ';
+            if (columns != ' ') columns = '(' + columns + ')';
+            if (values != ' ') values = '(' + values + ')';
+            let code = 'INSERT INTO ' + table + columns + ' VALUES ' + values;
             return code + ';';
         };
         SQL.forBlock["select"] = function (block) {
@@ -99,9 +138,17 @@ export const useBlockly = () => {
             const textValue = block.getFieldValue('TEXT');
             return [textValue, 0];
         };
+        SQL.forBlock["value"] = function (block) {
+            const textValue = SQL.valueToCode(block,"VALUE",0);
+            return textValue;
+        };
+        SQL.forBlock["column_name"] = function (block) {
+            const textValue = SQL.valueToCode(block,"COLUMN",0);
+            return textValue;
+        };
         SQL.forBlock["constrain"] = function (block) {
             const textValue = block.getFieldValue('CONSTR');
-            console.log(textValue);
+            
             return [textValue, 0];
         };
         // generate code for all blocks in statements
@@ -111,7 +158,7 @@ export const useBlockly = () => {
                 block.nextConnection && block.nextConnection.targetBlock();
 
             if (nextBlock && !thisOnly) {
-                if (nextBlock.type == "column") {
+                if (nextBlock.type == "column" ||nextBlock.type == "column_name" ||nextBlock.type == "value") {
                     return code + ',' + SQL.blockToCode(nextBlock);
                 }
             }

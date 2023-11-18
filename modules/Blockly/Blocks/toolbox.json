@@ -12,6 +12,10 @@
                 {
                     "kind": "block",
                     "type": "select"
+                },
+                {
+                    "kind": "block",
+                    "type": "insert"
                 }
             ]
         },
@@ -19,6 +23,14 @@
             "kind": "category",
             "name": "Είσοδος",
             "contents": [
+                {
+                    "kind": "block",
+                    "type": "value"
+                },
+                {
+                    "kind": "block",
+                    "type": "column_name"
+                },
                 {
                     "kind": "block",
                     "type": "text"
