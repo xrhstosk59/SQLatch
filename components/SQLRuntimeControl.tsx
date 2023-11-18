@@ -13,6 +13,7 @@ export default function SQLRuntimeControl() {
 
     const [modalShow, setModalShow] = useState(false);
     const [outputDB, setOutputDB] = useState<object[]>([]);
+    const [errorDB, setErrorDB] = useState<object[]>([]);
 
     useEffect(() => {
         useDB.initSQL();
@@ -20,6 +21,7 @@ export default function SQLRuntimeControl() {
 
     const showResult = () => {
         setOutputDB(useDB.getResultDB());
+        setErrorDB(useDB.getError());
         setModalShow(true);
     }
 
@@ -35,6 +37,7 @@ export default function SQLRuntimeControl() {
             <Button variant="success" onClick={onClickRun}>Αποτέλεσμα</Button>
             <SQLOutputModal
                 show={modalShow}
+                error={errorDB}
                 output={outputDB}
                 onHide={() => setModalShow(false)}
             />

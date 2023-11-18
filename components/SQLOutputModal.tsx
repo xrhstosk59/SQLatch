@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 
-export default function SQLOutputModal({show, onHide, output}) {
+export default function SQLOutputModal({show, onHide, error, output}) {
     return (
         <Modal
             show={show}
@@ -16,6 +16,7 @@ export default function SQLOutputModal({show, onHide, output}) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
+                {error != '' ? error : <></>}
                 <Table responsive striped bordered hover>
                     <thead>
                         <tr>

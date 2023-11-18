@@ -33,8 +33,9 @@ export const useSQL = () => {
     };
 
     const queryDB = (query: string) => {
+        errors = '';
         if (query == ''){
-            alert('Empty query!');
+            errors = 'Δεν βρέθηκαν blocks στο workspace!';
         }
         else {
             try {
@@ -45,8 +46,6 @@ export const useSQL = () => {
             } catch (err){
                 console.log(err.message);
                 errors = err.message;
-                //alert(err.message.split(':').slice(2, err.message.length));
-                
             }
         }
     };
