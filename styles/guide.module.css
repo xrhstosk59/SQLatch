@@ -1,5 +1,8 @@
 .container {
     overflow: auto;
+
     height: 85vh;
-    
+    margin-bottom: 4vh;
+
+    color: white;
 }
