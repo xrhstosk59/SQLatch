@@ -3,13 +3,20 @@ import { useEffect, useState } from 'react';
 
 import Container from 'react-bootstrap/Container';
 import Pagination from 'react-bootstrap/Pagination';
+import Link from 'next/link';
 
 import { useGuide } from '../modules/Guide';
-import Link from 'next/link';
+import { useBlockly } from '../modules/Blockly/Blockly';
 
 export default function Guide() {
 
     const useRequest = useGuide();
+    const useBL = useBlockly();
+
+    const LTSBlocks = [
+        'Lessons/Lesson1/blocks.json',
+        'Lessons/Lesson2/blocks.json'
+    ]
 
     const LTS = [
         'Lessons/Lesson1/theory.md',
@@ -26,7 +33,7 @@ export default function Guide() {
         'Ασκήσεις',
         'Σενάριο: Το μαγικό βιβλίο',
         'Σενάριο: Η κλοπή του μουσείου',
-        'Σενάριο: Η εξερεύνηση πλανητών',
+        'Σενάριο: Η εξερεύνηση πλανητών'
     ]
 
     const [idxState, setIdxState] = useState(0);
@@ -53,9 +60,13 @@ export default function Guide() {
         const setHTML = async () => {
             let html = await useRequest.convertMd('/MDGuides/' + LTS[idxState]);
             setMDGuides(html);
+            if (!inHome) {
+                useBL.setWorkspaceJSON('/MDGuides/' + LTSBlocks[idxState]);
+            }
         }
+
         setHTML();
-    }, [idxState]);
+    }, [idxState, inHome]);
 
     return (
         <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }} className={styles.container}>

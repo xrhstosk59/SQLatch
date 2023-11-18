@@ -123,10 +123,19 @@ export const useBlockly = () => {
         BLWorkspace = workspace;
     }
 
-    const setWorkspaceJSON = (state: object) => {
+    const setWorkspaceJSON = async (path: string): Promise<any> => {
         console.log('-- Blockly: Setting state --');
-        console.log(state);
-        Blockly.serialization.workspaces.load(state, BLWorkspace);
+        console.log(path);
+
+        try {
+            const response = await fetch(path);
+            const text = await response.text();
+            Blockly.serialization.workspaces.load(JSON.parse(text), BLWorkspace);
+
+        } catch (error) {
+            console.error('Error fetching the file: ', error);
+            return '';
+        }
     }
 
     const getToolbox = () => {
