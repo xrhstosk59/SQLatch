@@ -123,7 +123,7 @@ export const useBlockly = () => {
         BLWorkspace = workspace;
     }
 
-    const setWorkspaceJSON = async (path: string): Promise<any> => {
+    const loadWorkspaceFile = async (path: string): Promise<any> => {
         console.log('-- Blockly: Setting state --');
         console.log(path);
 
@@ -138,11 +138,18 @@ export const useBlockly = () => {
         }
     }
 
+    const loadWorkspaceState = (state: object) => {
+        console.log('-- Blockly: Setting state --');
+        console.log(state);
+
+        Blockly.serialization.workspaces.load(state, BLWorkspace);
+    }
+
     const getToolbox = () => {
         return toolboxJSON;
     }
 
-    const getWorkspaceJSON = (): object => {
+    const getWorkspaceState = (): object => {
         console.log('-- Blockly: Getting state --');
         const state = Blockly.serialization.workspaces.save(BLWorkspace);
         console.log(state);
@@ -160,9 +167,10 @@ export const useBlockly = () => {
         initBlockly,
         initGen,
         setWorkspace,
-        setWorkspaceJSON,
+        loadWorkspaceFile,
+        loadWorkspaceState,
         getToolbox,
-        getWorkspaceJSON,
+        getWorkspaceState,
         runGen
     }
 }

@@ -61,7 +61,7 @@ export default function Guide() {
             let html = await useRequest.convertMd('/MDGuides/' + LTS[idxState]);
             setMDGuides(html);
             if (!inHome) {
-                useBL.setWorkspaceJSON('/MDGuides/' + LTSBlocks[idxState]);
+                useBL.loadWorkspaceFile('/MDGuides/' + LTSBlocks[idxState]);
             }
         }
 
