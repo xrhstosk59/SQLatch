@@ -7,16 +7,17 @@
     color: white;
 }
 
-.link_list {
-    line-height: 30px;
-}
-
 .link {
     text-decoration: none;
     font-size: large;
     background-color: rgba(255, 255, 255, 0);
+    padding: 3px;
 }
 
 .link:hover {
     background-color: rgba(255, 255, 255, 0.1);
+}
+
+.link_list {
+    line-height: 30px;
 }
