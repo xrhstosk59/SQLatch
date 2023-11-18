@@ -2,24 +2,24 @@
     "type": "constrain",
     "message0": "%1",
     "args0": [
-      {
-        "type": "field_dropdown",
-        "name": "CONSTR",
-        "options": [
-          [
-            "PRIMARY KEY",
-            "PRIMARY KEY"
-          ],
-          [
-            "UNIQUE",
-            "UNIQUE"
-          ],
-          [
-            "FOREIGN",
-            "FOREIGN"
-          ]
-        ]
-      }
+        {
+            "type": "field_dropdown",
+            "name": "CONSTR",
+            "options": [
+                [
+                    "PRIMARY KEY",
+                    "PRIMARY KEY"
+                ],
+                [
+                    "UNIQUE",
+                    "UNIQUE"
+                ],
+                [
+                    "FOREIGN",
+                    "FOREIGN"
+                ]
+            ]
+        }
     ],
     "output": "constrain",
     "colour": 180,

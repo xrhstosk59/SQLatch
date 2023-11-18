@@ -26,7 +26,7 @@ export const useBlockly = () => {
                 this.jsonInit(createJSON);
             },
         };
-        
+
         Blockly.Blocks["select"] = {
             init: function () {
                 this.jsonInit(selectJSON);
@@ -101,7 +101,7 @@ export const useBlockly = () => {
             return [textValue, 0];
         };
         SQL.forBlock["constrain"] = function (block) {
-            const textValue = block.getFieldValue('CONSTRAIN');
+            const textValue = block.getFieldValue('CONSTR');
             console.log(textValue);
             return [textValue, 0];
         };
