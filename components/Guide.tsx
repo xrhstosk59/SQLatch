@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 import { useGuide } from '../modules/Guide';
 import { useBlockly } from '../modules/Blockly/Blockly';
+import { useSQL } from '../modules/SQLite';
 
 export default function Guide() {
 
@@ -26,7 +27,7 @@ export default function Guide() {
         'Scenarios/Scenario2/scen2.md',
         'Scenarios/Scenario3/scen3.md'
     ];
-
+    const DBs = ["", "Scenarios/Scenario2/scen2.db"]
     const LTSNames = [
         'Μάθημα με CREATE TABLE',
         'Μάθημα με SELECT',
@@ -66,6 +67,21 @@ export default function Guide() {
         }
 
         setHTML();
+    }, [idxState, inHome]);
+
+    useEffect(() => {
+        const setDB = async () => {
+            if (!inHome && idxState >= 3) {
+                let dbPath = DBs[idxState - 3];
+                if (dbPath) {
+                    let fulldbPath = '/MDGuides/' + dbPath;
+                    console.log(fulldbPath);
+                    await useSQL().loadDB(fulldbPath);
+                }
+            }
+
+        }
+        setDB();
     }, [idxState, inHome]);
 
     return (

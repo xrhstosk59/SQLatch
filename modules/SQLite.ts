@@ -1,6 +1,7 @@
 import sqlite3InitModule, { Database, Sqlite3Static } from '@sqlite.org/sqlite-wasm';
 
 let recentResult: object[];
+let sqlite3Global:Sqlite3Static;
 let activeDB: Database;
 let errors: any;
 
@@ -12,6 +13,7 @@ export const useSQL = () => {
             printErr: console.error,
         }).then((sqlite3) => {
             try {
+                sqlite3Global=sqlite3;
                 setupDB(sqlite3);
             } catch (err) {
                 console.log(err.message);
@@ -34,16 +36,16 @@ export const useSQL = () => {
 
     const queryDB = (query: string) => {
         errors = '';
-        if (query == ''){
+        if (query == '') {
             errors = 'Δεν βρέθηκαν blocks στο workspace!';
         }
         else {
             try {
                 console.log('-- SQLite: Querying --');
                 console.log(query);
-                recentResult = activeDB.exec(query, {rowMode:"object", returnValue: 'resultRows' });
+                recentResult = activeDB.exec(query, { rowMode: "object", returnValue: 'resultRows' });
                 console.log(recentResult);
-            } catch (err){
+            } catch (err) {
                 console.log(err.message);
                 errors = err.message;
             }
@@ -56,12 +58,35 @@ export const useSQL = () => {
     const getError = (): object[] => {
         return errors;
     }
+    const requestDB = async (path: string): Promise<any> => {
+        try {
+            const response = await fetch(path);
+            const arrayBuf = await response.arrayBuffer();
+            return arrayBuf;
 
+        } catch (error) {
+            console.error('Error fetching the db: ', error);
+            return '';
+        }
+    };
+    const loadDB = async (path: string) => {
+        const arrayBuffer = await requestDB(path)
+        const p = sqlite3Global.wasm.allocFromTypedArray(arrayBuffer);
+        const db = new sqlite3Global.oo1.DB();
+        const rc = sqlite3Global.capi.sqlite3_deserialize(
+            db.pointer, 'main', p, arrayBuffer.byteLength, arrayBuffer.byteLength,
+            sqlite3Global.capi.SQLITE_DESERIALIZE_FREEONCLOSE
+        );
+        db.checkRc(rc);
+        activeDB.close();
+        activeDB = db;
+    }
     return {
         initSQL,
         setupDB,
         queryDB,
         getResultDB,
-        getError
+        getError,
+        loadDB
     }
 }
