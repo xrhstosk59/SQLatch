@@ -7,7 +7,7 @@
       "name": "COLUMN"
     }
   ],
-  "previousStatement": null,
+  "previousStatement": ["COLUMN_NAME"],
   "nextStatement": null,
   "colour": 230,
   "tooltip": "",

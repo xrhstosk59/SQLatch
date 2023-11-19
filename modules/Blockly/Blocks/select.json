@@ -14,7 +14,8 @@
         },
         {
             "type": "input_statement",
-            "name": "PARAMETERS"
+            "name": "PARAMETERS",
+            "check":"PARAMETERS"
         }
     ],
 

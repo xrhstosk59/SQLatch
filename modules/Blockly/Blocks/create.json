@@ -9,7 +9,8 @@
         },
         {
             "type": "input_statement",
-            "name": "COLUMNS"
+            "name": "COLUMNS",
+            "check":"COLUMNS"
         }
     ],
     "inputsInline": false,

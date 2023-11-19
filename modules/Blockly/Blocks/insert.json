@@ -4,11 +4,13 @@
     "args0": [
         {
             "type": "input_value",
-            "name": "TABLE"
+            "name": "TABLE",
+            "check":"String"
         },
         {
             "type": "input_statement",
-            "name": "COLUMNS"
+            "name": "COLUMNS",
+            "check": "COLUMN_NAME"
         },
         {
             "type": "input_statement",

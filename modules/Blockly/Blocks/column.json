@@ -38,7 +38,7 @@
             "check":"constrain"
         }
     ],
-    "previousStatement": null,
+    "previousStatement": "COLUMNS",
     "nextStatement": null,
     "inputsInline": false,
     "colour": 200,
