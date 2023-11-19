@@ -24,10 +24,10 @@ export default function Guide() {
         'Lessons/Lesson2/theory.md',
         'Tasks/Tasks1/tasks.md',
         'Scenarios/Scenario1/scen.md',
-        'Scenarios/Scenario2/scen2.md',
-        'Scenarios/Scenario3/scen3.md'
+        'Scenarios/Scenario2/scen.md',
+        'Scenarios/Scenario3/scen.md'
     ];
-    const DBs = ["", "Scenarios/Scenario2/scen2.db"]
+
     const LTSNames = [
         'Μάθημα με CREATE TABLE',
         'Μάθημα με SELECT',
@@ -35,6 +35,11 @@ export default function Guide() {
         'Σενάριο: Το μαγικό βιβλίο',
         'Σενάριο: Η κλοπή του μουσείου',
         'Σενάριο: Η εξερεύνηση πλανητών'
+    ]
+
+    const DBs = [
+        '',
+        'Scenarios/Scenario2/database.db'
     ]
 
     const [idxState, setIdxState] = useState(0);
@@ -63,26 +68,13 @@ export default function Guide() {
             setMDGuides(html);
             if (!inHome) {
                 useBL.loadWorkspaceFile('/MDGuides/' + LTSBlocks[idxState]);
+                useSQL().loadDB('/MDGuides/' + DBs[idxState]);
             }
         }
 
         setHTML();
     }, [idxState, inHome]);
 
-    useEffect(() => {
-        const setDB = async () => {
-            if (!inHome && idxState >= 3) {
-                let dbPath = DBs[idxState - 3];
-                if (dbPath) {
-                    let fulldbPath = '/MDGuides/' + dbPath;
-                    console.log(fulldbPath);
-                    await useSQL().loadDB(fulldbPath);
-                }
-            }
-
-        }
-        setDB();
-    }, [idxState, inHome]);
 
     return (
         <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }} className={styles.container}>

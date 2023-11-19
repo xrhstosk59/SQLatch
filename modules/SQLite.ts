@@ -26,8 +26,8 @@ export const useSQL = () => {
             console.log('-- SQLite: Initializing DB --');
             activeDB = new sqlite3.oo1.DB();
 
-            queryDB('CREATE TABLE IF NOT EXISTS t(a,b,c)');
-            queryDB('INSERT INTO t(a,b,c) VALUES (1,2,3),(4,5,6),(4,5,6),(4,5,6),(4,5,6),(4,5,6)');
+            /*queryDB('CREATE TABLE IF NOT EXISTS t(a,b,c)');
+            queryDB('INSERT INTO t(a,b,c) VALUES (1,2,3),(4,5,6),(4,5,6),(4,5,6),(4,5,6),(4,5,6)');*/
         } catch (err) {
             console.log(err.message);
             activeDB.close();
@@ -55,32 +55,42 @@ export const useSQL = () => {
     const getResultDB = (): object[] => {
         return recentResult;
     }
+
     const getError = (): object[] => {
         return errors;
     }
+
     const requestDB = async (path: string): Promise<any> => {
         try {
+            console.log('-- SQLite: fetching .db file --');
             const response = await fetch(path);
             const arrayBuf = await response.arrayBuffer();
             return arrayBuf;
-
-        } catch (error) {
-            console.error('Error fetching the db: ', error);
+        } catch (err) {
+            console.log(err.message);
             return '';
         }
     };
+
     const loadDB = async (path: string) => {
+        console.log('-- SQLite: Loading DB --');
+
         const arrayBuffer = await requestDB(path)
-        const p = sqlite3Global.wasm.allocFromTypedArray(arrayBuffer);
-        const db = new sqlite3Global.oo1.DB();
-        const rc = sqlite3Global.capi.sqlite3_deserialize(
-            db.pointer, 'main', p, arrayBuffer.byteLength, arrayBuffer.byteLength,
-            sqlite3Global.capi.SQLITE_DESERIALIZE_FREEONCLOSE
-        );
-        db.checkRc(rc);
-        activeDB.close();
-        activeDB = db;
+        if (arrayBuffer == '') {
+            console.log('File error');
+        } else {
+            const p = sqlite3Global.wasm.allocFromTypedArray(arrayBuffer);
+            const db = new sqlite3Global.oo1.DB();
+            const rc = sqlite3Global.capi.sqlite3_deserialize(
+                db.pointer, 'main', p, arrayBuffer.byteLength, arrayBuffer.byteLength,
+                sqlite3Global.capi.SQLITE_DESERIALIZE_FREEONCLOSE
+            );
+            db.checkRc(rc);
+            activeDB.close();
+            activeDB = db;
+        }
     }
+
     return {
         initSQL,
         setupDB,
