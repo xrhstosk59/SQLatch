@@ -25,10 +25,10 @@ CREATE TABLE
 CREATE TABLE
 </span> Customers (
     CustomerID <span style="color:aquamarine">
-INT
+INTEGER
 </span> PRIMARY KEY,
     CustomerName <span style="color:aquamarine">
-VARCHAR(50)
+TEXT
 </span>
 );
 
@@ -39,15 +39,15 @@ VARCHAR(50)
 CREATE TABLE
 </span> Orders (
     OrderID <span style="color:aquamarine">
-INT
+INTEGER
 </span> <span style="color:aquamarine">
 PRIMARY KEY
 </span>,
     OrderDate <span style="color:aquamarine">
-DATE
+TEXT
 </span>,
     CustomerID <span style="color:aquamarine">
-INT
+INTEGER
 </span>,
     <span style="color:aquamarine">
 FOREIGN KEY

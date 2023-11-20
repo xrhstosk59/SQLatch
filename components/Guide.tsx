@@ -29,8 +29,8 @@ export default function Guide() {
     ];
 
     const LTSNames = [
-        'Μάθημα με CREATE TABLE',
         'Μάθημα με SELECT',
+        'Μάθημα με CREATE TABLE',
         'Ασκήσεις',
         'Σενάριο: Το μαγικό βιβλίο',
         'Σενάριο: Η κλοπή του μουσείου',
