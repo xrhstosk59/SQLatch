@@ -1,7 +1,7 @@
 import sqlite3InitModule, { Database, Sqlite3Static } from '@sqlite.org/sqlite-wasm';
 
 let recentResult: object[];
-let sqlite3Global:Sqlite3Static;
+let sqlite3Global: Sqlite3Static;
 let activeDB: Database;
 let errors: any;
 
@@ -13,7 +13,7 @@ export const useSQL = () => {
             printErr: console.error,
         }).then((sqlite3) => {
             try {
-                sqlite3Global=sqlite3;
+                sqlite3Global = sqlite3;
                 setupDB(sqlite3);
             } catch (err) {
                 console.log(err.message);
@@ -75,19 +75,27 @@ export const useSQL = () => {
     const loadDB = async (path: string) => {
         console.log('-- SQLite: Loading DB --');
 
-        const arrayBuffer = await requestDB(path)
-        if (arrayBuffer == '') {
-            console.log('File error');
-        } else {
-            const p = sqlite3Global.wasm.allocFromTypedArray(arrayBuffer);
+        if (path == '') {
+            console.log('No path specified, initializing empty DB');
             const db = new sqlite3Global.oo1.DB();
-            const rc = sqlite3Global.capi.sqlite3_deserialize(
-                db.pointer, 'main', p, arrayBuffer.byteLength, arrayBuffer.byteLength,
-                sqlite3Global.capi.SQLITE_DESERIALIZE_FREEONCLOSE
-            );
-            db.checkRc(rc);
             activeDB.close();
             activeDB = db;
+        }
+        else {
+            const arrayBuffer = await requestDB(path)
+            if (arrayBuffer == '') {
+                console.log('File error');
+            } else {
+                const p = sqlite3Global.wasm.allocFromTypedArray(arrayBuffer);
+                const db = new sqlite3Global.oo1.DB();
+                const rc = sqlite3Global.capi.sqlite3_deserialize(
+                    db.pointer, 'main', p, arrayBuffer.byteLength, arrayBuffer.byteLength,
+                    sqlite3Global.capi.SQLITE_DESERIALIZE_FREEONCLOSE
+                );
+                db.checkRc(rc);
+                activeDB.close();
+                activeDB = db;
+            }
         }
     }
 

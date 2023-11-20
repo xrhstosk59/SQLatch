@@ -148,7 +148,7 @@ export const useBlockly = () => {
         };
         SQL.forBlock["constrain"] = function (block) {
             const textValue = block.getFieldValue('CONSTR');
-            
+
             return [textValue, 0];
         };
         // generate code for all blocks in statements
@@ -170,18 +170,17 @@ export const useBlockly = () => {
         BLWorkspace = workspace;
     }
 
-    const loadWorkspaceFile = async (path: string): Promise<any> => {
+    const loadWorkspaceFile = async (path: string) => {
         console.log('-- Blockly: Setting state --');
         console.log(path);
 
         try {
             const response = await fetch(path);
             const text = await response.text();
-            Blockly.serialization.workspaces.load(JSON.parse(text), BLWorkspace);
-
+            loadWorkspaceState(JSON.parse(text));
         } catch (error) {
             console.error('Error fetching the file: ', error);
-            return '';
+            BLWorkspace.clear();
         }
     }
 

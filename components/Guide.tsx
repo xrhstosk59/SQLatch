@@ -16,7 +16,7 @@ export default function Guide() {
 
     const LTSBlocks = [
         'Lessons/Lesson1/blocks.json',
-        'Lessons/Lesson2/blocks.json'
+        'Lessons/Lesson2/blocks.json',
     ]
 
     const LTS = [
@@ -38,8 +38,11 @@ export default function Guide() {
     ]
 
     const DBs = [
+        'Lessons/Lesson1/database.db',
         '',
-        'Scenarios/Scenario2/database.db'
+        '',
+        '',
+        'Scenarios/Scenario2/database.db',
     ]
 
     const [idxState, setIdxState] = useState(0);
@@ -68,7 +71,11 @@ export default function Guide() {
             setMDGuides(html);
             if (!inHome) {
                 useBL.loadWorkspaceFile('/MDGuides/' + LTSBlocks[idxState]);
-                useSQL().loadDB('/MDGuides/' + DBs[idxState]);
+                if (DBs[idxState] == '' || DBs[idxState] == undefined) {
+                    useSQL().loadDB('');
+                } else {
+                    useSQL().loadDB('/MDGuides/' + DBs[idxState]);
+                }
             }
         }
 
