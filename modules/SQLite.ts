@@ -77,9 +77,7 @@ export const useSQL = () => {
 
         if (path == '') {
             console.log('No path specified, initializing empty DB');
-            const db = new sqlite3Global.oo1.DB();
-            activeDB.close();
-            activeDB = db;
+            resetDB();
         }
         else {
             const arrayBuffer = await requestDB(path)
@@ -99,12 +97,21 @@ export const useSQL = () => {
         }
     }
 
+    const resetDB = () => {
+        console.log('-- SQLite: Resetting DB --');
+
+        const db = new sqlite3Global.oo1.DB();
+        activeDB.close();
+        activeDB = db;
+    }
+
     return {
         initSQL,
         setupDB,
         queryDB,
         getResultDB,
         getError,
-        loadDB
+        loadDB,
+        resetDB
     }
 }

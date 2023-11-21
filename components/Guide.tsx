@@ -70,9 +70,13 @@ export default function Guide() {
             let html = await useRequest.convertMd('/MDGuides/' + LTS[idxState]);
             setMDGuides(html);
             if (!inHome) {
-                useBL.loadWorkspaceFile('/MDGuides/' + LTSBlocks[idxState]);
+                if (LTSBlocks[idxState] == '' || LTSBlocks[idxState] == undefined) {
+                    useBL.loadWorkspaceFile('');
+                } else {
+                    useBL.loadWorkspaceFile('/MDGuides/' + LTSBlocks[idxState]);
+                }
                 if (DBs[idxState] == '' || DBs[idxState] == undefined) {
-                    useSQL().loadDB('');
+                    useSQL().resetDB();
                 } else {
                     useSQL().loadDB('/MDGuides/' + DBs[idxState]);
                 }
@@ -91,7 +95,7 @@ export default function Guide() {
                         <Pagination.Item active={inHome} onClick={() => setInHome(true)}>Αρχική</Pagination.Item>
                         <Pagination.Prev onClick={() => loadPrevGuide()} />
 
-                        {LTS.map((_: string, valueIndex) => <Pagination.Item active={isPageActive(valueIndex)} onClick={() => setIdxState(valueIndex)}>{valueIndex + 1}</Pagination.Item>)}
+                        {LTS.map((_: string, valueIndex) => <Pagination.Item key={String(valueIndex)} active={isPageActive(valueIndex)} onClick={() => setIdxState(valueIndex)}>{valueIndex + 1}</Pagination.Item>)}
 
                         <Pagination.Next onClick={() => loadNextGuide()} />
                     </Pagination>

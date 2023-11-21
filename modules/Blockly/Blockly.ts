@@ -16,7 +16,7 @@ import columnNameJSON from './Blocks/column_name.json'
 const SQL = new Blockly.Generator("SQL");
 function parentIsType(block: Blockly.Block, allowedTypes: string[]) {
     //@ts-ignore Google recommended way
-    let parentBlock = block.parentBlock_ 
+    let parentBlock = block.parentBlock_
     if (!parentBlock) return false;
     return allowedTypes.includes(parentBlock.type);
 }
@@ -84,7 +84,7 @@ export const useBlockly = () => {
         onchange: function (e) {
             if (this.workspace.isDragging()) return;
             if (e.type !== Blockly.Events.BLOCK_MOVE) return;
-            if (!parentIsType(this, ["insert","value"])) { this.unplug() }
+            if (!parentIsType(this, ["insert", "value"])) { this.unplug() }
         },
     };
     Blockly.Blocks["column_name"] = {
@@ -94,7 +94,7 @@ export const useBlockly = () => {
         onchange: function (e) {
             if (this.workspace.isDragging()) return;
             if (e.type !== Blockly.Events.BLOCK_MOVE) return;
-            if (!parentIsType(this, ["insert","column_name"])) { this.unplug() }
+            if (!parentIsType(this, ["insert", "column_name"])) { this.unplug() }
         },
     };
 
@@ -131,7 +131,7 @@ export const useBlockly = () => {
             const textValue = SQL.valueToCode(block, 'COLUMN', 0);
             let type = block.getFieldValue('TYPE');
             const constrain = SQL.valueToCode(block, 'CONSTRAIN', 0);
-            let code = textValue + ' ' + type+' '+ constrain;
+            let code = textValue + ' ' + type + ' ' + constrain;
             return code;
         };
         SQL.forBlock["text"] = function (block) {
@@ -139,11 +139,11 @@ export const useBlockly = () => {
             return [textValue, 0];
         };
         SQL.forBlock["value"] = function (block) {
-            const textValue = SQL.valueToCode(block,"VALUE",0);
+            const textValue = SQL.valueToCode(block, "VALUE", 0);
             return textValue;
         };
         SQL.forBlock["column_name"] = function (block) {
-            const textValue = SQL.valueToCode(block,"COLUMN",0);
+            const textValue = SQL.valueToCode(block, "COLUMN", 0);
             return textValue;
         };
         SQL.forBlock["constrain"] = function (block) {
@@ -158,7 +158,7 @@ export const useBlockly = () => {
                 block.nextConnection && block.nextConnection.targetBlock();
 
             if (nextBlock && !thisOnly) {
-                if (nextBlock.type == "column" ||nextBlock.type == "column_name" ||nextBlock.type == "value") {
+                if (nextBlock.type == "column" || nextBlock.type == "column_name" || nextBlock.type == "value") {
                     return code + ',' + SQL.blockToCode(nextBlock);
                 }
             }
@@ -172,15 +172,21 @@ export const useBlockly = () => {
 
     const loadWorkspaceFile = async (path: string) => {
         console.log('-- Blockly: Setting state --');
-        console.log(path);
+        console.log('Path: ', path);
 
-        try {
-            const response = await fetch(path);
-            const text = await response.text();
-            loadWorkspaceState(JSON.parse(text));
-        } catch (error) {
-            console.error('Error fetching the file: ', error);
+        if (path == '') {
+            console.log('No path found, clearing..');
             BLWorkspace.clear();
+        }
+        else {
+            try {
+                const response = await fetch(path);
+                const text = await response.text();
+                loadWorkspaceState(JSON.parse(text));
+            } catch (error) {
+                console.error('Error fetching the file: ', error);
+                BLWorkspace.clear();
+            }
         }
     }
 
