@@ -21,12 +21,13 @@ export default function Home() {
             <Container className='wh-100 bg-dark' data-bs-theme="dark" fluid style={{ paddingLeft: 0, paddingRight: 0 }}>
                 <NavBar />
                 <SQLRuntimeControl />
-                <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }}>
+                <Container fluid>
                     <Row>
                         <Col xs={7}><BlocklyField /></Col>
                         <Col><Guide /></Col>
                     </Row>
                 </Container>
+
             </Container>
         </>
     );
