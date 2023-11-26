@@ -13,6 +13,7 @@ export default function Guide() {
 
     const useRequest = useGuide();
     const useBL = useBlockly();
+    const useDB = useSQL();
 
     const LTSBlocks = [
         'Lessons/Lesson1/blocks.json',
@@ -76,9 +77,9 @@ export default function Guide() {
                     useBL.loadWorkspaceFile('/MDGuides/' + LTSBlocks[idxState]);
                 }
                 if (DBs[idxState] == '' || DBs[idxState] == undefined) {
-                    useSQL().resetDB();
+                    useDB.resetDB();
                 } else {
-                    useSQL().loadDB('/MDGuides/' + DBs[idxState]);
+                    useDB.loadDB('/MDGuides/' + DBs[idxState]);
                 }
             }
         }

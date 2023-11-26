@@ -1,4 +1,3 @@
-
 import Blockly from "blockly";
 
 import createJSON from './Blocks/create.json';
@@ -10,7 +9,6 @@ import constrainJSON from './Blocks/constrain.json';
 import insertJSON from './Blocks/insert.json';
 import valueJSON from './Blocks/value.json';
 import columnNameJSON from './Blocks/column_name.json'
-
 
 
 const SQL = new Blockly.Generator("SQL");
@@ -61,41 +59,41 @@ export const useBlockly = () => {
                 if (!parentIsType(this, ["create", "column"])) { this.unplug() }
             },
         };
-    };
-    Blockly.Blocks["constrain"] = {
-        init: function () {
-            this.jsonInit(constrainJSON);
-        },
-        onchange: function (e) {
-            if (this.workspace.isDragging()) return;
-            if (e.type !== Blockly.Events.BLOCK_MOVE) return;
-            if (!parentIsType(this, ["column"])) { this.unplug() }
-        },
-    };
-    Blockly.Blocks["insert"] = {
-        init: function () {
-            this.jsonInit(insertJSON);
-        }
-    };
-    Blockly.Blocks["value"] = {
-        init: function () {
-            this.jsonInit(valueJSON);
-        },
-        onchange: function (e) {
-            if (this.workspace.isDragging()) return;
-            if (e.type !== Blockly.Events.BLOCK_MOVE) return;
-            if (!parentIsType(this, ["insert", "value"])) { this.unplug() }
-        },
-    };
-    Blockly.Blocks["column_name"] = {
-        init: function () {
-            this.jsonInit(columnNameJSON);
-        },
-        onchange: function (e) {
-            if (this.workspace.isDragging()) return;
-            if (e.type !== Blockly.Events.BLOCK_MOVE) return;
-            if (!parentIsType(this, ["insert", "column_name"])) { this.unplug() }
-        },
+        Blockly.Blocks["constrain"] = {
+            init: function () {
+                this.jsonInit(constrainJSON);
+            },
+            onchange: function (e) {
+                if (this.workspace.isDragging()) return;
+                if (e.type !== Blockly.Events.BLOCK_MOVE) return;
+                if (!parentIsType(this, ["column"])) { this.unplug() }
+            },
+        };
+        Blockly.Blocks["insert"] = {
+            init: function () {
+                this.jsonInit(insertJSON);
+            }
+        };
+        Blockly.Blocks["value"] = {
+            init: function () {
+                this.jsonInit(valueJSON);
+            },
+            onchange: function (e) {
+                if (this.workspace.isDragging()) return;
+                if (e.type !== Blockly.Events.BLOCK_MOVE) return;
+                if (!parentIsType(this, ["insert", "value"])) { this.unplug() }
+            },
+        };
+        Blockly.Blocks["column_name"] = {
+            init: function () {
+                this.jsonInit(columnNameJSON);
+            },
+            onchange: function (e) {
+                if (this.workspace.isDragging()) return;
+                if (e.type !== Blockly.Events.BLOCK_MOVE) return;
+                if (!parentIsType(this, ["insert", "column_name"])) { this.unplug() }
+            },
+        };
     };
 
     const initGen = () => {

@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 
 import Blockly from "blockly";
 import { useBlockly } from '../modules/Blockly/Blockly';
-import {ZoomToFitControl} from '@blockly/zoom-to-fit';
+import { ZoomToFitControl } from '@blockly/zoom-to-fit';
 import {ContinuousToolbox,ContinuousFlyout,ContinuousMetrics} from '@blockly/continuous-toolbox';
 import DarkTheme from '@blockly/theme-dark';
 
@@ -18,10 +18,11 @@ export default function BlocklyField() {
     const blocklyDiv = useRef(null);
 
     useEffect(() => {
+        /* Initialize Blockly */
         useBL.initBlockly();
         useBL.initGen();
         primaryWorkspace.current = Blockly.inject(blocklyDiv.current, { 
-            toolbox: useBL.getToolbox(), 
+            toolbox: useBL.getToolbox(),
             plugins: {
                 'toolbox': ContinuousToolbox,
                 'flyoutsVerticalToolbox': ContinuousFlyout,
@@ -30,14 +31,29 @@ export default function BlocklyField() {
             theme: DarkTheme,
             zoom: {
                 controls: true,
-                startScale:0.9
+                startScale: 0.9
             }
         });
         useBL.setWorkspace(primaryWorkspace.current);
+
+        /* Initialize Zoom-to-fit */
         const zoomToFit = new ZoomToFitControl(primaryWorkspace.current);
         zoomToFit.init();
 
-    }, [primaryWorkspace, useBL.getToolbox(), blocklyDiv]);
+        /* Load from parameters */
+        try {
+            const searchParams = new URLSearchParams(window.location.search);
+            const encodedData = searchParams.get('bl');
+
+            if (encodedData) {
+                const state = JSON.parse(atob(encodedData));
+                useBL.loadWorkspaceState(state);
+            }
+        }
+        catch (error) {
+            console.error('Error decoding or parsing data:', error);
+        }
+    }, []);
 
     return (
         <Container>

@@ -7,6 +7,14 @@ import { useBlockly } from '../modules/Blockly/Blockly';
 export default function NavBar() {
     const useBL = useBlockly();
 
+    const onClickShareButton = () => {
+        console.log('-- Navbar: Sharing link --');
+        const encBL = btoa(JSON.stringify(useBL.getWorkspaceState()));
+        const host = window.location.host;
+        const URL = 'http://' + host + '?bl=' + encBL;
+        alert(URL);
+    }
+
     const onClickSaveButton = () => {
         console.log('-- Navbar: Save init --');
         const json = useBL.getWorkspaceState();
@@ -48,7 +56,7 @@ export default function NavBar() {
                     <NavDropdown.Item href="">Έξοδος</NavDropdown.Item>
                 </NavDropdown>
                 <Nav.Link href="">Ρυθμίσεις</Nav.Link>
-                <Nav.Link href="">Κοινοποίηση</Nav.Link>
+                <Nav.Link onClick={onClickShareButton} href="">Κοινοποίηση</Nav.Link>
             </Nav>
             <input type="file" id="fileInput" hidden />
         </Navbar>
