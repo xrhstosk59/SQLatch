@@ -185,7 +185,7 @@ export const useBlockly = () => {
 
     const runGen = (): string => {
         console.log('-- Blockly: Running Generator --');
-        const code: string = SQL.workspaceToCode();
+        const code: string = SQL.workspaceToCode(BLWorkspace);
         return code;
     }
 

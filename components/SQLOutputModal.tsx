@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 
-export default function SQLOutputModal({ show, onHide, error, output }) {
+export default function SQLOutputModal({ show, onHide, output }) {
     return (
         <Modal
             show={show}
@@ -16,8 +16,7 @@ export default function SQLOutputModal({ show, onHide, error, output }) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <span style={{ fontWeight: 'bold', color: 'red' }}> {error != '' ? error : <></>} </span>
-                {error == '' ?  <Table responsive striped bordered hover>
+                <Table responsive striped bordered hover>
                     <thead>
                         <tr>
                             <th>#</th>
@@ -34,7 +33,7 @@ export default function SQLOutputModal({ show, onHide, error, output }) {
                             </tr>
                         ))}
                     </tbody>
-                </Table>:''}
+                </Table>
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={onHide}>Close</Button>

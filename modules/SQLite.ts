@@ -1,9 +1,9 @@
 import sqlite3InitModule, { Database, Sqlite3Static } from '@sqlite.org/sqlite-wasm';
 
-let recentResult: object[];
+let recentResult: object[] = [];
 let sqlite3Global: Sqlite3Static;
 let activeDB: Database;
-let errors: any;
+let errors: string = '';
 
 export const useSQL = () => {
     const initSQL = () => {
@@ -42,7 +42,7 @@ export const useSQL = () => {
                 recentResult = activeDB.exec(query, { rowMode: "object", returnValue: 'resultRows' });
             } catch (err) {
                 console.log(err.message);
-                errors = err.message;
+                errors = String(err.message);
             }
         }
     };
@@ -51,7 +51,7 @@ export const useSQL = () => {
         return recentResult;
     }
 
-    const getError = (): object[] => {
+    const getError = (): string => {
         return errors;
     }
 

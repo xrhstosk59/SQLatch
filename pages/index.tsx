@@ -27,7 +27,6 @@ export default function Home() {
                         <Col><Guide /></Col>
                     </Row>
                 </Container>
-
             </Container>
         </>
     );
