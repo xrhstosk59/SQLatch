@@ -3,16 +3,23 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 
 import { useBlockly } from '../modules/Blockly/Blockly';
+import ShareURLModal from './ShareURLModal';
+import { useState } from 'react';
+
+
 
 export default function NavBar() {
+    const [modalShow, setModalShow] = useState(false);
     const useBL = useBlockly();
+    const [URL, setURL] = useState("");
 
     const onClickShareButton = () => {
         console.log('-- Navbar: Sharing link --');
         const encBL = btoa(JSON.stringify(useBL.getWorkspaceState()));
         const host = window.location.host;
         const URL = 'http://' + host + '?bl=' + encBL;
-        alert(URL);
+        setURL(URL);
+        setModalShow(true);
     }
 
     const onClickSaveButton = () => {
@@ -47,18 +54,30 @@ export default function NavBar() {
     }
 
     return (
-        <Navbar style={{ paddingLeft: 20 }} bg="dark">
-            <Navbar.Brand href="">SQLatch</Navbar.Brand>
-            <Nav>
-                <NavDropdown title="Αρχείο" id="basic-nav-dropdown">
-                    <NavDropdown.Item onClick={onClickSaveButton} href="">Αποθήκευση</NavDropdown.Item>
-                    <NavDropdown.Item onClick={onClickLoadButton} href="">Φόρτωση</NavDropdown.Item>
-                    <NavDropdown.Item href="">Έξοδος</NavDropdown.Item>
-                </NavDropdown>
-                <Nav.Link href="">Ρυθμίσεις</Nav.Link>
-                <Nav.Link onClick={onClickShareButton} href="">Κοινοποίηση</Nav.Link>
-            </Nav>
-            <input type="file" id="fileInput" hidden />
-        </Navbar>
+        <>
+            <Navbar style={{ paddingLeft: 20 }} bg="dark">
+                <Navbar.Brand href="">SQLatch</Navbar.Brand>
+                <Nav>
+                    <NavDropdown title="Αρχείο" id="basic-nav-dropdown">
+                        <NavDropdown.Item onClick={onClickSaveButton} href="">Αποθήκευση</NavDropdown.Item>
+                        <NavDropdown.Item onClick={onClickLoadButton} href="">Φόρτωση</NavDropdown.Item>
+                        <NavDropdown.Item href="">Έξοδος</NavDropdown.Item>
+                    </NavDropdown>
+                    <Nav.Link href="">Ρυθμίσεις</Nav.Link>
+                    <Nav.Link onClick={onClickShareButton} href="">Κοινοποίηση</Nav.Link>
+
+                </Nav>
+                <input type="file" id="fileInput" hidden />
+            </Navbar>
+            <ShareURLModal
+                show={modalShow}
+                output={URL}
+                onHide={() => setModalShow(false)}
+            />
+        </>
     )
+}
+
+function setModalShow(arg0: boolean) {
+    throw new Error('Function not implemented.');
 }
