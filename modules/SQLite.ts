@@ -25,9 +25,6 @@ export const useSQL = () => {
         try {
             console.log('-- SQLite: Initializing DB --');
             activeDB = new sqlite3.oo1.DB();
-
-            /*queryDB('CREATE TABLE IF NOT EXISTS t(a,b,c)');
-            queryDB('INSERT INTO t(a,b,c) VALUES (1,2,3),(4,5,6),(4,5,6),(4,5,6),(4,5,6),(4,5,6)');*/
         } catch (err) {
             console.log(err.message);
             activeDB.close();
@@ -42,9 +39,7 @@ export const useSQL = () => {
         else {
             try {
                 console.log('-- SQLite: Querying --');
-                console.log(query);
                 recentResult = activeDB.exec(query, { rowMode: "object", returnValue: 'resultRows' });
-                console.log(recentResult);
             } catch (err) {
                 console.log(err.message);
                 errors = err.message;
@@ -76,7 +71,6 @@ export const useSQL = () => {
         console.log('-- SQLite: Loading DB --');
 
         if (path == '') {
-            console.log('No path specified, initializing empty DB');
             resetDB();
         }
         else {
@@ -99,7 +93,6 @@ export const useSQL = () => {
 
     const resetDB = () => {
         console.log('-- SQLite: Resetting DB --');
-
         const db = new sqlite3Global.oo1.DB();
         activeDB.close();
         activeDB = db;

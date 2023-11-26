@@ -10,7 +10,6 @@ import insertJSON from './Blocks/insert.json';
 import valueJSON from './Blocks/value.json';
 import columnNameJSON from './Blocks/column_name.json'
 
-
 const SQL = new Blockly.Generator("SQL");
 function parentIsType(block: Blockly.Block, allowedTypes: string[]) {
     //@ts-ignore Google recommended way
@@ -170,10 +169,7 @@ export const useBlockly = () => {
 
     const loadWorkspaceFile = async (path: string) => {
         console.log('-- Blockly: Setting state --');
-        console.log('Path: ', path);
-
         if (path == '') {
-            console.log('No path found, clearing..');
             BLWorkspace.clear();
         }
         else {
@@ -190,8 +186,6 @@ export const useBlockly = () => {
 
     const loadWorkspaceState = (state: object) => {
         console.log('-- Blockly: Setting state --');
-        console.log(state);
-
         Blockly.serialization.workspaces.load(state, BLWorkspace);
     }
 
@@ -202,14 +196,12 @@ export const useBlockly = () => {
     const getWorkspaceState = (): object => {
         console.log('-- Blockly: Getting state --');
         const state = Blockly.serialization.workspaces.save(BLWorkspace);
-        console.log(state);
         return state;
     }
 
     const runGen = (): string => {
         console.log('-- Blockly: Running Generator --');
         const code: string = SQL.workspaceToCode();
-        console.log(code);
         return code;
     }
 
