@@ -1,4 +1,4 @@
-import Blockly from "blockly";
+import Blockly, { WorkspaceSvg } from "blockly";
 
 import createJSON from './Blocks/create.json';
 import selectJSON from './Blocks/select.json';
@@ -161,6 +161,8 @@ export const useBlockly = () => {
                 const response = await fetch(path);
                 const text = await response.text();
                 loadWorkspaceState(JSON.parse(text));
+                //@ts-ignore stupid
+                BLWorkspace.scrollCenter();
             } catch (error) {
                 console.error('Error fetching the file: ', error);
                 BLWorkspace.clear();
