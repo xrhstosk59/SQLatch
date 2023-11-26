@@ -18,6 +18,7 @@ export default function ShareModal({ show, onHide, output }) {
                     type="text"
                     value={output}
                     readOnly
+                    style={{ marginBottom: "5px" }}
                 />
                 <Button variant="success" onClick={() => {navigator.clipboard.writeText(output)}} >Αντιγραφή στο πρόχειρο!</Button>
             </Modal.Body>
@@ -25,5 +26,5 @@ export default function ShareModal({ show, onHide, output }) {
                 <Button onClick={onHide}>Close</Button>
             </Modal.Footer>
         </Modal>
-    )
+    );
 }
