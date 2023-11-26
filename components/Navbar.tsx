@@ -17,7 +17,7 @@ export default function NavBar() {
         console.log('-- Navbar: Sharing link --');
         const encBL = btoa(JSON.stringify(useBL.getWorkspaceState()));
         const host = window.location.host;
-        const URL = 'http://' + host + '?bl=' + encBL;
+        const URL = 'http://' + host + '/?bl=' + encBL;
         setURL(URL);
         setModalShow(true);
     }
