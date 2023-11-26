@@ -1,17 +1,25 @@
 /* Next components   */
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
 
 /* Our Components */
 import NavBar from '../components/Navbar';
 import SQLRuntimeControl from '../components/SQLRuntimeControl';
 import BlocklyField from '../components/BlocklyField';
 import Guide from '../components/Guide';
+import IntroModal from '../components/IntroModal';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 export default function Home() {
+    const [introShow, setIntroShow] = useState(false);
+
+    useEffect(() => {
+        setIntroShow(true);
+    }, [])
+
     return (
         <>
             <Head>
@@ -27,6 +35,10 @@ export default function Home() {
                         <Col><Guide /></Col>
                     </Row>
                 </Container>
+                <IntroModal
+                    show={introShow}
+                    onHide={() => setIntroShow(false)}
+                />
             </Container>
         </>
     );
