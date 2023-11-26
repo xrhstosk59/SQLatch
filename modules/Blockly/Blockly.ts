@@ -5,7 +5,6 @@ import selectJSON from './Blocks/select.json';
 import whereJSON from './Blocks/where.json';
 import columnJSON from './Blocks/column.json';
 import toolboxJSON from './Blocks/toolbox.json';
-import constrainJSON from './Blocks/constrain.json';
 import insertJSON from './Blocks/insert.json';
 import valueJSON from './Blocks/value.json';
 import columnNameJSON from './Blocks/column_name.json'
@@ -58,16 +57,6 @@ export const useBlockly = () => {
                 if (!parentIsType(this, ["create", "column"])) { this.unplug() }
             },
         };
-        Blockly.Blocks["constrain"] = {
-            init: function () {
-                this.jsonInit(constrainJSON);
-            },
-            onchange: function (e) {
-                if (this.workspace.isDragging()) return;
-                if (e.type !== Blockly.Events.BLOCK_MOVE) return;
-                if (!parentIsType(this, ["column"])) { this.unplug() }
-            },
-        };
         Blockly.Blocks["insert"] = {
             init: function () {
                 this.jsonInit(insertJSON);
@@ -97,38 +86,38 @@ export const useBlockly = () => {
 
     const initGen = () => {
         SQL.forBlock["create"] = function (block) {
-            let table = SQL.valueToCode(block, 'TABLE', 0);
+            const table = SQL.valueToCode(block, 'TABLE', 0);
             let columns = SQL.statementToCode(block, 'COLUMNS') || ' ';
             if (columns != ' ') columns = '(' + columns + ')';
-            let code = 'CREATE TABLE ' + table + columns;
+            const code = 'CREATE TABLE ' + table + columns;
             return code + ';';
         };
         SQL.forBlock["insert"] = function (block) {
-            let table = SQL.valueToCode(block, 'TABLE', 0);
+            const table = SQL.valueToCode(block, 'TABLE', 0);
             let columns = SQL.statementToCode(block, 'COLUMNS') || ' ';
             let values = SQL.statementToCode(block, 'VALUES') || ' ';
             if (columns != ' ') columns = '(' + columns + ')';
             if (values != ' ') values = '(' + values + ')';
-            let code = 'INSERT INTO ' + table + columns + ' VALUES ' + values;
+            const code = 'INSERT INTO ' + table + columns + ' VALUES ' + values;
             return code + ';';
         };
         SQL.forBlock["select"] = function (block) {
-            let columns = SQL.valueToCode(block, "COLUMNS", 0);
-            let table = SQL.valueToCode(block, "TABLE", 0);
-            let parameters = SQL.statementToCode(block, "PARAMETERS") || " ";
-            let code = 'SELECT ' + columns + ' FROM ' + table + parameters;
+            const columns = SQL.valueToCode(block, "COLUMNS", 0);
+            const table = SQL.valueToCode(block, "TABLE", 0);
+            const parameters = SQL.statementToCode(block, "PARAMETERS") || " ";
+            const code = 'SELECT ' + columns + ' FROM ' + table + parameters;
             return code;
         };
         SQL.forBlock["where"] = function (block) {
             const textValue = SQL.valueToCode(block, 'CONDITION', 0);
-            let code = 'WHERE ' + textValue;
+            const code = 'WHERE ' + textValue;
             return code;
         };
         SQL.forBlock["column"] = function (block) {
             const textValue = SQL.valueToCode(block, 'COLUMN', 0);
-            let type = block.getFieldValue('TYPE');
-            const constrain = SQL.valueToCode(block, 'CONSTRAIN', 0);
-            let code = textValue + ' ' + type + ' ' + constrain;
+            const type = block.getFieldValue('TYPE');
+            const constrain = block.getFieldValue('CONSTRAIN');
+            const code = textValue + ' ' + type + ' ' + constrain;
             return code;
         };
         SQL.forBlock["text"] = function (block) {
@@ -142,11 +131,6 @@ export const useBlockly = () => {
         SQL.forBlock["column_name"] = function (block) {
             const textValue = SQL.valueToCode(block, "COLUMN", 0);
             return textValue;
-        };
-        SQL.forBlock["constrain"] = function (block) {
-            const textValue = block.getFieldValue('CONSTR');
-
-            return [textValue, 0];
         };
         // generate code for all blocks in statements
         //@ts-ignore Google recommended way

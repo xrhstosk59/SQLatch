@@ -33,9 +33,26 @@
             "type": "input_end_row"
         },
         {
-            "type": "input_value",
+            "type": "field_dropdown",
             "name": "CONSTRAIN",
-            "check":"constrain"
+            "options": [
+                [
+                    "NONE",
+                    ""
+                ],
+                [
+                    "PRIMARY KEY",
+                    "PRIMARY KEY"
+                ],
+                [
+                    "UNIQUE",
+                    "UNIQUE"
+                ],
+                [
+                    "FOREIGN",
+                    "FOREIGN"
+                ]
+            ]
         }
     ],
     "previousStatement": "COLUMNS",

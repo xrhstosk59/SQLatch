@@ -3,7 +3,21 @@
     "contents": [
         {
             "kind": "category",
-            "name": "Ερωτήματα",
+            "name": "Γενικά",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "text"
+                },
+                {
+                    "kind": "block",
+                    "type": "where"
+                }
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Δημιουργία",
             "contents": [
                 {
                     "kind": "block",
@@ -11,18 +25,18 @@
                 },
                 {
                     "kind": "block",
-                    "type": "select"
-                },
-                {
-                    "kind": "block",
-                    "type": "insert"
+                    "type": "column"
                 }
             ]
         },
         {
             "kind": "category",
-            "name": "Είσοδος",
+            "name": "Εισαγωγή",
             "contents": [
+                {
+                    "kind": "block",
+                    "type": "insert"
+                },
                 {
                     "kind": "block",
                     "type": "value"
@@ -30,28 +44,16 @@
                 {
                     "kind": "block",
                     "type": "column_name"
-                },
-                {
-                    "kind": "block",
-                    "type": "text"
                 }
             ]
         },
         {
             "kind": "category",
-            "name": "Λογική",
+            "name": "Επιλογή",
             "contents": [
                 {
                     "kind": "block",
-                    "type": "column"
-                },
-                {
-                    "kind": "block",
-                    "type": "constrain"
-                },
-                {
-                    "kind": "block",
-                    "type": "where"
+                    "type": "select"
                 }
             ]
         }
