@@ -18,6 +18,7 @@ export default function Guide() {
     const LTSBlocks = [
         'Lessons/Lesson1/blocks.json',
         'Lessons/Lesson2/blocks.json',
+        'Lessons/Lesson3/blocks.json',
     ]
 
     const LTS = [
@@ -43,6 +44,7 @@ export default function Guide() {
     const DBs = [
         'Lessons/Lesson1/database.db',
         '',
+        'Lessons/Lesson3/database.db',
         '',
         '',
         'Scenarios/Scenario2/database.db',

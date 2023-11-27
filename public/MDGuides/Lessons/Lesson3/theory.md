@@ -18,9 +18,18 @@
 
 **Παράδειγμα:**
 
-<span style="color:aquamarine">
+- <span style="color:aquamarine">
  INSERT INTO
- </span> employees <span style="color:aquamarine">
+</span> employees <span style="color:aquamarine">
  VALUES
- </span> (5,"Ioannis","Perpatitis",660);
+ </span> (6,"Ioannis","Perpatitis",660);
+![Screenshot](MDGuides/Lessons/Lesson3/images/first.png)
 
+Επίσης επιτρέπεται η χειροκίνητη εισαγωγή των columns σε περίπτωση που θέλουμε να τα βάλουμε με διαφορετική σειρά.
+- <span style="color:aquamarine">
+ INSERT INTO
+</span> employees(id, lastname, firstname, salary) <span style="color:aquamarine">
+ VALUES
+ </span> (6,"Ioannis","Perpatitis",660);
+
+![Screenshot](MDGuides/Lessons/Lesson3/images/second.png)
