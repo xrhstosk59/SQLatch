@@ -9,11 +9,12 @@
         },
         {
             "type": "input_statement",
-            "name": "COLUMNS"
+            "name": "COLUMNS",
+            "check":"COLUMNS"
         }
     ],
     "inputsInline": false,
-    "colour": 230,
+    "colour": 200,
     "tooltip": "",
     "helpUrl": ""
 }

@@ -8,9 +8,9 @@
             "check": "String"
         }
     ],
-    "previousStatement": null,
+    "previousStatement": "PARAMETERS",
     "nextStatement": null,
-    "colour": 230,
+    "colour": 170,
     "tooltip": "",
     "helpUrl": ""
 }

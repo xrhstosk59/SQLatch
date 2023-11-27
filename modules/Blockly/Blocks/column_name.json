@@ -1,0 +1,15 @@
+{
+  "type": "column_name",
+  "message0": "COLUMN NAME: %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "COLUMN"
+    }
+  ],
+  "previousStatement": ["COLUMN_NAME"],
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+}

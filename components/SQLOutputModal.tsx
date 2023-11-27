@@ -2,7 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Table from 'react-bootstrap/Table';
 
-export default function SQLOutputModal({show, onHide, output}) {
+export default function SQLOutputModal({ show, onHide, output }) {
     return (
         <Modal
             show={show}
@@ -10,7 +10,7 @@ export default function SQLOutputModal({show, onHide, output}) {
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
-            <Modal.Header closeButton>
+            <Modal.Header closeButton onClick={onHide}>
                 <Modal.Title id="contained-modal-title-vcenter">
                     Έξοδος
                 </Modal.Title>

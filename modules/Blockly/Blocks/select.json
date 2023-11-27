@@ -14,13 +14,14 @@
         },
         {
             "type": "input_statement",
-            "name": "PARAMETERS"
+            "name": "PARAMETERS",
+            "check":"PARAMETERS"
         }
     ],
 
     "previousStatement": null,
     "inputsInline": false,
-    "colour": 230,
+    "colour": 270,
     "tooltip": "",
     "helpUrl": ""
 }

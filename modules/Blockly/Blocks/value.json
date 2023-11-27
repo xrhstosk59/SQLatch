@@ -1,0 +1,16 @@
+{
+    "type": "value",
+    "message0": "VALUE: %1",
+    "args0": [
+      {
+        "type": "input_value",
+        "name": "VALUE",
+        "check": "String"
+      }
+    ],
+    "previousStatement": ["VALUES"],
+    "nextStatement": null,
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+  }

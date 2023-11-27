@@ -3,7 +3,21 @@
     "contents": [
         {
             "kind": "category",
-            "name": "Main",
+            "name": "Γενικά",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "text"
+                },
+                {
+                    "kind": "block",
+                    "type": "where"
+                }
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Δημιουργία",
             "contents": [
                 {
                     "kind": "block",
@@ -11,31 +25,35 @@
                 },
                 {
                     "kind": "block",
-                    "type": "select"
-                }
-            ]
-        },
-        {
-            "kind": "category",
-            "name": "Input",
-            "contents": [
-                {
-                    "kind": "block",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "kind": "category",
-            "name": "Logic",
-            "contents": [
-                {
-                    "kind": "block",
                     "type": "column"
+                }
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Εισαγωγή",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "insert"
                 },
                 {
                     "kind": "block",
-                    "type": "where"
+                    "type": "value"
+                },
+                {
+                    "kind": "block",
+                    "type": "column_name"
+                }
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Επιλογή",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "select"
                 }
             ]
         }
