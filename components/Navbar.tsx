@@ -4,13 +4,23 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import { useBlockly } from '../modules/Blockly/Blockly';
-import ShareURLModal from './ShareURLModal';
 import { useState } from 'react';
 
+import ShareURLModal from './ShareURLModal';
+import { useSQL } from '../modules/SQLite';
+
 export default function NavBar() {
-    const [modalShow, setModalShow] = useState(false);
+
     const useBL = useBlockly();
+    const useDB = useSQL();
+
+    const [modalShow, setModalShow] = useState(false);
     const [URL, setURL] = useState("");
+
+    const onClickResetButton = () => {
+        useBL.loadWorkspaceFile('');
+        useDB.resetDB();
+    }
 
     const onClickShareButton = () => {
         console.log('-- Navbar: Sharing link --');
@@ -65,7 +75,7 @@ export default function NavBar() {
                         <NavDropdown.Item onClick={onClickLoadButton} href="">
                             <i className="bi bi-cloud-upload"></i> Φόρτωση
                         </NavDropdown.Item>
-                        <NavDropdown.Item href="">
+                        <NavDropdown.Item onClick={onClickResetButton} href="">
                             <i className="bi bi-trash"></i> Καθαρισμός
                         </NavDropdown.Item>
                     </NavDropdown>
