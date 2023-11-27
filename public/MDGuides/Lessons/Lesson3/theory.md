@@ -1,4 +1,4 @@
-## 3. Insert Into
+## 3. INSERT INTO
 
 Η εντολή <span style="color:coral">
  INSERT INTO
