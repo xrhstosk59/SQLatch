@@ -1,6 +1,7 @@
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import { useBlockly } from '../modules/Blockly/Blockly';
 import ShareURLModal from './ShareURLModal';
@@ -56,14 +57,23 @@ export default function NavBar() {
             <Navbar style={{ paddingLeft: 20, minHeight: '6svh' }} bg="dark">
                 <Navbar.Brand href="">SQLatch</Navbar.Brand>
                 <Nav>
-                    <NavDropdown title="Αρχείο" id="basic-nav-dropdown">
-                        <NavDropdown.Item onClick={onClickSaveButton} href="">Αποθήκευση</NavDropdown.Item>
-                        <NavDropdown.Item onClick={onClickLoadButton} href="">Φόρτωση</NavDropdown.Item>
-                        <NavDropdown.Item href="">Έξοδος</NavDropdown.Item>
+                    <NavDropdown title={<span><i className="bi bi-file-earmark"></i> Αρχείο</span>} id="basic-nav-dropdown">
+                        <NavDropdown.Item onClick={onClickSaveButton} href="">
+                            <i className="bi bi-floppy"></i> Αποθήκευση
+                        </NavDropdown.Item>
+                        <NavDropdown.Item onClick={onClickLoadButton} href="">
+                            <i className="bi bi-cloud-upload"></i> Φόρτωση
+                        </NavDropdown.Item>
+                        <NavDropdown.Item href="">
+                            <i className="bi bi-trash"></i> Καθαρισμός
+                        </NavDropdown.Item>
                     </NavDropdown>
-                    <Nav.Link href="">Ρυθμίσεις</Nav.Link>
-                    <Nav.Link onClick={onClickShareButton} href="">Κοινοποίηση</Nav.Link>
-
+                    <Nav.Link href="">
+                        <i className="bi bi-gear"></i> Ρυθμίσεις
+                    </Nav.Link>
+                    <Nav.Link onClick={onClickShareButton} href="">
+                        <i className="bi bi-share"></i> Κοινοποίηση
+                    </Nav.Link>
                 </Nav>
                 <input type="file" id="fileInput" hidden />
             </Navbar>
@@ -73,8 +83,9 @@ export default function NavBar() {
                 onHide={() => setModalShow(false)}
             />
         </>
-    )
-}
+    );
+};
+
 
 function setModalShow(arg0: boolean) {
     throw new Error('Function not implemented.');

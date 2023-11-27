@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Container, Modal } from "react-bootstrap";
 import { useShowdown } from "../modules/Showdown";
+import { colour } from "blockly/blocks";
 
 export default function IntroModal({ show, onHide }) {
     const useMD = useShowdown();
@@ -17,8 +18,8 @@ export default function IntroModal({ show, onHide }) {
     }, [])
 
     return (
-        <Modal style={{color: 'white'}} show={show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered >
-            <Modal.Header className='bg-dark' data-bs-theme="dark" closeButton onClick={onHide}>
+        <Modal style={{color: 'white', }} show={show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered >
+            <Modal.Header style={{color: 'white', background: '#0d6efd'}} data-bs-theme="dark" closeButton onClick={onHide}>
                 <Modal.Title id="contained-modal-title-vcenter">
                     Καλώς ήρθατε στη SQLatch!
                 </Modal.Title>
