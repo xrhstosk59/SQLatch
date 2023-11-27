@@ -23,6 +23,7 @@ export default function Guide() {
     const LTS = [
         'Lessons/Lesson1/theory.md',
         'Lessons/Lesson2/theory.md',
+        'Lessons/Lesson3/theory.md',
         'Tasks/Tasks1/tasks.md',
         'Scenarios/Scenario1/scen.md',
         'Scenarios/Scenario2/scen.md',
@@ -32,6 +33,7 @@ export default function Guide() {
     const LTSNames = [
         'Μάθημα με SELECT',
         'Μάθημα με CREATE TABLE',
+        'Μάθημα με INSERT',
         'Άσκηση',
         'Σενάριο: Το μαγικό βιβλίο',
         'Σενάριο: Η κλοπή του μουσείου',
