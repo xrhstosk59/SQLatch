@@ -65,7 +65,7 @@ export default function NavBar() {
 
     return (
         <>
-            <Navbar style={{ paddingLeft: 20, minHeight: '6svh' }} bg="dark">
+            <Navbar style={{ paddingLeft: 20, height: '56px' }} bg="dark">
                 <Navbar.Brand href="">SQLatch</Navbar.Brand>
                 <Nav>
                     <NavDropdown title={<span><i className="bi bi-file-earmark"></i> Αρχείο</span>} id="basic-nav-dropdown">

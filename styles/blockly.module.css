@@ -1,8 +1,7 @@
 .container {
     overflow: auto;
 
-    height: 89svh;
-    padding-bottom: 6vh;
+    height: calc((100svh - (56px + 48px)) - 6svh);
     padding-left: 0;
     padding-right: 0;
 }

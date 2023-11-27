@@ -26,7 +26,7 @@ export default function Home() {
                 <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png"></link>
                 <title>SQLatch - POC</title>
             </Head>
-            <Container fluid className='wh-100 bg-dark' data-bs-theme="dark">
+            <Container fluid style={{height: '100svh'}} className='wh-100 bg-dark' data-bs-theme="dark">
                 <NavBar />
                 <SQLRuntimeControl />
                 <Container fluid>

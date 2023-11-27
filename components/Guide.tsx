@@ -93,7 +93,7 @@ export default function Guide() {
 
 
     return (
-        <Container fluid className={styles.container}>
+        <Container className={styles.container}>
             {!inHome ? (
                 <Container>
                     <Pagination style={{ display: "flex", justifyContent: "center" }}>
@@ -117,4 +117,3 @@ export default function Guide() {
         </Container>
     );
 }
-
