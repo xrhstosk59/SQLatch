@@ -5,13 +5,13 @@ import Container from 'react-bootstrap/Container';
 import Pagination from 'react-bootstrap/Pagination';
 import Link from 'next/link';
 
-import { useGuide } from '../modules/Guide';
+import { useShowdown } from '../modules/Showdown';
 import { useBlockly } from '../modules/Blockly/Blockly';
 import { useSQL } from '../modules/SQLite';
 
 export default function Guide() {
 
-    const useRequest = useGuide();
+    const useMD = useShowdown();
     const useBL = useBlockly();
     const useDB = useSQL();
 
@@ -68,7 +68,7 @@ export default function Guide() {
 
     useEffect(() => {
         const setHTML = async () => {
-            let html = await useRequest.convertMd('/MDGuides/' + LTS[idxState]);
+            let html = await useMD.convertMd('/MDGuides/' + LTS[idxState]);
             setMDGuides(html);
             if (!inHome) {
                 if (LTSBlocks[idxState] == '' || LTSBlocks[idxState] == undefined) {
@@ -89,7 +89,7 @@ export default function Guide() {
 
 
     return (
-        <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }} className={styles.container}>
+        <Container fluid className={styles.container}>
             {!inHome ? (
                 <Container>
                     <Pagination style={{ display: "flex", justifyContent: "center" }}>

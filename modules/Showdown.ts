@@ -1,6 +1,6 @@
 import showdown from 'showdown';
 
-export const useGuide = () => {
+export const useShowdown = () => {
     const converter = new showdown.Converter();
 
     const convertMd = (path: string): any => {

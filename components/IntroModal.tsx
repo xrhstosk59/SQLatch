@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Container, Modal } from "react-bootstrap";
-import { useGuide } from "../modules/Guide";
+import { useShowdown } from "../modules/Showdown";
 
 export default function IntroModal({ show, onHide }) {
-    const useMD = useGuide();
+    const useMD = useShowdown();
 
     const [introMD, setIntroMD] = useState();
 

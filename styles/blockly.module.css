@@ -1,5 +1,8 @@
 .container {
     overflow: auto;
-    height: 85vh;
-    margin-bottom: 6vh;
+
+    height: 89svh;
+    padding-bottom: 6vh;
+    padding-left: 0;
+    padding-right: 0;
 }

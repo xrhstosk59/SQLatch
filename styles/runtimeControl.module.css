@@ -2,6 +2,8 @@
     display: flex;
     justify-content: center;
 
-    font-size: 18px;
+    min-height: 5svh;
     padding: 5px;
+
+    font-size: 18px;
 }

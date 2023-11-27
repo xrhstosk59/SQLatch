@@ -6,8 +6,6 @@ import { useBlockly } from '../modules/Blockly/Blockly';
 import ShareURLModal from './ShareURLModal';
 import { useState } from 'react';
 
-
-
 export default function NavBar() {
     const [modalShow, setModalShow] = useState(false);
     const useBL = useBlockly();
@@ -55,7 +53,7 @@ export default function NavBar() {
 
     return (
         <>
-            <Navbar style={{ paddingLeft: 20 }} bg="dark">
+            <Navbar style={{ paddingLeft: 20, minHeight: '6svh' }} bg="dark">
                 <Navbar.Brand href="">SQLatch</Navbar.Brand>
                 <Nav>
                     <NavDropdown title="Αρχείο" id="basic-nav-dropdown">

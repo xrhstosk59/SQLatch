@@ -57,7 +57,7 @@ export default function BlocklyField() {
 
     return (
         <Container>
-            <Container fluid style={{ paddingLeft: 0, paddingRight: 0 }} className={styles.container} ref={blocklyDiv} id="blocklyDiv" />
+            <Container fluid className={styles.container} ref={blocklyDiv} id="blocklyDiv" />
         </Container>
     )
 }
