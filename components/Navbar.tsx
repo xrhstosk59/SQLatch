@@ -34,6 +34,7 @@ export default function NavBar() {
     const onClickLoadButton = () => {
         var fileInput = document.createElement('input');
         fileInput.type = 'file';
+        fileInput.accept = '.json';
 
         fileInput.onchange = e => {
             if (fileInput.files.length > 0) {
