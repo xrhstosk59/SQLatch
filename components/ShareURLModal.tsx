@@ -35,7 +35,7 @@ export default function ShareModal({ show, onHide, output }) {
             </Modal.Body>
             <Modal.Footer style={{ background: '#252a2e' }}>
                 <Button variant="danger" onClick={onHide}>
-                    Close
+                    Κλείσιμο
                 </Button>
             </Modal.Footer>
         </Modal>
