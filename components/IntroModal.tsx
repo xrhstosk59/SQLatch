@@ -17,16 +17,16 @@ export default function IntroModal({ show, onHide }) {
     }, [])
 
     return (
-        <Modal show={show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-            <Modal.Header closeButton onClick={onHide}>
+        <Modal style={{color: 'white'}} show={show} size="lg" aria-labelledby="contained-modal-title-vcenter" centered >
+            <Modal.Header className='bg-dark' data-bs-theme="dark" closeButton onClick={onHide}>
                 <Modal.Title id="contained-modal-title-vcenter">
                     Καλώς ήρθατε στη SQLatch!
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body className='bg-dark' data-bs-theme="dark">
                 <Container style={{height: '50vh', overflow: 'auto'}}  dangerouslySetInnerHTML={{ __html: introMD }} />
             </Modal.Body>
-            <Modal.Footer>
+            <Modal.Footer className='bg-dark' data-bs-theme="dark">
                 No rights were ever reserved
             </Modal.Footer>
         </Modal>
