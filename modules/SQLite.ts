@@ -82,7 +82,7 @@ export const useSQL = () => {
                 const db = new sqlite3Global.oo1.DB();
                 const rc = sqlite3Global.capi.sqlite3_deserialize(
                     db.pointer, 'main', p, arrayBuffer.byteLength, arrayBuffer.byteLength,
-                    sqlite3Global.capi.SQLITE_DESERIALIZE_FREEONCLOSE
+                    sqlite3Global.capi.SQLITE_DESERIALIZE_FREEONCLOSE| sqlite3Global.capi.SQLITE_DESERIALIZE_RESIZEABLE
                 );
                 db.checkRc(rc);
                 activeDB.close();
