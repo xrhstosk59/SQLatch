@@ -375,25 +375,48 @@ SQL.forBlock['newblock'] = function (block) {
 
 ## 🚀 Deployment
 
-### Static Hosting
+### Quick Deploy to Vercel (1-Click)
 
-Το SQLatch εξάγει static files, οπότε μπορεί να host σε:
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/xrhstosk59/SQLatch)
 
-- **[Vercel](https://vercel.com/)** (Recommended - one-click deploy)
-- **[Netlify](https://www.netlify.com/)**
-- **[GitHub Pages](https://pages.github.com/)**
-- **[Cloudflare Pages](https://pages.cloudflare.com/)**
-- Οποιονδήποτε static file server (Apache, Nginx, etc.)
+**Ή manually:**
 
-### Deploy Steps
+1. **Push to GitHub** (if not already)
+```bash
+git add .
+git commit -m "Ready for deployment"
+git push origin main
+```
+
+2. **Deploy στη Vercel**:
+   - Πήγαινε στο [vercel.com](https://vercel.com/)
+   - Login με GitHub
+   - Κλικ **"Add New..."** → **"Project"**
+   - Import το **SQLatch** repository
+   - Κλικ **"Deploy"**
+   - Περίμενε 2-3 λεπτά → Live! 🎉
+
+### Alternative Hosting
+
+Το SQLatch είναι static site και μπορεί να host σε:
+
+- **[Vercel](https://vercel.com/)** - Recommended, auto-deploy, free SSL
+- **[Netlify](https://www.netlify.com/)** - Drag & drop deployment
+- **[GitHub Pages](https://pages.github.com/)** - Free για public repos
+- **[Cloudflare Pages](https://pages.cloudflare.com/)** - Global CDN
+- Οποιονδήποτε static server (Apache, Nginx, etc.)
+
+### Manual Deploy
 
 ```bash
 # 1. Build
 npm run build
 
 # 2. Deploy το ./out folder
-# Copy contents to your web server
+# Upload contents σε web server
 ```
+
+**Για αναλυτικό deployment guide**, δες το **[DEPLOYMENT.md](DEPLOYMENT.md)**
 
 ---
 
