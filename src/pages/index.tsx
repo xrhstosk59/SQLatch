@@ -1,6 +1,6 @@
 /* Next components   */
 import Head from 'next/head';
-import { useEffect, useState, lazy, Suspense } from 'react';
+import { useEffect, useState, lazy, Suspense, startTransition } from 'react';
 
 /* Our Components */
 import NavBar from '../components/layout/Navbar';
@@ -19,7 +19,9 @@ export default function Home() {
     const [introShow, setIntroShow] = useState(false);
 
     useEffect(() => {
-        setIntroShow(true);
+        startTransition(() => {
+            setIntroShow(true);
+        });
     }, []);
 
     return (
