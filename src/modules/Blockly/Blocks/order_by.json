@@ -1,0 +1,22 @@
+{
+    "type": "order_by",
+    "message0": "ORDER BY %1 %2",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "COLUMN"
+        },
+        {
+            "type": "field_dropdown",
+            "name": "DIRECTION",
+            "options": [
+                ["ASC", "ASC"],
+                ["DESC", "DESC"]
+            ]
+        }
+    ],
+    "previousStatement": null,
+    "colour": 230,
+    "tooltip": "ORDER BY column ASC/DESC",
+    "helpUrl": ""
+}

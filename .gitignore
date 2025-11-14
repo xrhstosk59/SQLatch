@@ -5,3 +5,10 @@
 .next
 node_modules
 out
+
+# TypeScript
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db

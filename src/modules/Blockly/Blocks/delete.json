@@ -1,0 +1,18 @@
+{
+    "type": "delete",
+    "message0": "DELETE FROM %1 %2",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "TABLE"
+        },
+        {
+            "type": "input_statement",
+            "name": "WHERE"
+        }
+    ],
+    "previousStatement": null,
+    "colour": 0,
+    "tooltip": "DELETE FROM table WHERE condition",
+    "helpUrl": ""
+}
