@@ -15,7 +15,8 @@
             ]
         }
     ],
-    "previousStatement": null,
+    "previousStatement": "PARAMETERS",
+    "nextStatement": "PARAMETERS",
     "colour": 230,
     "tooltip": "ORDER BY column ASC/DESC",
     "helpUrl": ""

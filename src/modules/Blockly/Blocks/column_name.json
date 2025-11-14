@@ -8,7 +8,7 @@
         }
     ],
     "previousStatement": ["COLUMN_NAME"],
-    "nextStatement": null,
+    "nextStatement": "COLUMN_NAME",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""

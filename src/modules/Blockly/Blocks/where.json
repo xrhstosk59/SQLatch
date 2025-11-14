@@ -9,7 +9,7 @@
         }
     ],
     "previousStatement": "PARAMETERS",
-    "nextStatement": null,
+    "nextStatement": "PARAMETERS",
     "colour": 170,
     "tooltip": "",
     "helpUrl": ""

@@ -32,7 +32,7 @@
         }
     ],
     "previousStatement": "COLUMNS",
-    "nextStatement": null,
+    "nextStatement": "COLUMNS",
     "inputsInline": false,
     "colour": 200,
     "tooltip": "",

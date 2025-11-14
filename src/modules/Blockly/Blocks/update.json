@@ -11,7 +11,8 @@
         },
         {
             "type": "input_statement",
-            "name": "SET"
+            "name": "SET",
+            "check": "SET"
         }
     ],
     "previousStatement": null,

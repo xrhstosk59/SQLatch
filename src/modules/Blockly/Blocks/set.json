@@ -11,8 +11,8 @@
             "name": "VALUE"
         }
     ],
-    "previousStatement": null,
-    "nextStatement": null,
+    "previousStatement": "SET",
+    "nextStatement": "SET",
     "colour": 160,
     "tooltip": "SET column = value",
     "helpUrl": ""

@@ -8,7 +8,8 @@
         },
         {
             "type": "input_statement",
-            "name": "WHERE"
+            "name": "WHERE",
+            "check": "PARAMETERS"
         }
     ],
     "previousStatement": null,

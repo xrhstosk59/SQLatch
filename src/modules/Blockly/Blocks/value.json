@@ -9,7 +9,7 @@
         }
     ],
     "previousStatement": ["VALUES"],
-    "nextStatement": null,
+    "nextStatement": "VALUES",
     "colour": 230,
     "tooltip": "",
     "helpUrl": ""
