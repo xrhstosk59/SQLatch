@@ -35,7 +35,12 @@
 
 ### 🧩 Visual SQL Builder
 - **Drag-and-drop blocks** για SQL statements
-- Support για: `SELECT`, `CREATE TABLE`, `INSERT`, `UPDATE`, `DELETE`, `WHERE`, `ORDER BY`
+- **Πλήρες Support για SQL Operations**:
+  - **Data Query**: `SELECT` με `WHERE`, `ORDER BY`
+  - **Table Creation**: `CREATE TABLE` με column definitions και constraints
+  - **Data Manipulation**: `INSERT`, `UPDATE`, `DELETE`
+  - **Advanced**: Multiple column support, chained conditions, SET clauses
+- **Smart Block Validation** - Τα blocks "κουμπώνουν" μόνο σε valid positions
 - **SQL Preview** - Δες το generated SQL πριν το execution
 - **Syntax highlighting** για better readability
 
@@ -157,7 +162,8 @@ SQLatch/
 │   │   └── SQLiteContext.tsx
 │   │
 │   ├── hooks/               # Custom React hooks
-│   ├── modules/             # Core modules (Blockly, SQLite, Showdown)
+│   ├── modules/             # Core modules (SQLite, Showdown, Blockly blocks)
+│   │   └── Blockly/Blocks/  # Blockly block JSON definitions
 │   ├── pages/               # Next.js pages
 │   ├── styles/              # CSS Modules
 │   ├── utils/               # Utility functions
@@ -258,6 +264,89 @@ export const LTSNames = [
 
 ---
 
+## 🧩 Blockly Blocks Development
+
+### Available SQL Blocks
+
+Όλα τα blocks ορίζονται στο `src/modules/Blockly/Blocks/` σε JSON format:
+
+#### Statement Blocks (Top-level SQL)
+- **`create.json`** - CREATE TABLE statements
+- **`select.json`** - SELECT queries
+- **`insert.json`** - INSERT statements
+- **`update.json`** - UPDATE statements
+- **`delete.json`** - DELETE statements
+
+#### Parameter Blocks (Modifiers)
+- **`where.json`** - WHERE conditions
+- **`order_by.json`** - ORDER BY clauses
+- **`column.json`** - Column definitions (για CREATE TABLE)
+- **`column_name.json`** - Column names (για INSERT)
+- **`value.json`** - Values (για INSERT)
+- **`set.json`** - SET clauses (για UPDATE)
+
+### Block Connections
+
+Τα blocks έχουν **type-safe connections** που επιτρέπουν μόνο valid συνδυασμούς:
+
+```
+CREATE TABLE → column → column → column (chaining)
+SELECT → WHERE → ORDER BY (parameters)
+INSERT → column_name → column_name (column list)
+       → value → value (value list)
+UPDATE → set → set (multiple SET clauses)
+DELETE → WHERE (conditions)
+```
+
+### Adding New Blocks
+
+1. **Create JSON definition** στο `src/modules/Blockly/Blocks/newblock.json`:
+```json
+{
+  "type": "newblock",
+  "message0": "MY BLOCK %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "INPUT",
+      "check": "String"
+    }
+  ],
+  "previousStatement": "CONNECTION_TYPE",
+  "nextStatement": "CONNECTION_TYPE",
+  "colour": 200
+}
+```
+
+2. **Import στο BlocklyContext.tsx**:
+```typescript
+import newblockJSON from '../modules/Blockly/Blocks/newblock.json';
+```
+
+3. **Register το block** στο `initBlockly()`:
+```typescript
+Blockly.Blocks['newblock'] = {
+  init: function () {
+    this.jsonInit(newblockJSON);
+  },
+  onchange: createValidationHandler(['allowed_parent'])
+};
+```
+
+4. **Add code generator** στο `initGen()`:
+```typescript
+SQL.forBlock['newblock'] = function (block) {
+  const input = SQL.valueToCode(block, 'INPUT', 0);
+  return 'GENERATED SQL ' + input;
+};
+```
+
+5. **Update toolbox** στο `toolbox.json` για να εμφανιστεί στη palette.
+
+**Περισσότερα**: [Blockly Developer Guide](https://developers.google.com/blockly/guides/create-custom-blocks/overview)
+
+---
+
 ## 🎨 Design System
 
 ### Colors
@@ -349,6 +438,13 @@ Contributions are welcome! Παρακαλώ:
 ---
 
 ## 🗺️ Roadmap
+
+### ✅ Recently Implemented
+- [x] **UPDATE blocks** - Full support για UPDATE statements με SET clauses
+- [x] **DELETE blocks** - Delete data με WHERE conditions
+- [x] **ORDER BY blocks** - Sort query results
+- [x] **Smart block connections** - Improved validation και chaining
+- [x] **Multiple column/value support** - Chain columns, values και conditions
 
 ### Planned Features
 - [ ] More SQL blocks (JOIN, GROUP BY, HAVING, subqueries)

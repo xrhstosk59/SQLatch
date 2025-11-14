@@ -23,29 +23,39 @@ interface AutoSaveProviderProps {
 
 export function AutoSaveProvider({ children }: AutoSaveProviderProps) {
     const blockly = useBlocklyContext();
-    const [isEnabled, setIsEnabled] = useState(false);
-    const [interval, setIntervalState] = useState(DEFAULT_INTERVAL);
-    const [lastSaved, setLastSaved] = useState<Date | null>(null);
+    const [isMounted, setIsMounted] = useState(false);
 
-    // Load settings from localStorage on mount
-    useEffect(() => {
+    // Lazy initialization - only runs once on mount
+    const [isEnabled, setIsEnabled] = useState(() => {
+        if (typeof window === 'undefined') return false;
         try {
             const enabled = localStorage.getItem(AUTOSAVE_ENABLED_KEY);
-            const savedInterval = localStorage.getItem(AUTOSAVE_INTERVAL_KEY);
-
-            if (enabled !== null) {
-                setIsEnabled(enabled === 'true');
-            }
-            if (savedInterval !== null) {
-                setIntervalState(parseInt(savedInterval, 10));
-            }
-        } catch (error) {
-            console.error('Error loading auto-save settings:', error);
+            return enabled === 'true';
+        } catch {
+            return false;
         }
+    });
+
+    const [interval, setIntervalState] = useState(() => {
+        if (typeof window === 'undefined') return DEFAULT_INTERVAL;
+        try {
+            const savedInterval = localStorage.getItem(AUTOSAVE_INTERVAL_KEY);
+            return savedInterval ? parseInt(savedInterval, 10) : DEFAULT_INTERVAL;
+        } catch {
+            return DEFAULT_INTERVAL;
+        }
+    });
+
+    const [lastSaved, setLastSaved] = useState<Date | null>(null);
+
+    // Set mounted flag after hydration
+    useEffect(() => {
+        setIsMounted(true);
     }, []);
 
     // Auto-save function
     const handleAutoSave = () => {
+        if (!isMounted) return; // Don't save during hydration
         try {
             const workspaceState = blockly.getWorkspaceState();
             localStorage.setItem(AUTOSAVE_STATE_KEY, JSON.stringify(workspaceState));
@@ -56,9 +66,9 @@ export function AutoSaveProvider({ children }: AutoSaveProviderProps) {
         }
     };
 
-    // Use auto-save hook
+    // Use auto-save hook - only enable after mount
     useAutoSave({
-        enabled: isEnabled,
+        enabled: isEnabled && isMounted,
         intervalMs: interval,
         onSave: handleAutoSave,
     });

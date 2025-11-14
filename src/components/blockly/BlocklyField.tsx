@@ -29,6 +29,7 @@ export default function BlocklyField() {
 
     const primaryWorkspace = useRef<Blockly.WorkspaceSvg | null>(null);
     const blocklyDiv = useRef<HTMLDivElement | null>(null);
+    const [isMounted, setIsMounted] = useState(false);
 
     const [modalShow, setModalShow] = useState(false);
     const [previewModalShow, setPreviewModalShow] = useState(false);
@@ -37,12 +38,14 @@ export default function BlocklyField() {
     const [errorDB, setErrorDB] = useState<string>('');
     const [currentSQL, setCurrentSQL] = useState<string>('');
 
+    // Initialize SQL after hydration
     useEffect(() => {
+        setIsMounted(true);
         useDB.initSQL();
     }, []);
 
     useEffect(() => {
-        if (!blocklyDiv.current) return;
+        if (!blocklyDiv.current || !isMounted) return;
 
         /* Initialize Blockly */
         useBL.initBlockly();
@@ -101,7 +104,7 @@ export default function BlocklyField() {
                 primaryWorkspace.current.dispose();
             }
         };
-    }, []);
+    }, [isMounted]); // Run when component is mounted
 
     const showResult = () => {
         setOutputDB(useDB.getResultDB());
