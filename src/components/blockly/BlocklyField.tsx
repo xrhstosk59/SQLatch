@@ -62,6 +62,8 @@ export default function BlocklyField() {
                 metricsManager: ContinuousMetrics,
             },
             theme: DarkTheme,
+            media: 'https://unpkg.com/blockly/media/', // Use CDN that supports CORS
+            sounds: false, // Disable sounds to avoid CORS issues
             zoom: {
                 controls: true,
                 startScale: isMobile ? 0.7 : 0.9,
