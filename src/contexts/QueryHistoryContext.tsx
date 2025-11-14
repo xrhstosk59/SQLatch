@@ -26,25 +26,24 @@ interface QueryHistoryProviderProps {
 }
 
 export function QueryHistoryProvider({ children }: QueryHistoryProviderProps) {
-    const [history, setHistory] = useState<QueryHistoryEntry[]>([]);
-
-    // Load history from localStorage on mount
-    useEffect(() => {
+    // Lazy initialization - load from localStorage only once on mount
+    const [history, setHistory] = useState<QueryHistoryEntry[]>(() => {
+        if (typeof window === 'undefined') return [];
         try {
             const stored = localStorage.getItem(HISTORY_STORAGE_KEY);
             if (stored) {
                 const parsed = JSON.parse(stored);
                 // Convert timestamp strings back to Date objects
-                const historyWithDates = parsed.map((entry: QueryHistoryEntry) => ({
+                return parsed.map((entry: QueryHistoryEntry) => ({
                     ...entry,
                     timestamp: new Date(entry.timestamp),
                 }));
-                setHistory(historyWithDates);
             }
         } catch (error) {
             console.error('Error loading query history:', error);
         }
-    }, []);
+        return [];
+    });
 
     // Save history to localStorage whenever it changes
     useEffect(() => {
