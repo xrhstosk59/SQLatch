@@ -3,6 +3,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { ToastContainer, Form } from 'react-bootstrap';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Image from 'next/image';
 
 import { useBlocklyContext } from '../../contexts/BlocklyContext';
 import { useSQLite } from '../../contexts/SQLiteContext';
@@ -109,8 +110,15 @@ export default function NavBar() {
                 role="navigation"
                 aria-label="Κύριο μενού πλοήγησης"
             >
-                <Navbar.Brand href="" aria-label="SQLatch - Αρχική σελίδα">
-                    SQLatch
+                <Navbar.Brand href="" aria-label="SQLatch - Αρχική σελίδα" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <Image
+                        src="/logo.png"
+                        alt="SQLatch Logo"
+                        width={120}
+                        height={40}
+                        style={{ objectFit: 'contain' }}
+                        priority
+                    />
                     <AutoSaveIndicator />
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
