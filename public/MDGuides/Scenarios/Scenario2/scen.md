@@ -1,40 +1,38 @@
-## Η κλοπή του μουσείου 
-![Sample Image](https://img.freepik.com/free-vector/three-thieves_1308-84102.jpg?w=300&t=st=1699953850~exp=1699954450~hmac=54031f7c6f361bbae0b07bd66077e8d05d84b9e2d289fbb9a0c942e5803a34d2)
+##Το μαγικό Βιβλίο (2ο Μέρος)
+![Sample Image](MDGuides/Scenarios/Scenario2/img.png)
 
-Σε ένα  μουσείο σύγχρονης τέχνης, ένα πολύτιμο έργο τέχνης έχει κλαπεί από έναν άγνωστο δράστη. Ο ντεντέκτιβ αναλαμβάνει την υπόθεση και πρέπει να χρησιμοποιήσει τα δεδομένα από το σύστημα ασφαλείας του μουσείου για να εντοπίσει τον κλέφτη και να ανακτήσει το έργο τέχνης. 
+Ο μάγος του σεναρίου, με την βοήθειά σου στο πρώτο μέρος, έχει καταφέρει να σταθεροποιήσει την κατάσταση του μαγικού του βιβλίου. Ωστόσο χρειάζεται την βοήθειά σου για μία τελευταία φορά ώστε να καταφέρει να ανακτήσει ολοκληρώτικα τον έλεγχο του βιβλίου.
+Θα τον βοηθησεις;
 
-<span style="color:coral">-
-<span style="text-decoration:underline;">   **Πίνακες:**</span>
+<details><summary>
+**Περιεχόμενα και σκοπός Εκπαιδευτικού Σεναρίου** 
+</summary>
+<br>Σκοπός του σεναρίου είναι να εκπαιδεύσει τους χρήστες στη <span style="color:aquamarine">
+   χρήση λίγο πιο περίπλοκων και προχωρημένων εντολών της SQL</span> με διαδραστικό τρόπο.
+</br><br>
 
+**-** <span style="text-decoration:underline;">  **Το συγκεκριμένο σενάριο αποτελείται από 7 ασκήσεις οι οποίες περιέχουν:**</span>
+1. Ασκηση με <span style="color:coral">
+   **GROUP BY**</span>
+2. Ασκηση με <span style="color:coral">
+   **GROUP BY**</span>, <span style="color:coral">
+   **SUM**</span> και <span style="color:coral">
+   **HAVING**</span>
+3. Ασκηση με <span style="color:coral">
+   **JOIN**</span>
+4. Ασκηση με <span style="color:coral">
+   **JOIN**</span> και <span style="color:coral">
+   **WHERE**</span>
+5. Ασκηση με <span style="color:coral">
+   **GROUP BY**</span>, <span style="color:coral">
+   **JOIN**</span>, και <span style="color:coral">
+   **AVG**</span>
+6. Ασκηση με <span style="color:coral">
+   **GROUP BY**</span> και <span style="color:coral">
+   **ORDER BY**</span>
+7. Ασκηση με <span style="color:coral">
+   **JOIN**</span>, <span style="color:coral">
+   **WHERE**</span>, και <span style="color:coral">
+   **COUNT**</span>
 
-1. Πεδία: **CameraID**, **Location**, **Date**, **Time,** **Footage**.
-
-* Κρατά πληροφορίες για κάθε κάμερα που καταγράφει τις δραστηριότητες στο μουσείο.
-
-1. Πίνακας Επισκεπτών:
-
-* Πεδία: **VisitorID**, **CameraID**, **Name**, **TicketNumber**.
-* Καταγράφει τις επισκέψεις επισκεπτών στο μουσείο με τα ονόματα και τους αριθμούς εισιτηρίων τους.
-
-1. Πίνακας Έργων Τέχνης:
-
-* Πεδία: **ArtworkID**, **Title**, **Artist**, **Value**, **DateAcquired**.
-* Καταγράφει πληροφορίες για τα έργα τέχνης που βρίσκονται στο μουσείο.
-
-1. Πίνακας Κλεμμένων Έργων:
-
-* Πεδία: **StolenArtworkID**, **ArtworkID**, **DateStolen**.
-* Καταγράφει τα έργα τέχνης που έχουν κλαπεί και την ημερομηνία της κλοπής.
-
-
-
-<span style="color:aquamarine">-
-<span style="text-decoration:underline;">   **Ασκήσεις:**</span>
-
-
-
-1. Βρείτε τον συνολικό αριθμό των επισκεπτών για κάθε ημέρα.
-2. Ποιο έργο τέχνης είχε τη χαμηλότερη αξία;
-3. Βρείτε τα πρόσωπα που βρίσκονταν στην περιοχή του κλεμμένου έργου τέχνης κατά την ώρα της κλοπής.
-4. Βρείτε τον επισκέπτη που έχει επισκεφτεί το μουσείο τις περισσότερες φορές.
-5. Εντοπίστε το έργο τέχνης που έχει κλαπεί, αλλά δεν έχει ανακτηθεί ακόμα.
+</details>

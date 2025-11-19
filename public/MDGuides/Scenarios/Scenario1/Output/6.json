@@ -1,0 +1,47 @@
+[
+    {
+        "spell_id": 1,
+        "ingredient_id": 1,
+        "quantity": 3
+    },
+    {
+        "spell_id": 5,
+        "ingredient_id": 1,
+        "quantity": 4
+    },
+    {
+        "spell_id": 9,
+        "ingredient_id": 1,
+        "quantity": 1
+    },
+    {
+        "spell_id": 3,
+        "ingredient_id": 2,
+        "quantity": 5
+    },
+    {
+        "spell_id": 6,
+        "ingredient_id": 2,
+        "quantity": 6
+    },
+    {
+        "spell_id": 4,
+        "ingredient_id": 3,
+        "quantity": 2
+    },
+    {
+        "spell_id": 7,
+        "ingredient_id": 3,
+        "quantity": 3
+    },
+    {
+        "spell_id": 2,
+        "ingredient_id": 4,
+        "quantity": 1
+    },
+    {
+        "spell_id": 8,
+        "ingredient_id": 4,
+        "quantity": 7
+    }
+]

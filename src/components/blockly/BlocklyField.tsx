@@ -7,6 +7,7 @@ import Blockly from 'blockly';
 import { useBlocklyContext } from '../../contexts/BlocklyContext';
 import { useSQLite } from '../../contexts/SQLiteContext';
 import { useQueryHistory } from '../../contexts/QueryHistoryContext';
+import { useValidation } from '../../modules/Validator';
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import { ZoomToFitControl } from '@blockly/zoom-to-fit';
 import {
@@ -21,11 +22,19 @@ import { ToastContainer } from 'react-bootstrap';
 import SQLOutputModal from '../modals/SQLOutputModal';
 import SQLPreviewModal from '../modals/SQLPreviewModal';
 import ErrorToast from '../ui/ErrorToast';
+import ValidationToast from '../ui/ValidationToast';
+import SuccessToast from '../ui/SuccessToast';
 
-export default function BlocklyField() {
+interface BlocklyFieldProps {
+    valSync: boolean;
+    setValSync: (value: boolean) => void;
+}
+
+export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps) {
     const useBL = useBlocklyContext();
     const useDB = useSQLite();
     const queryHistory = useQueryHistory();
+    const useVA = useValidation();
 
     const primaryWorkspace = useRef<Blockly.WorkspaceSvg | null>(null);
     const blocklyDiv = useRef<HTMLDivElement | null>(null);
@@ -34,6 +43,8 @@ export default function BlocklyField() {
     const [modalShow, setModalShow] = useState(false);
     const [previewModalShow, setPreviewModalShow] = useState(false);
     const [toastShow, setToastShow] = useState(false);
+    const [validationToastShow, setValidationToastShow] = useState(false);
+    const [successToastShow, setSuccessToastShow] = useState(false);
     const [outputDB, setOutputDB] = useState<Record<string, unknown>[]>([]);
     const [errorDB, setErrorDB] = useState<string>('');
     const [currentSQL, setCurrentSQL] = useState<string>('');
@@ -144,7 +155,26 @@ export default function BlocklyField() {
             error !== '' ? error : undefined
         );
 
-        showResult();
+        // Show result and perform validation
+        setToastShow(false);
+        if (error === '') {
+            // Query succeeded, now validate
+            if (useVA.validate(currentSQL, results)) {
+                console.log('Validation: passed');
+                setValSync(!valSync);
+                setSuccessToastShow(true);
+                setModalShow(true);
+            } else {
+                setValidationToastShow(true);
+                setModalShow(true);
+            }
+        } else {
+            // Query failed, show error
+            setToastShow(true);
+        }
+
+        setOutputDB(results);
+        setErrorDB(error);
     };
 
     // Keyboard shortcut for running query (Ctrl+Enter)
@@ -184,6 +214,19 @@ export default function BlocklyField() {
                         setToastShow(false);
                     }}
                     error={errorDB}
+                />
+                <ValidationToast
+                    show={validationToastShow}
+                    onHide={() => {
+                        setValidationToastShow(false);
+                    }}
+                />
+                <SuccessToast
+                    show={successToastShow}
+                    onHide={() => {
+                        setSuccessToastShow(false);
+                    }}
+                    message="Η επικύρωση πέρασε επιτυχώς!"
                 />
             </ToastContainer>
         </Container>

@@ -8,6 +8,9 @@ interface SQLiteContextType {
     getError: () => string;
     loadDB: (path: string) => Promise<void>;
     resetDB: () => void;
+    getTableNames: () => Record<string, unknown>[];
+    getColumnNames: (name: string) => Record<string, unknown>[];
+    getForeignKeys: (name: string) => Record<string, unknown>[];
 }
 
 const SQLiteContext = createContext<SQLiteContextType | undefined>(undefined);
@@ -135,6 +138,30 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
         }
     };
 
+    const getTableNames = (): Record<string, unknown>[] => {
+        if (!activeDB) return [];
+        return activeDB.exec(
+            "SELECT name FROM sqlite_schema WHERE type = 'table' AND name NOT IN ('sqlite_sequence')",
+            { rowMode: 'object', returnValue: 'resultRows' }
+        ) as Record<string, unknown>[];
+    };
+
+    const getColumnNames = (name: string): Record<string, unknown>[] => {
+        if (!activeDB) return [];
+        return activeDB.exec(`PRAGMA table_info(${name});`, {
+            rowMode: 'object',
+            returnValue: 'resultRows',
+        }) as Record<string, unknown>[];
+    };
+
+    const getForeignKeys = (name: string): Record<string, unknown>[] => {
+        if (!activeDB) return [];
+        return activeDB.exec(`PRAGMA foreign_key_list(${name})`, {
+            rowMode: 'object',
+            returnValue: 'resultRows',
+        }) as Record<string, unknown>[];
+    };
+
     const value: SQLiteContextType = useMemo(
         () => ({
             initSQL,
@@ -143,6 +170,9 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
             getError,
             loadDB,
             resetDB,
+            getTableNames,
+            getColumnNames,
+            getForeignKeys,
         }),
         []
     );

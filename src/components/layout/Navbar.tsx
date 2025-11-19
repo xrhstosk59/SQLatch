@@ -15,6 +15,9 @@ import ShareURLModal from '../modals/ShareURLModal';
 import SuccessToast from '../ui/SuccessToast';
 import AutoSaveIndicator from '../ui/AutoSaveIndicator';
 import KeyboardShortcutsModal from '../modals/KeyboardShortcutsModal';
+import AboutModal from '../modals/AboutModal';
+import SchemaModal from '../modals/SchemaModal';
+import convertSchema, { DatabaseConfig } from '../../modules/SchemaGenerator';
 import {
     downloadJSON,
     loadJSONFile,
@@ -32,6 +35,14 @@ export default function NavBar() {
     const [successToastShow, setSuccessToastShow] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [shortcutsModalShow, setShortcutsModalShow] = useState(false);
+    const [aboutModalShow, setAboutModalShow] = useState(false);
+    const [schemaModalShow, setSchemaModalShow] = useState(false);
+    const [currentDatabase, setCurrentDatabase] = useState<DatabaseConfig>({
+        tables: [],
+        edgeConfigs: [],
+        schemaColors: {},
+        tablePositions: {},
+    });
 
     const onClickResetButton = () => {
         const confirmed = confirmAction(
@@ -79,6 +90,11 @@ export default function NavBar() {
             alert(error instanceof Error ? error.message : 'Σφάλμα κατά τη φόρτωση του αρχείου');
             console.error('Load error:', error);
         }
+    };
+
+    const onClickSchemaButton = () => {
+        setCurrentDatabase(convertSchema(useDB));
+        setSchemaModalShow(true);
     };
 
     // Keyboard shortcuts
@@ -172,8 +188,12 @@ export default function NavBar() {
                             />
                         </NavDropdown.Item>
                     </NavDropdown>
-                    <Nav.Link href="" aria-label="Ρυθμίσεις">
-                        <i className="bi bi-gear" aria-hidden="true"></i> Ρυθμίσεις
+                    <Nav.Link
+                        onClick={onClickSchemaButton}
+                        href=""
+                        aria-label="Σχήμα Βάσης Δεδομένων"
+                    >
+                        <i className="bi bi-diagram-3" aria-hidden="true"></i> Σχήμα Βάσης
                     </Nav.Link>
                     <Nav.Link
                         onClick={onClickShareButton}
@@ -183,6 +203,13 @@ export default function NavBar() {
                         <i className="bi bi-share" aria-hidden="true"></i> Κοινοποίηση{' '}
                         <small style={{ color: '#999' }}>Ctrl+Shift+S</small>
                     </Nav.Link>
+                    <Nav.Link
+                        onClick={() => setAboutModalShow(true)}
+                        href=""
+                        aria-label="Σχετικά με εμάς"
+                    >
+                        <i className="bi bi-info-circle" aria-hidden="true"></i> Σχετικά με εμάς
+                    </Nav.Link>
                 </Nav>
                 </Navbar.Collapse>
                 <input type="file" id="fileInput" hidden aria-hidden="true" />
@@ -191,6 +218,12 @@ export default function NavBar() {
             <KeyboardShortcutsModal
                 show={shortcutsModalShow}
                 onHide={() => setShortcutsModalShow(false)}
+            />
+            <AboutModal show={aboutModalShow} onHide={() => setAboutModalShow(false)} />
+            <SchemaModal
+                show={schemaModalShow}
+                onHide={() => setSchemaModalShow(false)}
+                db={currentDatabase}
             />
             <ToastContainer position="top-end" style={{ padding: '20px', zIndex: 9999 }}>
                 <SuccessToast
