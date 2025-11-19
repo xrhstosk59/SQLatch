@@ -1,0 +1,25 @@
+.container {
+    overflow: auto;
+
+    height: calc((100svh - (56px + 48px)) - 6svh);
+    padding-top: 15px;
+    padding-left: 0;
+    padding-right: 0;
+
+    color: white;
+}
+
+.link {
+    text-decoration: none;
+    font-size: large;
+    background-color: rgba(255, 255, 255, 0);
+    padding: 3px;
+}
+
+.link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.link_list {
+    line-height: 30px;
+}

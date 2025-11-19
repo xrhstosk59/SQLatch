@@ -1,0 +1,8 @@
+.container {
+    overflow: auto;
+
+    height: calc(100svh - (56px + 48px));
+    padding-bottom: 6vh;
+    padding-left: 0;
+    padding-right: 0;
+}

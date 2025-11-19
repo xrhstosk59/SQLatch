@@ -1,0 +1,7 @@
+# VS folders
+.vscode
+
+# Next.js folders
+.next
+node_modules
+out

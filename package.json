@@ -1,0 +1,31 @@
+{
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build"
+    },
+    "dependencies": {
+        "@blockly/continuous-toolbox": "^5.0.8",
+        "@blockly/theme-dark": "^6.0.4",
+        "@blockly/zoom-to-fit": "^5.0.9",
+        "@sqlite.org/sqlite-wasm": "^3.43.2-build1",
+        "blockly": "^10.2.2",
+        "bootstrap": "^5.3.2",
+        "bootstrap-icons": "^1.11.2",
+        "html-react-parser": "^4.2.9",
+        "next": "^13.5.4",
+        "react": "^18.2.0",
+        "react-bootstrap": "^2.9.1",
+        "react-dom": "^18.2.0",
+        "showdown": "^2.1.0"
+    },
+    "devDependencies": {
+        "@types/node": "20.8.6",
+        "@types/react": "18.2.28",
+        "typescript": "5.2.2"
+    },
+    "browser": {
+        "fs": false,
+        "os": false,
+        "path": false
+    }
+}
