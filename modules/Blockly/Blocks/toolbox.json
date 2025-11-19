@@ -1,0 +1,61 @@
+{
+    "kind": "categoryToolbox",
+    "contents": [
+        {
+            "kind": "category",
+            "name": "Γενικά",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "text"
+                },
+                {
+                    "kind": "block",
+                    "type": "where"
+                }
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Δημιουργία",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "create"
+                },
+                {
+                    "kind": "block",
+                    "type": "column"
+                }
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Εισαγωγή",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "insert"
+                },
+                {
+                    "kind": "block",
+                    "type": "value"
+                },
+                {
+                    "kind": "block",
+                    "type": "column_name"
+                }
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Επιλογή",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "select"
+                }
+            ]
+        }
+    ]
+}

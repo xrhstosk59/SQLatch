@@ -1,0 +1,24 @@
+{
+    "type": "insert",
+    "message0": "INSERT INTO %1 COLUMNS %2 VALUES %3",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "TABLE",
+            "check":"String"
+        },
+        {
+            "type": "input_statement",
+            "name": "COLUMNS",
+            "check": "COLUMN_NAME"
+        },
+        {
+            "type": "input_statement",
+            "name": "VALUES",
+            "check": "VALUES"
+        }
+    ],
+    "colour": 230,
+    "tooltip": "",
+    "helpUrl": ""
+}

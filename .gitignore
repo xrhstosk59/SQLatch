@@ -1,6 +1,9 @@
 # VS folders
 .vscode
 
+# Claude Code
+.claude
+
 # Next.js folders
 .next
 node_modules
