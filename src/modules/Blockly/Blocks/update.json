@@ -1,0 +1,22 @@
+{
+    "type": "update",
+    "message0": "UPDATE %1 SET %2 %3",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "TABLE"
+        },
+        {
+            "type": "input_dummy"
+        },
+        {
+            "type": "input_statement",
+            "name": "SET",
+            "check": "SET"
+        }
+    ],
+    "previousStatement": null,
+    "colour": 160,
+    "tooltip": "UPDATE table SET column = value",
+    "helpUrl": ""
+}

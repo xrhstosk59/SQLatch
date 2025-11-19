@@ -1,0 +1,89 @@
+{
+    "kind": "categoryToolbox",
+    "contents": [
+        {
+            "kind": "category",
+            "name": "Γενικά",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "text"
+                },
+                {
+                    "kind": "block",
+                    "type": "where"
+                },
+                {
+                    "kind": "block",
+                    "type": "order_by"
+                }
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Δημιουργία",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "create"
+                },
+                {
+                    "kind": "block",
+                    "type": "column"
+                }
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Εισαγωγή",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "insert"
+                },
+                {
+                    "kind": "block",
+                    "type": "value"
+                },
+                {
+                    "kind": "block",
+                    "type": "column_name"
+                }
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Επιλογή",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "select"
+                }
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Ενημέρωση",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "update"
+                },
+                {
+                    "kind": "block",
+                    "type": "set"
+                }
+            ]
+        },
+        {
+            "kind": "category",
+            "name": "Διαγραφή",
+            "contents": [
+                {
+                    "kind": "block",
+                    "type": "delete"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,40 @@
+{
+    "type": "column",
+    "message0": "COLUMN: %1 TYPE: %2 %3 CONSTRAIN: %4",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "COLUMN",
+            "check": "String"
+        },
+        {
+            "type": "field_dropdown",
+            "name": "TYPE",
+            "options": [
+                ["INTEGER", "INTEGER"],
+                ["REAL", "REAL"],
+                ["TEXT", "TEXT"],
+                ["BLOB", "BLOB"]
+            ]
+        },
+        {
+            "type": "input_end_row"
+        },
+        {
+            "type": "field_dropdown",
+            "name": "CONSTRAIN",
+            "options": [
+                [" ", ""],
+                ["PRIMARY KEY", "PRIMARY KEY"],
+                ["UNIQUE", "UNIQUE"],
+                ["FOREIGN", "FOREIGN"]
+            ]
+        }
+    ],
+    "previousStatement": "COLUMNS",
+    "nextStatement": "COLUMNS",
+    "inputsInline": false,
+    "colour": 200,
+    "tooltip": "",
+    "helpUrl": ""
+}

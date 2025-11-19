@@ -1,0 +1,19 @@
+{
+    "type": "set",
+    "message0": "%1 = %2",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "COLUMN"
+        },
+        {
+            "type": "input_value",
+            "name": "VALUE"
+        }
+    ],
+    "previousStatement": "SET",
+    "nextStatement": "SET",
+    "colour": 160,
+    "tooltip": "SET column = value",
+    "helpUrl": ""
+}

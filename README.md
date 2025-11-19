@@ -1,35 +1,515 @@
 # SQLatch
-SQLatch is an educational project made to give the ability to students to learn how to code in the SQL Language. Using intuitive blocks, students can construct their own queries to create tables, insert data, select data, etc.
 
-Moreover, SQLatch is enriched with included Lessons, Exercises, and Scenarios that are meant to excite the learner in a playful manner, making him solve problems and keeping him engaged.
+> **Visual SQL Learning Platform** - Μάθε SQL με drag-and-drop blocks!
 
-Finally, Users can save/load their Block workspace, making SQLatch the perfect candidate to be utilized in a classroom environment. Teachers can share scenarios that they have prepared, and students can save 
-their progress and forward it to the teacher.
+[![Next.js](https://img.shields.io/badge/Next.js-13.5-black?style=flat&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-18.2-61dafb?style=flat&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.2-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![SQLite WASM](https://img.shields.io/badge/SQLite-WASM-003b57?style=flat&logo=sqlite)](https://sqlite.org/wasm/)
+[![License](https://img.shields.io/badge/license-MIT-green?style=flat)](LICENSE)
 
+---
 
-## Project Structure
-![SQLatch Diagram - light](https://github.com/BillisC/SQLatch/assets/26091373/9e0e4319-4575-44b2-8f6a-0f1c376efffe)
+## 📚 Περιγραφή
 
+Το **SQLatch** είναι μια εκπαιδευτική πλατφόρμα που κάνει τη μάθηση SQL **εύκολη και διασκεδαστική**! Χρησιμοποιώντας visual programming με **Blockly blocks**, οι μαθητές μπορούν να δημιουργήσουν SQL queries χωρίς να θυμούνται syntax.
 
-## How to Run
-To run SQLatch you will need to install nodeJS along with the required packages that are a part of the project. To do that you shall run:
-```
-npm install .
-npm run build
-```
-This will build a static version of the site that can then be hosted using any serving software such as Apache or Nginx etc.
+### 🎯 Γιατί SQLatch;
 
-To run the development version with debugging enabled you should run:
-```
-npm install .
+- ✅ **Zero Setup** - Τρέχει εξολοκλήρου στον browser, χωρίς installation
+- ✅ **Visual Programming** - Drag-and-drop SQL blocks
+- ✅ **Instant Feedback** - Εκτέλεση queries σε real-time με in-browser database
+- ✅ **Educational Content** - Ενσωματωμένα μαθήματα, ασκήσεις και σενάρια
+- ✅ **Modern UI** - Dark theme, responsive, mobile-friendly
+- ✅ **Share & Collaborate** - Save/load workspace, share URLs
+
+---
+
+## ✨ Κύρια Χαρακτηριστικά
+
+### 🎨 Modern User Interface
+- **Floating Action Button (FAB)** για query execution
+- **Dark theme** με gradient backgrounds και animations
+- **Responsive design** - Works σε desktop, tablet, και mobile
+- **Touch-optimized** με pinch-to-zoom support
+
+### 🧩 Visual SQL Builder
+- **Drag-and-drop blocks** για SQL statements
+- **Πλήρες Support για SQL Operations**:
+  - **Data Query**: `SELECT` με `WHERE`, `ORDER BY`
+  - **Table Creation**: `CREATE TABLE` με column definitions και constraints
+  - **Data Manipulation**: `INSERT`, `UPDATE`, `DELETE`
+  - **Advanced**: Multiple column support, chained conditions, SET clauses
+- **Smart Block Validation** - Τα blocks "κουμπώνουν" μόνο σε valid positions
+- **SQL Preview** - Δες το generated SQL πριν το execution
+- **Syntax highlighting** για better readability
+
+### 💾 In-Browser Database
+- **SQLite WASM** - Πλήρης SQL database στον browser
+- **Pre-loaded scenarios** με databases
+- **Real-time execution** - Instant results
+- **Error handling** με user-friendly messages
+
+### 📖 Interactive Learning
+- **3 Μαθήματα**: SELECT, CREATE TABLE, INSERT basics
+- **3 Σενάρια**: Story-based learning (Magic Book, Museum Theft, Planet Exploration)
+- **Ασκήσεις**: Practice exercises με progressive difficulty
+- **Markdown-based content** - Εύκολη προσθήκη νέων lessons
+
+### 📊 Query History
+- **Track όλα τα executed queries** με timestamp
+- **Success/Error status** indicators
+- **Result count** display για successful queries
+- **Copy to clipboard** functionality
+- **Delete individual** ή clear all queries
+
+### 💾 Workspace Persistence
+- **Auto-save** κάθε 2 δευτερόλεπτα
+- **LocalStorage** persistence - Δεν χάνεις τη δουλειά σου
+- **Import/Export** workspace files (.json)
+- **Share URLs** - Base64-encoded workspace sharing
+
+### ⌨️ Power User Features
+- **Keyboard shortcuts**: `Ctrl+Enter` για execution, `Ctrl+S` για sharing
+- **Export results** σε CSV/JSON format
+- **Custom scenarios** - Δημιούργησε τα δικά σου μαθήματα
+
+---
+
+## 🛠️ Tech Stack
+
+### Core
+- **[Next.js 13](https://nextjs.org/)** - React framework με static export
+- **[React 18](https://react.dev/)** - UI library με Suspense & startTransition
+- **[TypeScript](https://www.typescriptlang.org/)** - Type safety
+
+### Visual Programming
+- **[Blockly](https://developers.google.com/blockly)** - Google's visual programming library
+- **Blockly Plugins**: Continuous Toolbox, Dark Theme, Zoom-to-Fit
+
+### Database
+- **[SQLite WASM](https://sqlite.org/wasm/)** - Full SQL database σε WebAssembly
+
+### UI/UX
+- **[Bootstrap 5](https://getbootstrap.com/)** & **React Bootstrap** - Responsive components
+- **[Bootstrap Icons](https://icons.getbootstrap.com/)** - Icon library
+- **CSS Modules** - Scoped styling
+
+### Content
+- **[Showdown](https://showdownjs.com/)** - Markdown to HTML converter
+- **[DOMPurify](https://github.com/cure53/DOMPurify)** - XSS protection
+
+### Code Quality
+- **[ESLint](https://eslint.org/)** - Linting
+- **[Prettier](https://prettier.io/)** - Code formatting
+- **[TypeScript](https://www.typescriptlang.org/)** - Type checking
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Node.js** 16.x ή νεότερο
+- **npm** 7.x ή νεότερο
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/xrhstosk59/SQLatch.git
+cd SQLatch
+
+# Install dependencies
+npm install
+
+# Start development server (port 3000)
 npm run dev
 ```
-This will open a webserver that runs locally and the website will update dynamically every time you change something in the source code. <DISCLAIMER:> This is not recommended for hosting a production server!
 
+Άνοιξε το browser στο **http://localhost:3000** 🎉
 
-## Scenario/Lesson Creation
-Scenarios are loaded from Markdown files that are server-hosted and converted to HTML using Showdown dynamically. To create your own scenario you must first compose the markdown file that includes your text, images, styling etc. and then upload it to the server. For more information about Markdown File Syntax [click here](https://showdownjs.com/docs/markdown-syntax/).
+### Production Build
 
-The filepaths for the hosted .md files are: ```public/MDGuides/Lessons``` or ```public/MDGuides/Scenarios``` or ```public/MDGuides/Tasks``` depending on the type of content you are creating.
+```bash
+# Build για production (static export)
+npm run build
 
-Combining this with the importation of a pre-made block can result in a full lesson that students can interact with and experiment on.
+# Το output βρίσκεται στο ./out folder
+# Deploy το out/ σε οποιονδήποτε static host
+```
+
+---
+
+## 📂 Project Structure
+
+```
+SQLatch/
+├── src/
+│   ├── components/          # React components
+│   │   ├── blockly/         # Blockly workspace + FAB
+│   │   ├── common/          # Reusable components (BaseModal)
+│   │   ├── guide/           # Tutorial system
+│   │   ├── layout/          # Navbar
+│   │   ├── modals/          # Modal dialogs
+│   │   ├── sql/             # QueryHistory
+│   │   └── ui/              # UI elements (toasts, spinners)
+│   │
+│   ├── contexts/            # React Context providers
+│   │   ├── AutoSaveContext.tsx
+│   │   ├── BlocklyContext.tsx
+│   │   ├── QueryHistoryContext.tsx
+│   │   └── SQLiteContext.tsx
+│   │
+│   ├── hooks/               # Custom React hooks
+│   ├── modules/             # Core modules (SQLite, Showdown, Blockly blocks)
+│   │   └── Blockly/Blocks/  # Blockly block JSON definitions
+│   ├── pages/               # Next.js pages
+│   ├── styles/              # CSS Modules
+│   ├── utils/               # Utility functions
+│   └── config/              # Configuration (lessons.ts)
+│
+├── public/                  # Static assets
+│   ├── MDGuides/            # Educational content (Markdown)
+│   │   ├── Lessons/
+│   │   ├── Scenarios/
+│   │   └── Tasks/
+│   └── favicon.png
+│
+├── PROJECT_DOCUMENTATION.md # Full technical documentation (1300+ lines)
+└── README.md                # This file
+```
+
+---
+
+## 💻 Development
+
+### Available Scripts
+
+```bash
+# Development
+npm run dev              # Start dev server με hot reload (port 3000)
+npm run build            # Production build (static export)
+
+# Code Quality
+npm run lint             # Run ESLint
+npm run lint:fix         # Auto-fix ESLint issues
+npm run format           # Format code με Prettier
+npm run format:check     # Check formatting
+npm run type-check       # TypeScript validation
+```
+
+### Code Quality Tools
+
+Το project χρησιμοποιεί:
+- **Prettier** για consistent formatting
+- **ESLint** για code quality
+- **TypeScript** για type safety
+
+### Development Workflow
+
+1. **Fork & Clone** το repository
+2. **Create branch**: `git checkout -b feature/amazing-feature`
+3. **Make changes** και test locally
+4. **Run checks**: `npm run type-check && npm run lint`
+5. **Commit**: Use descriptive commit messages
+6. **Push** και create Pull Request
+
+---
+
+## 📖 Creating Custom Content
+
+### Lessons & Scenarios
+
+Τα lessons βρίσκονται στο `public/MDGuides/` και είναι σε **Markdown format**.
+
+#### Structure
+
+```
+public/MDGuides/
+├── Lessons/Lesson1/
+│   ├── theory.md         # Lesson content
+│   ├── blocks.json       # Pre-configured Blockly workspace
+│   └── database.db       # SQLite database (optional)
+│
+├── Scenarios/Scenario1/
+│   ├── scen.md          # Scenario story
+│   └── database.db      # Pre-loaded database
+│
+└── Tasks/Tasks1/
+    └── tasks.md         # Exercise instructions
+```
+
+#### Adding New Content
+
+1. Δημιούργησε νέο φάκελο στο `Lessons/`, `Scenarios/`, ή `Tasks/`
+2. Γράψε το content σε Markdown (`.md`)
+3. (Optional) Προσθέσε Blockly workspace (`.json`)
+4. (Optional) Προσθέσε database (`.db`)
+5. Ενημέρωσε το `src/config/lessons.ts`:
+
+```typescript
+export const LTS = [
+  // ... existing lessons
+  'Lessons/MyNewLesson/theory.md',
+];
+
+export const LTSNames = [
+  // ... existing names
+  'Το Νέο μου Μάθημα',
+];
+```
+
+**Markdown Syntax**: [Showdown Documentation](https://showdownjs.com/docs/markdown-syntax/)
+
+---
+
+## 🧩 Blockly Blocks Development
+
+### Available SQL Blocks
+
+Όλα τα blocks ορίζονται στο `src/modules/Blockly/Blocks/` σε JSON format:
+
+#### Statement Blocks (Top-level SQL)
+- **`create.json`** - CREATE TABLE statements
+- **`select.json`** - SELECT queries
+- **`insert.json`** - INSERT statements
+- **`update.json`** - UPDATE statements
+- **`delete.json`** - DELETE statements
+
+#### Parameter Blocks (Modifiers)
+- **`where.json`** - WHERE conditions
+- **`order_by.json`** - ORDER BY clauses
+- **`column.json`** - Column definitions (για CREATE TABLE)
+- **`column_name.json`** - Column names (για INSERT)
+- **`value.json`** - Values (για INSERT)
+- **`set.json`** - SET clauses (για UPDATE)
+
+### Block Connections
+
+Τα blocks έχουν **type-safe connections** που επιτρέπουν μόνο valid συνδυασμούς:
+
+```
+CREATE TABLE → column → column → column (chaining)
+SELECT → WHERE → ORDER BY (parameters)
+INSERT → column_name → column_name (column list)
+       → value → value (value list)
+UPDATE → set → set (multiple SET clauses)
+DELETE → WHERE (conditions)
+```
+
+### Adding New Blocks
+
+1. **Create JSON definition** στο `src/modules/Blockly/Blocks/newblock.json`:
+```json
+{
+  "type": "newblock",
+  "message0": "MY BLOCK %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "INPUT",
+      "check": "String"
+    }
+  ],
+  "previousStatement": "CONNECTION_TYPE",
+  "nextStatement": "CONNECTION_TYPE",
+  "colour": 200
+}
+```
+
+2. **Import στο BlocklyContext.tsx**:
+```typescript
+import newblockJSON from '../modules/Blockly/Blocks/newblock.json';
+```
+
+3. **Register το block** στο `initBlockly()`:
+```typescript
+Blockly.Blocks['newblock'] = {
+  init: function () {
+    this.jsonInit(newblockJSON);
+  },
+  onchange: createValidationHandler(['allowed_parent'])
+};
+```
+
+4. **Add code generator** στο `initGen()`:
+```typescript
+SQL.forBlock['newblock'] = function (block) {
+  const input = SQL.valueToCode(block, 'INPUT', 0);
+  return 'GENERATED SQL ' + input;
+};
+```
+
+5. **Update toolbox** στο `toolbox.json` για να εμφανιστεί στη palette.
+
+**Περισσότερα**: [Blockly Developer Guide](https://developers.google.com/blockly/guides/create-custom-blocks/overview)
+
+---
+
+## 🎨 Design System
+
+### Colors
+- **Primary Background**: `#1a1d29`, `#252a3a` (dark gradients)
+- **Accent**: `#4a9eff` (blue)
+- **Success**: `#28a745` (green)
+- **Error**: `#dc3545` (red)
+- **Text**: `#e1e4ed` (light gray)
+
+### Responsive Breakpoints
+- **Desktop**: ≥992px (70/30 split layout)
+- **Tablet**: 768-991px
+- **Mobile**: <768px (stacked layout)
+- **Small mobile**: <576px (compact UI, icon-only FAB)
+
+---
+
+## 🔒 Security
+
+- **XSS Prevention**: DOMPurify sanitizes όλο το HTML content
+- **No Backend**: Όλα τα data μένουν στον browser (privacy-first)
+- **No Tracking**: Zero analytics, zero cookies
+- **Input Validation**: SQL injection protection (parameterized queries)
+
+---
+
+## 🚀 Deployment
+
+### Quick Deploy to Vercel (1-Click)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/xrhstosk59/SQLatch)
+
+**Ή manually:**
+
+1. **Push to GitHub** (if not already)
+```bash
+git add .
+git commit -m "Ready for deployment"
+git push origin main
+```
+
+2. **Deploy στη Vercel**:
+   - Πήγαινε στο [vercel.com](https://vercel.com/)
+   - Login με GitHub
+   - Κλικ **"Add New..."** → **"Project"**
+   - Import το **SQLatch** repository
+   - Κλικ **"Deploy"**
+   - Περίμενε 2-3 λεπτά → Live! 🎉
+
+### Alternative Hosting
+
+Το SQLatch είναι static site και μπορεί να host σε:
+
+- **[Vercel](https://vercel.com/)** - Recommended, auto-deploy, free SSL
+- **[Netlify](https://www.netlify.com/)** - Drag & drop deployment
+- **[GitHub Pages](https://pages.github.com/)** - Free για public repos
+- **[Cloudflare Pages](https://pages.cloudflare.com/)** - Global CDN
+- Οποιονδήποτε static server (Apache, Nginx, etc.)
+
+### Manual Deploy
+
+```bash
+# 1. Build
+npm run build
+
+# 2. Deploy το ./out folder
+# Upload contents σε web server
+```
+
+**Για αναλυτικό deployment guide**, δες το **[DEPLOYMENT.md](DEPLOYMENT.md)**
+
+---
+
+## 📄 Documentation
+
+Για **πλήρη τεχνική τεκμηρίωση**, δες το **[PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md)** (1,300+ γραμμές).
+
+Περιλαμβάνει:
+- Αναλυτική περιγραφή κάθε component
+- Architecture diagrams
+- Data flow explanations
+- API documentation
+- Development workflows
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Παρακαλώ:
+
+1. Fork το project
+2. Create feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open Pull Request
+
+### Guidelines
+- Follow existing code style (Prettier + ESLint)
+- Write descriptive commit messages
+- Add tests για new features (when applicable)
+- Update documentation
+
+---
+
+## 🐛 Known Issues & Limitations
+
+- SQLite WASM requires modern browser (Chrome 89+, Firefox 89+, Safari 15+)
+- Large databases (>10MB) μπορεί να είναι αργά
+- No server-side persistence - όλα τα data είναι local
+- Limited σε SQLite SQL dialect (no stored procedures, triggers, etc.)
+
+---
+
+## 🗺️ Roadmap
+
+### ✅ Recently Implemented
+- [x] **UPDATE blocks** - Full support για UPDATE statements με SET clauses
+- [x] **DELETE blocks** - Delete data με WHERE conditions
+- [x] **ORDER BY blocks** - Sort query results
+- [x] **Smart block connections** - Improved validation και chaining
+- [x] **Multiple column/value support** - Chain columns, values και conditions
+
+### Planned Features
+- [ ] More SQL blocks (JOIN, GROUP BY, HAVING, subqueries)
+- [ ] Multiple database tabs
+- [ ] Query performance metrics
+- [ ] SQL to Blocks (reverse engineering)
+- [ ] Collaborative editing (realtime)
+- [ ] Dark/Light theme toggle
+- [ ] More educational scenarios
+- [ ] Database schema visualization
+- [ ] Export workspace to SQL file
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- **[Google Blockly](https://developers.google.com/blockly)** - Visual programming framework
+- **[SQLite](https://sqlite.org/)** - Database engine
+- **[Next.js](https://nextjs.org/)** - React framework
+- **[Bootstrap](https://getbootstrap.com/)** - UI components
+- **Original Creator**: [BillisC](https://github.com/BillisC/SQLatch)
+
+---
+
+## 📧 Contact
+
+**Repository**: [https://github.com/xrhstosk59/SQLatch](https://github.com/xrhstosk59/SQLatch)
+
+**Issues**: [https://github.com/xrhstosk59/SQLatch/issues](https://github.com/xrhstosk59/SQLatch/issues)
+
+---
+
+<div align="center">
+
+**Made with ❤️ for SQL learners**
+
+**🚀 Generated with [Claude Code](https://claude.com/claude-code)**
+
+</div>
