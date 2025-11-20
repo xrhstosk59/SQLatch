@@ -1,3 +1,3 @@
 export interface SchemaColors {
-  [schemaName: string] : string
-};
+    [schemaName: string]: string;
+}

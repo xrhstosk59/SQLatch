@@ -1,6 +1,7 @@
 import { AppProps } from 'next/app';
 import '../styles/global.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { SQLiteProvider } from '../contexts/SQLiteContext';
 import { BlocklyProvider } from '../contexts/BlocklyContext';
 import { QueryHistoryProvider } from '../contexts/QueryHistoryContext';

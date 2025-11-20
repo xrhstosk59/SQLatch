@@ -3,7 +3,7 @@ import styles from '../../styles/blockly.module.css';
 import React from 'react';
 import { useEffect, useRef, useState } from 'react';
 
-import Blockly from 'blockly';
+import * as Blockly from 'blockly';
 import { useBlocklyContext } from '../../contexts/BlocklyContext';
 import { useSQLite } from '../../contexts/SQLiteContext';
 import { useQueryHistory } from '../../contexts/QueryHistoryContext';
@@ -15,6 +15,8 @@ import {
     ContinuousFlyout,
     ContinuousMetrics,
 } from '@blockly/continuous-toolbox';
+// @ts-ignore - registerContinuousToolbox exists but types are incomplete
+import { registerContinuousToolbox } from '@blockly/continuous-toolbox';
 import DarkTheme from '@blockly/theme-dark';
 
 import Container from 'react-bootstrap/Container';
@@ -38,6 +40,7 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
 
     const primaryWorkspace = useRef<Blockly.WorkspaceSvg | null>(null);
     const blocklyDiv = useRef<HTMLDivElement | null>(null);
+    const pluginsRegistered = useRef(false);
     const [isMounted, setIsMounted] = useState(false);
 
     const [modalShow, setModalShow] = useState(false);
@@ -53,7 +56,7 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
     useEffect(() => {
         setIsMounted(true);
         useDB.initSQL();
-    }, []);
+    }, [useDB]);
 
     useEffect(() => {
         if (!blocklyDiv.current || !isMounted) return;
@@ -61,6 +64,12 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
         /* Initialize Blockly */
         useBL.initBlockly();
         useBL.initGen();
+
+        // Register continuous toolbox (only once)
+        if (!pluginsRegistered.current) {
+            registerContinuousToolbox();
+            pluginsRegistered.current = true;
+        }
 
         // Detect if mobile device
         const isMobile = window.innerWidth < 768;
@@ -117,7 +126,7 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
                 primaryWorkspace.current.dispose();
             }
         };
-    }, [isMounted]); // Run when component is mounted
+    }, [isMounted, useBL]); // Run when component is mounted
 
     const showResult = () => {
         setOutputDB(useDB.getResultDB());
@@ -202,11 +211,7 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
                 onConfirm={executeSQL}
                 sqlCode={currentSQL}
             />
-            <SQLOutputModal
-                show={modalShow}
-                output={outputDB}
-                onHide={() => setModalShow(false)}
-            />
+            <SQLOutputModal show={modalShow} output={outputDB} onHide={() => setModalShow(false)} />
             <ToastContainer position="bottom-end" style={{ padding: '20px' }}>
                 <ErrorToast
                     show={toastShow}

@@ -6,7 +6,9 @@ export const useShowdown = () => {
 
     const convertMd = async (path: string): Promise<string> => {
         try {
+            console.log('Fetching markdown from:', path);
             const text = await requestMd(path);
+            console.log('Markdown fetched, length:', text.length);
             const rawHtml = converter.makeHtml(text);
             // Sanitize HTML to prevent XSS attacks
             const sanitizedHtml = DOMPurify.sanitize(rawHtml, {
@@ -51,11 +53,17 @@ export const useShowdown = () => {
 
     const requestMd = async (path: string): Promise<string> => {
         try {
+            console.log('Attempting fetch:', path);
             const response = await fetch(path);
+            console.log('Fetch response status:', response.status, response.statusText);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const text = await response.text();
+            console.log('Fetch successful, text length:', text.length);
             return text;
         } catch (error) {
-            console.error('Error fetching the file: ', error);
+            console.error('Error fetching the file:', path, error);
             return '';
         }
     };

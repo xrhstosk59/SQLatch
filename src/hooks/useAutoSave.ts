@@ -12,7 +12,11 @@ const DEFAULT_INTERVAL = 30000; // 30 seconds
  * Custom hook for auto-saving workspace
  * @param options - Configuration options for auto-save
  */
-export function useAutoSave({ enabled, intervalMs = DEFAULT_INTERVAL, onSave }: UseAutoSaveOptions) {
+export function useAutoSave({
+    enabled,
+    intervalMs = DEFAULT_INTERVAL,
+    onSave,
+}: UseAutoSaveOptions) {
     const savedCallback = useRef<() => void>();
 
     // Remember the latest callback

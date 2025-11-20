@@ -27,7 +27,9 @@ export default function GuideHome({ lessonNames, onLessonClick, viewed = [] }: G
                         >
                             {index + 1}. {name}
                         </Link>
-                        {viewed[index] && <i className="bi bi-check-lg" style={{ color: '#14A44D' }}></i>}
+                        {viewed[index] && (
+                            <i className="bi bi-check-lg" style={{ color: '#14A44D' }}></i>
+                        )}
                         <InfoScenarioButton title="Πληροφορίες" body={LTS[index].info} />
                     </li>
                 ))}

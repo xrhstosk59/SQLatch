@@ -4,14 +4,14 @@
  */
 
 export interface LessonItem {
-    blocks: string;           // Block JSON file path or scenario path
-    theory: string;           // Theory markdown file path
-    info: string;             // Description text
-    name: string;             // Display name
-    database: string;         // Database file path
-    isScenario: boolean;      // Whether this is a scenario (has videos)
+    blocks: string; // Block JSON file path or scenario path
+    theory: string; // Theory markdown file path
+    info: string; // Description text
+    name: string; // Display name
+    database: string; // Database file path
+    isScenario: boolean; // Whether this is a scenario (has videos)
     requirements: [string[], string][]; // Validation requirements
-    numVideos: number;        // Number of videos (scenarios only)
+    numVideos: number; // Number of videos (scenarios only)
 }
 
 // Theory requirements for lessons
@@ -30,25 +30,25 @@ const theoryRequirements = [
 
 // Scenario 1 requirements
 const scenarioP1Requirements = [
-    [['SELECT','*'], 'Output/0.json'],
+    [['SELECT', '*'], 'Output/0.json'],
     [['WHERE'], 'Output/1.json'],
     [['OR'], 'Output/2.json'],
     [['INSERT', 'INTO'], 'Output/3.json'],
     [['UPDATE'], 'Output/4.json'],
     [['min(quantity)'], 'Output/5.json'],
     [['ORDER'], 'Output/6.json'],
-    [['DELETE'], 'Output/7.json']
+    [['DELETE'], 'Output/7.json'],
 ] as [string[], string][];
 
 // Scenario 2 requirements
 const scenarioP2Requirements = [
     [['GROUP'], 'Output/0.json'],
     [['HAVING'], 'Output/1.json'],
-    [['JOIN','JOIN'], 'Output/2.json'],
-    [['JOIN','JOIN','WHERE'], 'Output/3.json'],
-    [['JOIN','GROUP'], 'Output/4.json'],
-    [['GROUP','ORDER','DESC;'], 'Output/5.json'],
-    [['count(*)','JOIN','WHERE'], 'Output/6.json']
+    [['JOIN', 'JOIN'], 'Output/2.json'],
+    [['JOIN', 'JOIN', 'WHERE'], 'Output/3.json'],
+    [['JOIN', 'GROUP'], 'Output/4.json'],
+    [['GROUP', 'ORDER', 'DESC;'], 'Output/5.json'],
+    [['count(*)', 'JOIN', 'WHERE'], 'Output/6.json'],
 ] as [string[], string][];
 
 // Main lesson configuration array
@@ -62,7 +62,7 @@ export const LTS: LessonItem[] = [
         database: '',
         isScenario: false,
         requirements: [],
-        numVideos: 0
+        numVideos: 0,
     },
     {
         blocks: 'Lessons/Lesson1/blocks.json',
@@ -72,7 +72,7 @@ export const LTS: LessonItem[] = [
         database: '',
         isScenario: false,
         requirements: [theoryRequirements[0]],
-        numVideos: 0
+        numVideos: 0,
     },
     {
         blocks: 'Lessons/Lesson2/blocks.json',
@@ -82,7 +82,7 @@ export const LTS: LessonItem[] = [
         database: 'Lessons/Lesson2/database.db',
         isScenario: false,
         requirements: [theoryRequirements[1]],
-        numVideos: 0
+        numVideos: 0,
     },
     {
         blocks: '',
@@ -92,7 +92,7 @@ export const LTS: LessonItem[] = [
         database: '',
         isScenario: false,
         requirements: [],
-        numVideos: 0
+        numVideos: 0,
     },
     {
         blocks: 'Lessons/Lesson3/blocks.json',
@@ -102,7 +102,7 @@ export const LTS: LessonItem[] = [
         database: 'Lessons/Lesson3/database.db',
         isScenario: false,
         requirements: [theoryRequirements[2]],
-        numVideos: 0
+        numVideos: 0,
     },
     {
         blocks: '',
@@ -112,7 +112,7 @@ export const LTS: LessonItem[] = [
         database: 'Lessons/Lesson4/database.db',
         isScenario: false,
         requirements: [theoryRequirements[3]],
-        numVideos: 0
+        numVideos: 0,
     },
     {
         blocks: '',
@@ -122,7 +122,7 @@ export const LTS: LessonItem[] = [
         database: 'Lessons/Lesson7/database.db',
         isScenario: false,
         requirements: [theoryRequirements[6]],
-        numVideos: 0
+        numVideos: 0,
     },
     {
         blocks: '',
@@ -132,7 +132,7 @@ export const LTS: LessonItem[] = [
         database: 'Lessons/Lesson8/database.db',
         isScenario: false,
         requirements: [theoryRequirements[7]],
-        numVideos: 0
+        numVideos: 0,
     },
     {
         blocks: 'Lessons/Lesson5/blocks.json',
@@ -142,7 +142,7 @@ export const LTS: LessonItem[] = [
         database: 'Lessons/Lesson5/database.db',
         isScenario: false,
         requirements: [theoryRequirements[4]],
-        numVideos: 0
+        numVideos: 0,
     },
     {
         blocks: 'Lessons/Lesson6/blocks.json',
@@ -152,7 +152,7 @@ export const LTS: LessonItem[] = [
         database: 'Lessons/Lesson6/database.db',
         isScenario: false,
         requirements: [theoryRequirements[5]],
-        numVideos: 0
+        numVideos: 0,
     },
     {
         blocks: '',
@@ -162,7 +162,7 @@ export const LTS: LessonItem[] = [
         database: 'Tasks/Tasks2/database.db',
         isScenario: false,
         requirements: [],
-        numVideos: 0
+        numVideos: 0,
     },
     {
         blocks: 'MDGuides/Scenarios/Scenario1/',
@@ -172,7 +172,7 @@ export const LTS: LessonItem[] = [
         database: 'Scenarios/Scenario1/database.db',
         isScenario: true,
         requirements: scenarioP1Requirements,
-        numVideos: 8
+        numVideos: 8,
     },
     {
         blocks: '',
@@ -182,7 +182,7 @@ export const LTS: LessonItem[] = [
         database: 'Lessons/Lesson9/database.db',
         isScenario: false,
         requirements: [theoryRequirements[8]],
-        numVideos: 0
+        numVideos: 0,
     },
     {
         blocks: '',
@@ -192,7 +192,7 @@ export const LTS: LessonItem[] = [
         database: 'Lessons/Lesson10/database.db',
         isScenario: false,
         requirements: [theoryRequirements[9]],
-        numVideos: 0
+        numVideos: 0,
     },
     {
         blocks: 'MDGuides/Scenarios/Scenario2/',
@@ -202,6 +202,6 @@ export const LTS: LessonItem[] = [
         database: 'Scenarios/Scenario2/database.db',
         isScenario: true,
         requirements: scenarioP2Requirements,
-        numVideos: 7
-    }
+        numVideos: 7,
+    },
 ];

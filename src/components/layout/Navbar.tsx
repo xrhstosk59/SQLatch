@@ -126,7 +126,11 @@ export default function NavBar() {
                 role="navigation"
                 aria-label="Κύριο μενού πλοήγησης"
             >
-                <Navbar.Brand href="" aria-label="SQLatch - Αρχική σελίδα" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <Navbar.Brand
+                    href=""
+                    aria-label="SQLatch - Αρχική σελίδα"
+                    style={{ display: 'flex', alignItems: 'center', gap: '10px' }}
+                >
                     <Image
                         src="/logo.png"
                         alt="SQLatch Logo"
@@ -141,76 +145,76 @@ export default function NavBar() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav>
                         <NavDropdown
-                        title={
-                            <span>
-                                <i className="bi bi-file-earmark" aria-hidden="true"></i> Αρχείο
-                            </span>
-                        }
-                        id="file-menu-dropdown"
-                        aria-label="Μενού αρχείου"
-                    >
-                        <NavDropdown.Item
-                            onClick={onClickSaveButton}
+                            title={
+                                <span>
+                                    <i className="bi bi-file-earmark" aria-hidden="true"></i> Αρχείο
+                                </span>
+                            }
+                            id="file-menu-dropdown"
+                            aria-label="Μενού αρχείου"
+                        >
+                            <NavDropdown.Item
+                                onClick={onClickSaveButton}
+                                href=""
+                                aria-label="Αποθήκευση workspace (Ctrl+S)"
+                            >
+                                <i className="bi bi-floppy" aria-hidden="true"></i> Αποθήκευση{' '}
+                                <small style={{ color: '#999' }}>Ctrl+S</small>
+                            </NavDropdown.Item>
+                            <NavDropdown.Item
+                                onClick={onClickLoadButton}
+                                href=""
+                                aria-label="Φόρτωση workspace (Ctrl+O)"
+                            >
+                                <i className="bi bi-cloud-upload" aria-hidden="true"></i> Φόρτωση{' '}
+                                <small style={{ color: '#999' }}>Ctrl+O</small>
+                            </NavDropdown.Item>
+                            <NavDropdown.Item
+                                onClick={onClickResetButton}
+                                href=""
+                                aria-label="Καθαρισμός workspace"
+                            >
+                                <i className="bi bi-trash" aria-hidden="true"></i> Καθαρισμός
+                            </NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item
+                                onClick={autoSave.toggleAutoSave}
+                                aria-label={`Auto-save ${autoSave.isEnabled ? 'ενεργό' : 'ανενεργό'}`}
+                            >
+                                <Form.Check
+                                    type="checkbox"
+                                    id="auto-save-toggle"
+                                    label="Auto-save"
+                                    checked={autoSave.isEnabled}
+                                    onChange={() => {}}
+                                    style={{ pointerEvents: 'none' }}
+                                    aria-label="Toggle auto-save"
+                                />
+                            </NavDropdown.Item>
+                        </NavDropdown>
+                        <Nav.Link
+                            onClick={onClickSchemaButton}
                             href=""
-                            aria-label="Αποθήκευση workspace (Ctrl+S)"
+                            aria-label="Σχήμα Βάσης Δεδομένων"
                         >
-                            <i className="bi bi-floppy" aria-hidden="true"></i> Αποθήκευση{' '}
-                            <small style={{ color: '#999' }}>Ctrl+S</small>
-                        </NavDropdown.Item>
-                        <NavDropdown.Item
-                            onClick={onClickLoadButton}
+                            <i className="bi bi-diagram-3" aria-hidden="true"></i> Σχήμα Βάσης
+                        </Nav.Link>
+                        <Nav.Link
+                            onClick={onClickShareButton}
                             href=""
-                            aria-label="Φόρτωση workspace (Ctrl+O)"
+                            aria-label="Κοινοποίηση workspace (Ctrl+Shift+S)"
                         >
-                            <i className="bi bi-cloud-upload" aria-hidden="true"></i> Φόρτωση{' '}
-                            <small style={{ color: '#999' }}>Ctrl+O</small>
-                        </NavDropdown.Item>
-                        <NavDropdown.Item
-                            onClick={onClickResetButton}
+                            <i className="bi bi-share" aria-hidden="true"></i> Κοινοποίηση{' '}
+                            <small style={{ color: '#999' }}>Ctrl+Shift+S</small>
+                        </Nav.Link>
+                        <Nav.Link
+                            onClick={() => setAboutModalShow(true)}
                             href=""
-                            aria-label="Καθαρισμός workspace"
+                            aria-label="Σχετικά με εμάς"
                         >
-                            <i className="bi bi-trash" aria-hidden="true"></i> Καθαρισμός
-                        </NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item
-                            onClick={autoSave.toggleAutoSave}
-                            aria-label={`Auto-save ${autoSave.isEnabled ? 'ενεργό' : 'ανενεργό'}`}
-                        >
-                            <Form.Check
-                                type="checkbox"
-                                id="auto-save-toggle"
-                                label="Auto-save"
-                                checked={autoSave.isEnabled}
-                                onChange={() => {}}
-                                style={{ pointerEvents: 'none' }}
-                                aria-label="Toggle auto-save"
-                            />
-                        </NavDropdown.Item>
-                    </NavDropdown>
-                    <Nav.Link
-                        onClick={onClickSchemaButton}
-                        href=""
-                        aria-label="Σχήμα Βάσης Δεδομένων"
-                    >
-                        <i className="bi bi-diagram-3" aria-hidden="true"></i> Σχήμα Βάσης
-                    </Nav.Link>
-                    <Nav.Link
-                        onClick={onClickShareButton}
-                        href=""
-                        aria-label="Κοινοποίηση workspace (Ctrl+Shift+S)"
-                    >
-                        <i className="bi bi-share" aria-hidden="true"></i> Κοινοποίηση{' '}
-                        <small style={{ color: '#999' }}>Ctrl+Shift+S</small>
-                    </Nav.Link>
-                    <Nav.Link
-                        onClick={() => setAboutModalShow(true)}
-                        href=""
-                        aria-label="Σχετικά με εμάς"
-                    >
-                        <i className="bi bi-info-circle" aria-hidden="true"></i> Σχετικά με εμάς
-                    </Nav.Link>
-                </Nav>
+                            <i className="bi bi-info-circle" aria-hidden="true"></i> Σχετικά με εμάς
+                        </Nav.Link>
+                    </Nav>
                 </Navbar.Collapse>
                 <input type="file" id="fileInput" hidden aria-hidden="true" />
             </Navbar>

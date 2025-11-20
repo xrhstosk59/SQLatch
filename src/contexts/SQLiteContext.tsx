@@ -1,4 +1,12 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
+import React, {
+    createContext,
+    useContext,
+    useState,
+    useEffect,
+    ReactNode,
+    useMemo,
+    useCallback,
+} from 'react';
 import sqlite3InitModule, { Database, Sqlite3Static } from '@sqlite.org/sqlite-wasm';
 
 interface SQLiteContextType {
@@ -174,6 +182,7 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
             getColumnNames,
             getForeignKeys,
         }),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         []
     );
 

@@ -75,7 +75,10 @@ export default function Guide({ valSync }: GuideProps) {
                         }
                         // Set validation requirements
                         if (currentLesson.requirements.length > 0) {
-                            useVA.setRequirements(currentLesson.requirements[0][0], currentLesson.requirements[0][1]);
+                            useVA.setRequirements(
+                                currentLesson.requirements[0][0],
+                                currentLesson.requirements[0][1]
+                            );
                         }
                     }
 
@@ -113,7 +116,7 @@ export default function Guide({ valSync }: GuideProps) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [valSync, scenCompleteSync]);
 
-    const lessonNames = LTS.map(item => item.name);
+    const lessonNames = LTS.map((item) => item.name);
 
     return (
         <Container className={styles.container}>
@@ -142,7 +145,11 @@ export default function Guide({ valSync }: GuideProps) {
                     )}
                 </Container>
             ) : (
-                <GuideHome lessonNames={lessonNames} onLessonClick={handleLessonClick} viewed={viewed} />
+                <GuideHome
+                    lessonNames={lessonNames}
+                    onLessonClick={handleLessonClick}
+                    viewed={viewed}
+                />
             )}
             <QueryHistory />
         </Container>

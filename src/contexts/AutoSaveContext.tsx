@@ -1,4 +1,12 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
+import React, {
+    createContext,
+    useContext,
+    useState,
+    useEffect,
+    ReactNode,
+    useMemo,
+    useCallback,
+} from 'react';
 import { useBlocklyContext } from './BlocklyContext';
 import { useAutoSave } from '../hooks/useAutoSave';
 
@@ -73,11 +81,11 @@ export function AutoSaveProvider({ children }: AutoSaveProviderProps) {
         onSave: handleAutoSave,
     });
 
-    const toggleAutoSave = () => {
+    const toggleAutoSave = useCallback(() => {
         const newEnabled = !isEnabled;
         setIsEnabled(newEnabled);
         localStorage.setItem(AUTOSAVE_ENABLED_KEY, String(newEnabled));
-    };
+    }, [isEnabled]);
 
     const setInterval = (newInterval: number) => {
         setIntervalState(newInterval);
@@ -92,7 +100,7 @@ export function AutoSaveProvider({ children }: AutoSaveProviderProps) {
             toggleAutoSave,
             setInterval,
         }),
-        [isEnabled, interval, lastSaved]
+        [isEnabled, interval, lastSaved, toggleAutoSave]
     );
 
     return <AutoSaveContext.Provider value={value}>{children}</AutoSaveContext.Provider>;

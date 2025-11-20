@@ -20,13 +20,7 @@ export function useKeyboardShortcut(
         (event: KeyboardEvent) => {
             if (!enabled) return;
 
-            const {
-                key,
-                ctrl = false,
-                alt = false,
-                shift = false,
-                meta = false,
-            } = shortcut;
+            const { key, ctrl = false, alt = false, shift = false, meta = false } = shortcut;
 
             const matches =
                 event.key.toLowerCase() === key.toLowerCase() &&
@@ -63,13 +57,7 @@ export function useKeyboardShortcuts(
             if (!enabled) return;
 
             for (const { shortcut, callback } of shortcuts) {
-                const {
-                    key,
-                    ctrl = false,
-                    alt = false,
-                    shift = false,
-                    meta = false,
-                } = shortcut;
+                const { key, ctrl = false, alt = false, shift = false, meta = false } = shortcut;
 
                 const matches =
                     event.key.toLowerCase() === key.toLowerCase() &&

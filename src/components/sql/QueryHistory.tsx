@@ -81,13 +81,16 @@ function QueryHistory() {
                                                     <span className={styles.timestamp}>
                                                         {formatTimestamp(entry.timestamp)}
                                                     </span>
-                                                    {entry.success && entry.resultCount !== undefined && (
-                                                        <span className={styles.resultCount}>
-                                                            {entry.resultCount} αποτελέσματα
-                                                        </span>
-                                                    )}
+                                                    {entry.success &&
+                                                        entry.resultCount !== undefined && (
+                                                            <span className={styles.resultCount}>
+                                                                {entry.resultCount} αποτελέσματα
+                                                            </span>
+                                                        )}
                                                 </div>
-                                                <pre className={styles.queryCode}>{entry.query}</pre>
+                                                <pre className={styles.queryCode}>
+                                                    {entry.query}
+                                                </pre>
                                                 {entry.error && (
                                                     <div className={styles.errorText}>
                                                         Error: {entry.error}

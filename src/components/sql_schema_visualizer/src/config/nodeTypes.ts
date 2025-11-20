@@ -1,5 +1,5 @@
-import { TableNode } from "../Visualizer/components";
+import { TableNode } from '../Visualizer/components';
 
 export const nodeTypes = {
-  table: TableNode,
+    table: TableNode,
 };

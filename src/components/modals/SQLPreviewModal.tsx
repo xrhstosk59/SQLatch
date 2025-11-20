@@ -8,12 +8,7 @@ interface SQLPreviewModalProps {
     sqlCode: string;
 }
 
-function SQLPreviewModal({
-    show,
-    onHide,
-    onConfirm,
-    sqlCode,
-}: SQLPreviewModalProps) {
+function SQLPreviewModal({ show, onHide, onConfirm, sqlCode }: SQLPreviewModalProps) {
     const footer = (
         <ModalFooterActions
             onCancel={onHide}

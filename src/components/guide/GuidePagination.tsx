@@ -31,7 +31,7 @@ function GuidePagination({
                 justifyContent: 'center',
                 padding: '10px',
                 flexWrap: 'wrap',
-                gap: '5px'
+                gap: '5px',
             }}
         >
             <Pagination.Item
@@ -40,7 +40,7 @@ function GuidePagination({
                     fontWeight: 'bold',
                     backgroundColor: '#0d6efd',
                     borderColor: '#0d6efd',
-                    color: 'white'
+                    color: 'white',
                 }}
             >
                 Αρχική
@@ -53,7 +53,9 @@ function GuidePagination({
                     active={isPageActive(index)}
                     onClick={() => onPageClick(index)}
                 >
-                    {viewed[index] && <i className="bi bi-check-lg" style={{ color: '#14A44D' }}></i>}
+                    {viewed[index] && (
+                        <i className="bi bi-check-lg" style={{ color: '#14A44D' }}></i>
+                    )}
                     {index + 1}
                 </Pagination.Item>
             ))}

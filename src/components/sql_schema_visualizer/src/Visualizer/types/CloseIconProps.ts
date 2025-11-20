@@ -1,4 +1,4 @@
 export type CloseIconProps = {
-  className?: string,
-  onClick?: Function
+    className?: string;
+    onClick?: Function;
 };

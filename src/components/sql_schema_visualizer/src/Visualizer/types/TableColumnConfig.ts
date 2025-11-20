@@ -1,7 +1,7 @@
 export interface TableColumnConfig {
-  name: string;
-  description: string;
-  type: string;
-  handleType?: string;
-  key?: boolean;
-};
+    name: string;
+    description: string;
+    type: string;
+    handleType?: string;
+    key?: boolean;
+}

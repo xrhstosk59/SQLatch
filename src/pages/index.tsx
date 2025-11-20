@@ -28,7 +28,10 @@ export default function Home() {
     return (
         <>
             <Head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+                />
                 <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png"></link>
                 <title>SQLatch - POC</title>
             </Head>

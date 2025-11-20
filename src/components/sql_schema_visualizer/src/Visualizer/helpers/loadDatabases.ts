@@ -1,15 +1,15 @@
-import { DatabaseConfigs } from "../types";
-import { loadDatabaseConfig } from "../helpers";
-import databases from "../../config/databases";
+import { DatabaseConfigs } from '../types';
+import { loadDatabaseConfig } from '../helpers';
+import databases from '../../config/databases';
 
 export const loadDatabases = async () => {
-  const databaseConfigs: DatabaseConfigs = {};
+    const databaseConfigs: DatabaseConfigs = {};
 
-  for (const databaseName of Object.keys(databases)) {
-    const databaseConfig = await loadDatabaseConfig(databaseName);
+    for (const databaseName of Object.keys(databases)) {
+        const databaseConfig = await loadDatabaseConfig(databaseName);
 
-    databaseConfigs[databaseName] = databaseConfig;
-  }
+        databaseConfigs[databaseName] = databaseConfig;
+    }
 
-  return databaseConfigs;
+    return databaseConfigs;
 };
