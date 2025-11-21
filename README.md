@@ -28,35 +28,40 @@
 ## ✨ Κύρια Χαρακτηριστικά
 
 ### 🎨 Modern User Interface
+
 - **Floating Action Button (FAB)** για query execution
 - **Dark theme** με gradient backgrounds και animations
 - **Responsive design** - Works σε desktop, tablet, και mobile
 - **Touch-optimized** με pinch-to-zoom support
 
 ### 🧩 Visual SQL Builder
+
 - **Drag-and-drop blocks** για SQL statements
 - **Πλήρες Support για SQL Operations**:
-  - **Data Query**: `SELECT` με `WHERE`, `ORDER BY`
-  - **Table Creation**: `CREATE TABLE` με column definitions και constraints
-  - **Data Manipulation**: `INSERT`, `UPDATE`, `DELETE`
-  - **Advanced**: Multiple column support, chained conditions, SET clauses
+    - **Data Query**: `SELECT` με `WHERE`, `ORDER BY`
+    - **Table Creation**: `CREATE TABLE` με column definitions και constraints
+    - **Data Manipulation**: `INSERT`, `UPDATE`, `DELETE`
+    - **Advanced**: Multiple column support, chained conditions, SET clauses
 - **Smart Block Validation** - Τα blocks "κουμπώνουν" μόνο σε valid positions
 - **SQL Preview** - Δες το generated SQL πριν το execution
 - **Syntax highlighting** για better readability
 
 ### 💾 In-Browser Database
+
 - **SQLite WASM** - Πλήρης SQL database στον browser
 - **Pre-loaded scenarios** με databases
 - **Real-time execution** - Instant results
 - **Error handling** με user-friendly messages
 
 ### 📖 Interactive Learning
+
 - **3 Μαθήματα**: SELECT, CREATE TABLE, INSERT basics
 - **3 Σενάρια**: Story-based learning (Magic Book, Museum Theft, Planet Exploration)
 - **Ασκήσεις**: Practice exercises με progressive difficulty
 - **Markdown-based content** - Εύκολη προσθήκη νέων lessons
 
 ### 📊 Query History
+
 - **Track όλα τα executed queries** με timestamp
 - **Success/Error status** indicators
 - **Result count** display για successful queries
@@ -64,12 +69,14 @@
 - **Delete individual** ή clear all queries
 
 ### 💾 Workspace Persistence
+
 - **Auto-save** κάθε 2 δευτερόλεπτα
 - **LocalStorage** persistence - Δεν χάνεις τη δουλειά σου
 - **Import/Export** workspace files (.json)
 - **Share URLs** - Base64-encoded workspace sharing
 
 ### ⌨️ Power User Features
+
 - **Keyboard shortcuts**: `Ctrl+Enter` για execution, `Ctrl+S` για sharing
 - **Export results** σε CSV/JSON format
 - **Custom scenarios** - Δημιούργησε τα δικά σου μαθήματα
@@ -79,27 +86,33 @@
 ## 🛠️ Tech Stack
 
 ### Core
+
 - **[Next.js 13](https://nextjs.org/)** - React framework με static export
 - **[React 18](https://react.dev/)** - UI library με Suspense & startTransition
 - **[TypeScript](https://www.typescriptlang.org/)** - Type safety
 
 ### Visual Programming
+
 - **[Blockly](https://developers.google.com/blockly)** - Google's visual programming library
 - **Blockly Plugins**: Continuous Toolbox, Dark Theme, Zoom-to-Fit
 
 ### Database
+
 - **[SQLite WASM](https://sqlite.org/wasm/)** - Full SQL database σε WebAssembly
 
 ### UI/UX
+
 - **[Bootstrap 5](https://getbootstrap.com/)** & **React Bootstrap** - Responsive components
 - **[Bootstrap Icons](https://icons.getbootstrap.com/)** - Icon library
 - **CSS Modules** - Scoped styling
 
 ### Content
+
 - **[Showdown](https://showdownjs.com/)** - Markdown to HTML converter
 - **[DOMPurify](https://github.com/cure53/DOMPurify)** - XSS protection
 
 ### Code Quality
+
 - **[ESLint](https://eslint.org/)** - Linting
 - **[Prettier](https://prettier.io/)** - Code formatting
 - **[TypeScript](https://www.typescriptlang.org/)** - Type checking
@@ -202,6 +215,7 @@ npm run type-check       # TypeScript validation
 ### Code Quality Tools
 
 Το project χρησιμοποιεί:
+
 - **Prettier** για consistent formatting
 - **ESLint** για code quality
 - **TypeScript** για type safety
@@ -250,13 +264,13 @@ public/MDGuides/
 
 ```typescript
 export const LTS = [
-  // ... existing lessons
-  'Lessons/MyNewLesson/theory.md',
+    // ... existing lessons
+    'Lessons/MyNewLesson/theory.md',
 ];
 
 export const LTSNames = [
-  // ... existing names
-  'Το Νέο μου Μάθημα',
+    // ... existing names
+    'Το Νέο μου Μάθημα',
 ];
 ```
 
@@ -271,6 +285,7 @@ export const LTSNames = [
 Όλα τα blocks ορίζονται στο `src/modules/Blockly/Blocks/` σε JSON format:
 
 #### Statement Blocks (Top-level SQL)
+
 - **`create.json`** - CREATE TABLE statements
 - **`select.json`** - SELECT queries
 - **`insert.json`** - INSERT statements
@@ -278,6 +293,7 @@ export const LTSNames = [
 - **`delete.json`** - DELETE statements
 
 #### Parameter Blocks (Modifiers)
+
 - **`where.json`** - WHERE conditions
 - **`order_by.json`** - ORDER BY clauses
 - **`column.json`** - Column definitions (για CREATE TABLE)
@@ -301,43 +317,47 @@ DELETE → WHERE (conditions)
 ### Adding New Blocks
 
 1. **Create JSON definition** στο `src/modules/Blockly/Blocks/newblock.json`:
+
 ```json
 {
-  "type": "newblock",
-  "message0": "MY BLOCK %1",
-  "args0": [
-    {
-      "type": "input_value",
-      "name": "INPUT",
-      "check": "String"
-    }
-  ],
-  "previousStatement": "CONNECTION_TYPE",
-  "nextStatement": "CONNECTION_TYPE",
-  "colour": 200
+    "type": "newblock",
+    "message0": "MY BLOCK %1",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "INPUT",
+            "check": "String"
+        }
+    ],
+    "previousStatement": "CONNECTION_TYPE",
+    "nextStatement": "CONNECTION_TYPE",
+    "colour": 200
 }
 ```
 
 2. **Import στο BlocklyContext.tsx**:
+
 ```typescript
 import newblockJSON from '../modules/Blockly/Blocks/newblock.json';
 ```
 
 3. **Register το block** στο `initBlockly()`:
+
 ```typescript
 Blockly.Blocks['newblock'] = {
-  init: function () {
-    this.jsonInit(newblockJSON);
-  },
-  onchange: createValidationHandler(['allowed_parent'])
+    init: function () {
+        this.jsonInit(newblockJSON);
+    },
+    onchange: createValidationHandler(['allowed_parent']),
 };
 ```
 
 4. **Add code generator** στο `initGen()`:
+
 ```typescript
 SQL.forBlock['newblock'] = function (block) {
-  const input = SQL.valueToCode(block, 'INPUT', 0);
-  return 'GENERATED SQL ' + input;
+    const input = SQL.valueToCode(block, 'INPUT', 0);
+    return 'GENERATED SQL ' + input;
 };
 ```
 
@@ -350,6 +370,7 @@ SQL.forBlock['newblock'] = function (block) {
 ## 🎨 Design System
 
 ### Colors
+
 - **Primary Background**: `#1a1d29`, `#252a3a` (dark gradients)
 - **Accent**: `#4a9eff` (blue)
 - **Success**: `#28a745` (green)
@@ -357,6 +378,7 @@ SQL.forBlock['newblock'] = function (block) {
 - **Text**: `#e1e4ed` (light gray)
 
 ### Responsive Breakpoints
+
 - **Desktop**: ≥992px (70/30 split layout)
 - **Tablet**: 768-991px
 - **Mobile**: <768px (stacked layout)
@@ -382,6 +404,7 @@ SQL.forBlock['newblock'] = function (block) {
 **Ή manually:**
 
 1. **Push to GitHub** (if not already)
+
 ```bash
 git add .
 git commit -m "Ready for deployment"
@@ -389,12 +412,12 @@ git push origin main
 ```
 
 2. **Deploy στη Vercel**:
-   - Πήγαινε στο [vercel.com](https://vercel.com/)
-   - Login με GitHub
-   - Κλικ **"Add New..."** → **"Project"**
-   - Import το **SQLatch** repository
-   - Κλικ **"Deploy"**
-   - Περίμενε 2-3 λεπτά → Live! 🎉
+    - Πήγαινε στο [vercel.com](https://vercel.com/)
+    - Login με GitHub
+    - Κλικ **"Add New..."** → **"Project"**
+    - Import το **SQLatch** repository
+    - Κλικ **"Deploy"**
+    - Περίμενε 2-3 λεπτά → Live! 🎉
 
 ### Alternative Hosting
 
@@ -425,6 +448,7 @@ npm run build
 Για **πλήρη τεχνική τεκμηρίωση**, δες το **[PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md)** (1,300+ γραμμές).
 
 Περιλαμβάνει:
+
 - Αναλυτική περιγραφή κάθε component
 - Architecture diagrams
 - Data flow explanations
@@ -444,6 +468,7 @@ Contributions are welcome! Παρακαλώ:
 5. Open Pull Request
 
 ### Guidelines
+
 - Follow existing code style (Prettier + ESLint)
 - Write descriptive commit messages
 - Add tests για new features (when applicable)
@@ -463,6 +488,7 @@ Contributions are welcome! Παρακαλώ:
 ## 🗺️ Roadmap
 
 ### ✅ Recently Implemented
+
 - [x] **UPDATE blocks** - Full support για UPDATE statements με SET clauses
 - [x] **DELETE blocks** - Delete data με WHERE conditions
 - [x] **ORDER BY blocks** - Sort query results
@@ -470,6 +496,7 @@ Contributions are welcome! Παρακαλώ:
 - [x] **Multiple column/value support** - Chain columns, values και conditions
 
 ### Planned Features
+
 - [ ] More SQL blocks (JOIN, GROUP BY, HAVING, subqueries)
 - [ ] Multiple database tabs
 - [ ] Query performance metrics

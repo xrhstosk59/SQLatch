@@ -61,7 +61,9 @@
 
 .floatingButton:focus {
     outline: none;
-    box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.3), 0 6px 20px rgba(40, 167, 69, 0.4);
+    box-shadow:
+        0 0 0 4px rgba(40, 167, 69, 0.3),
+        0 6px 20px rgba(40, 167, 69, 0.4);
 }
 
 .floatingButton i {

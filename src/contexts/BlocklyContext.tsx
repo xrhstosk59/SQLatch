@@ -34,6 +34,7 @@ interface BlocklyContextType {
     getToolbox: () => Blockly.utils.toolbox.ToolboxDefinition;
     getWorkspaceState: () => object;
     runGen: () => string;
+    runGenSelected: () => string;
 }
 
 const BlocklyContext = createContext<BlocklyContextType | undefined>(undefined);
@@ -287,6 +288,32 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
         return code;
     };
 
+    const runGenSelected = (): string => {
+        console.log('-- Blockly: Running Generator (Selected Only) --');
+
+        // Get selected blocks from workspace
+        const selected = Blockly.getSelected();
+
+        if (!selected) {
+            console.log('-- Blockly: No block selected, running all blocks --');
+            return runGen();
+        }
+
+        // Get the top-level block (in case a child block is selected)
+        let topBlock = selected;
+        while (topBlock.getParent()) {
+            topBlock = topBlock.getParent()!;
+        }
+
+        console.log('-- Blockly: Selected block:', topBlock.type);
+
+        // Generate code only for this block
+        const code = SQL.blockToCode(topBlock);
+        console.log('-- Blockly: Generated code:', code);
+
+        return typeof code === 'string' ? code : code[0];
+    };
+
     const value: BlocklyContextType = useMemo(
         () => ({
             initBlockly,
@@ -297,6 +324,7 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
             getToolbox,
             getWorkspaceState,
             runGen,
+            runGenSelected,
         }),
         // eslint-disable-next-line react-hooks/exhaustive-deps
         []

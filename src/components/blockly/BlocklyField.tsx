@@ -52,11 +52,12 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
     const [errorDB, setErrorDB] = useState<string>('');
     const [currentSQL, setCurrentSQL] = useState<string>('');
 
-    // Initialize SQL after hydration
+    // Initialize SQL after hydration (only once on mount)
     useEffect(() => {
         setIsMounted(true);
         useDB.initSQL();
-    }, [useDB]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (!blocklyDiv.current || !isMounted) return;

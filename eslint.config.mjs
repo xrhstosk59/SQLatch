@@ -1,7 +1,7 @@
 import next from 'eslint-config-next';
 import prettier from 'eslint-plugin-prettier';
 
-export default [
+const eslintConfig = [
     ...next,
     {
         plugins: {
@@ -18,3 +18,5 @@ export default [
         },
     },
 ];
+
+export default eslintConfig;

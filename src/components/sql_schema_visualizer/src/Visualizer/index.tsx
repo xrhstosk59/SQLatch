@@ -38,7 +38,6 @@ import { EdgeConfig, DatabaseConfig } from './types';
 
 // this is important! You need to import the styles from the lib to make it work
 import 'reactflow/dist/style.css';
-import './Style';
 import DatabaseIcon from './components/DatabaseIcon';
 
 interface FlowProps {
@@ -62,6 +61,18 @@ const Flow: React.FC<FlowProps> = (props: FlowProps) => {
     const [unknownDatasetOn, setUnknownDatasetOn] = useState(false);
     const [databaseMenuPopupOn, setDatabaseMenuPopupOn] = useState(false);
     const [nodeHoverActive, setNodeHoverActive] = useState(true);
+
+    // Update nodes and edges when currentDatabase changes
+    useEffect(() => {
+        console.log('Flow - Updating nodes for currentDatabase:', currentDatabase);
+        const newNodes = initializeNodes(currentDatabase);
+        console.log('Flow - Generated nodes:', newNodes);
+        console.log('Flow - Node count:', newNodes.length);
+        setNodes(newNodes);
+        const newEdges = calculateEdges({ nodes: newNodes, currentDatabase });
+        console.log('Flow - Generated edges:', newEdges);
+        setEdges(newEdges);
+    }, [currentDatabase, setNodes, setEdges]);
 
     const onInit = (instance: ReactFlowInstance) => {
         const nodes = instance.getNodes();
@@ -376,16 +387,19 @@ const Flow: React.FC<FlowProps> = (props: FlowProps) => {
 const Visualizer: React.FC<FlowProps> = ({ currentDatabase }) => {
     const [currentDatabaseInternal, setCurrentDatabase] = useState(currentDatabase);
 
-    /* const [currentDatabaseInternal, setCurrentDatabase] = useState({
-    tables: [],
-    edgeConfigs: [],
-    schemaColors: {},
-    tablePositions: {}
-  } as DatabaseConfig)*/
-    //setCurrentDatabase(currentDatabase);
+    useEffect(() => {
+        console.log('Visualizer - Received currentDatabase:', currentDatabase);
+        console.log('Visualizer - Tables:', currentDatabase?.tables);
+        console.log('Visualizer - Table count:', currentDatabase?.tables?.length);
+        setCurrentDatabase(currentDatabase);
+    }, [currentDatabase]);
 
     return (
-        <ReactFlowProvider>{<Flow currentDatabase={currentDatabaseInternal} />}</ReactFlowProvider>
+        <div style={{ width: '100%', height: '100%' }}>
+            <ReactFlowProvider>
+                <Flow currentDatabase={currentDatabaseInternal} />
+            </ReactFlowProvider>
+        </div>
     );
 };
 

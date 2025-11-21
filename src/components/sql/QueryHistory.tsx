@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useState, useEffect } from 'react';
 import { Collapse } from 'react-bootstrap';
 import { useQueryHistory } from '../../contexts/QueryHistoryContext';
 import styles from '../../styles/queryHistory.module.css';
@@ -7,6 +7,11 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 function QueryHistory() {
     const { history, clearHistory, deleteQuery } = useQueryHistory();
     const [isOpen, setIsOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const formatTimestamp = (date: Date) => {
         return new Date(date).toLocaleString('el-GR', {
@@ -47,8 +52,10 @@ function QueryHistory() {
                         ></i>
                     </button>
                     <div>
-                        <span className={styles.badge}>{history.length} queries</span>
-                        {history.length > 0 && (
+                        <span className={styles.badge}>
+                            {mounted ? history.length : 0} queries
+                        </span>
+                        {mounted && history.length > 0 && (
                             <button className={styles.clearButton} onClick={clearHistory}>
                                 <i className="bi bi-trash"></i> Καθαρισμός
                             </button>
@@ -59,7 +66,7 @@ function QueryHistory() {
             <Collapse in={isOpen}>
                 <div id="query-history-collapse" className={styles.collapseContainer}>
                     <div className={styles.body}>
-                        {history.length === 0 ? (
+                        {!mounted || history.length === 0 ? (
                             <div className={styles.emptyState}>
                                 <i className={`bi bi-inbox ${styles.emptyIcon}`}></i>
                                 <p className={styles.emptyText}>

@@ -93,7 +93,12 @@ export default function NavBar() {
     };
 
     const onClickSchemaButton = () => {
-        setCurrentDatabase(convertSchema(useDB));
+        const schema = convertSchema(useDB);
+        console.log('=== SCHEMA DEBUG ===');
+        console.log('Tables:', schema.tables);
+        console.log('Table count:', schema.tables.length);
+        console.log('Full schema:', schema);
+        setCurrentDatabase(schema);
         setSchemaModalShow(true);
     };
 

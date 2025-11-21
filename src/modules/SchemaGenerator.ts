@@ -36,9 +36,11 @@ interface SQLiteContextType {
 
 const convertSchema = (useDB: SQLiteContextType): DatabaseConfig => {
     const table_names = useDB.getTableNames();
+    console.log('convertSchema - table_names from DB:', table_names);
 
     const tables: TableConfig[] = table_names.map((row: any) => {
         const name = row['name'];
+        console.log(`convertSchema - Processing table: ${name}`);
         const columns = useDB.getColumnNames(name).map((row: any) => {
             return {
                 name: row['name'],
@@ -47,13 +49,20 @@ const convertSchema = (useDB: SQLiteContextType): DatabaseConfig => {
                 key: Boolean(row['pk']) ?? false,
             };
         });
-        return { name, columns, schemaColor: '#91C4F2' } as TableConfig;
+        console.log(`convertSchema - Table ${name} has ${columns.length} columns`, columns);
+        return {
+            name,
+            columns,
+            schemaColor: '#91C4F2',
+            schema: 'public'
+        } as TableConfig;
     });
 
     const tablePositions: Record<string, { x: number; y: number }> = {};
     table_names.forEach((row: any, index: number) => {
         const name = row['name'];
-        tablePositions[name] = { x: index * 200, y: 0 };
+        // Add public. prefix to match the schema used by the visualizer
+        tablePositions[`public.${name}`] = { x: index * 300, y: 100 };
     });
 
     const edgeConfigs = table_names.map((row: any) => {

@@ -1,28 +1,28 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "out",
-  "framework": null,
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
+    "buildCommand": "npm run build",
+    "outputDirectory": "out",
+    "framework": null,
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "headers": [
         {
-          "key": "Cross-Origin-Embedder-Policy",
-          "value": "require-corp"
-        },
-        {
-          "key": "Cross-Origin-Opener-Policy",
-          "value": "same-origin"
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "Cross-Origin-Embedder-Policy",
+                    "value": "require-corp"
+                },
+                {
+                    "key": "Cross-Origin-Opener-Policy",
+                    "value": "same-origin"
+                }
+            ]
         }
-      ]
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/$1.html"
-    }
-  ]
+    ],
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/$1.html"
+        }
+    ]
 }

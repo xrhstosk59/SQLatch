@@ -32,9 +32,39 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
     const [sqlite3Global, setSqlite3Global] = useState<Sqlite3Static | null>(null);
     const [activeDB, setActiveDB] = useState<Database | null>(null);
     const [errors, setErrors] = useState<string>('');
+    const [isInitializing, setIsInitializing] = useState(false);
+    const [isInitialized, setIsInitialized] = useState(false);
 
-    const initSQL = () => {
+    const setupDB = useCallback((sqlite3: Sqlite3Static) => {
+        try {
+            console.log('-- SQLite: Initializing DB --');
+            console.log('-- SQLite: Creating NEW database instance --');
+            const db = new sqlite3.oo1.DB();
+            console.log('-- SQLite: New DB created:', db);
+            setActiveDB((prevDB) => {
+                if (prevDB) {
+                    console.log('-- SQLite: Closing previous DB --');
+                    prevDB.close();
+                }
+                return db;
+            });
+            setIsInitialized(true);
+            setIsInitializing(false);
+        } catch (err) {
+            console.log(err instanceof Error ? err.message : String(err));
+            setIsInitializing(false);
+        }
+    }, []);
+
+    const initSQL = useCallback(() => {
+        // Prevent multiple initializations
+        if (isInitializing || isInitialized) {
+            console.log('-- SQLite: Already initialized or initializing, skipping --');
+            return;
+        }
+
         console.log('-- SQLite: Initializing module --');
+        setIsInitializing(true);
         sqlite3InitModule({
             print: console.log,
             printErr: console.error,
@@ -44,52 +74,59 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
                 setupDB(sqlite3);
             } catch (err) {
                 console.log(err instanceof Error ? err.message : String(err));
+                setIsInitializing(false);
             }
         });
-    };
+    }, [setupDB, isInitializing, isInitialized]);
 
-    const setupDB = (sqlite3: Sqlite3Static) => {
-        try {
-            console.log('-- SQLite: Initializing DB --');
-            const db = new sqlite3.oo1.DB();
-            setActiveDB(db);
-        } catch (err) {
-            console.log(err instanceof Error ? err.message : String(err));
-            if (activeDB) {
-                activeDB.close();
-            }
-        }
-    };
-
-    const queryDB = (query: string) => {
+    const queryDB = useCallback((query: string) => {
         setErrors('');
         if (query === '') {
             setErrors('Δεν βρέθηκαν blocks στο workspace!');
         } else {
             try {
                 console.log('-- SQLite: Querying --');
+                console.log('-- SQLite: Original query:', query);
+
+                // Remove trailing semicolons as SQLite.wasm exec() doesn't accept them
+                const cleanQuery = query.trim().replace(/;+\s*$/, '');
+                console.log('-- SQLite: Clean query:', cleanQuery);
+                console.log('-- SQLite: activeDB instance:', activeDB);
+
                 if (activeDB) {
-                    const result = activeDB.exec(query, {
+                    const result = activeDB.exec(cleanQuery, {
                         rowMode: 'object',
                         returnValue: 'resultRows',
                     }) as Record<string, unknown>[];
+                    console.log('-- SQLite: Query result:', result);
                     setRecentResult(result);
+
+                    // If CREATE TABLE, verify it was created
+                    if (cleanQuery.trim().toUpperCase().startsWith('CREATE TABLE')) {
+                        const tables = activeDB.exec(
+                            "SELECT name FROM sqlite_schema WHERE type = 'table'",
+                            { rowMode: 'object', returnValue: 'resultRows' }
+                        );
+                        console.log('-- SQLite: Tables after CREATE:', tables);
+                    }
+                } else {
+                    console.log('-- SQLite: ERROR - No activeDB!');
                 }
             } catch (err) {
                 const message = err instanceof Error ? err.message : String(err);
-                console.log(message);
+                console.log('-- SQLite: Query error:', message);
                 setErrors(message);
             }
         }
-    };
+    }, [activeDB]);
 
-    const getResultDB = (): Record<string, unknown>[] => {
+    const getResultDB = useCallback((): Record<string, unknown>[] => {
         return recentResult;
-    };
+    }, [recentResult]);
 
-    const getError = (): string => {
+    const getError = useCallback((): string => {
         return errors;
-    };
+    }, [errors]);
 
     const requestDB = async (path: string): Promise<ArrayBuffer | ''> => {
         try {
@@ -103,7 +140,23 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
         }
     };
 
-    const loadDB = async (path: string) => {
+    const resetDB = useCallback(() => {
+        console.log('-- SQLite: Resetting DB --');
+        console.log('-- SQLite: WARNING - Creating new DB, old data will be lost! --');
+        if (sqlite3Global) {
+            const db = new sqlite3Global.oo1.DB();
+            console.log('-- SQLite: Reset - New DB created --');
+            setActiveDB((prevDB) => {
+                if (prevDB) {
+                    console.log('-- SQLite: Reset - Closing previous DB --');
+                    prevDB.close();
+                }
+                return db;
+            });
+        }
+    }, [sqlite3Global]);
+
+    const loadDB = useCallback(async (path: string) => {
         console.log('-- SQLite: Loading DB --');
 
         if (path === '') {
@@ -126,49 +179,44 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
                             sqlite3Global.capi.SQLITE_DESERIALIZE_RESIZEABLE
                     );
                     db.checkRc(rc);
-                    if (activeDB) {
-                        activeDB.close();
-                    }
-                    setActiveDB(db);
+                    setActiveDB((prevDB) => {
+                        if (prevDB) prevDB.close();
+                        return db;
+                    });
                 }
             }
         }
-    };
+    }, [sqlite3Global, resetDB]);
 
-    const resetDB = () => {
-        console.log('-- SQLite: Resetting DB --');
-        if (sqlite3Global) {
-            const db = new sqlite3Global.oo1.DB();
-            if (activeDB) {
-                activeDB.close();
-            }
-            setActiveDB(db);
+    const getTableNames = useCallback((): Record<string, unknown>[] => {
+        console.log('getTableNames - activeDB:', activeDB);
+        if (!activeDB) {
+            console.log('getTableNames - No activeDB!');
+            return [];
         }
-    };
-
-    const getTableNames = (): Record<string, unknown>[] => {
-        if (!activeDB) return [];
-        return activeDB.exec(
+        const result = activeDB.exec(
             "SELECT name FROM sqlite_schema WHERE type = 'table' AND name NOT IN ('sqlite_sequence')",
             { rowMode: 'object', returnValue: 'resultRows' }
         ) as Record<string, unknown>[];
-    };
+        console.log('getTableNames - Result:', result);
+        return result;
+    }, [activeDB]);
 
-    const getColumnNames = (name: string): Record<string, unknown>[] => {
+    const getColumnNames = useCallback((name: string): Record<string, unknown>[] => {
         if (!activeDB) return [];
         return activeDB.exec(`PRAGMA table_info(${name});`, {
             rowMode: 'object',
             returnValue: 'resultRows',
         }) as Record<string, unknown>[];
-    };
+    }, [activeDB]);
 
-    const getForeignKeys = (name: string): Record<string, unknown>[] => {
+    const getForeignKeys = useCallback((name: string): Record<string, unknown>[] => {
         if (!activeDB) return [];
         return activeDB.exec(`PRAGMA foreign_key_list(${name})`, {
             rowMode: 'object',
             returnValue: 'resultRows',
         }) as Record<string, unknown>[];
-    };
+    }, [activeDB]);
 
     const value: SQLiteContextType = useMemo(
         () => ({
@@ -182,8 +230,7 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
             getColumnNames,
             getForeignKeys,
         }),
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        []
+        [initSQL, queryDB, getResultDB, getError, loadDB, resetDB, getTableNames, getColumnNames, getForeignKeys]
     );
 
     return <SQLiteContext.Provider value={value}>{children}</SQLiteContext.Provider>;

@@ -17,7 +17,7 @@ export default function SchemaModal({ show, onHide, db }: SchemaModalProps) {
             >
                 <Modal.Title id="contained-modal-title-vcenter">Σχήμα Βάσης Δεδομένων</Modal.Title>
             </Modal.Header>
-            <Modal.Body style={{ height: '80svh', background: '#252a2e' }}>
+            <Modal.Body style={{ height: '80svh', width: '100%', background: '#252a2e', padding: 0 }}>
                 <Visualizer currentDatabase={db}></Visualizer>
             </Modal.Body>
             <Modal.Footer style={{ background: '#252a2e' }}>

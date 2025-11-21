@@ -4,6 +4,7 @@ import { useSQLite } from '../../contexts/SQLiteContext';
 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
 import { ToastContainer } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 
@@ -36,6 +37,7 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
     const [errortoastShow, setErrorToastShow] = useState(false);
     const [validationtoastShow, setValidationToastShow] = useState(false);
     const [successtoastShow, setSuccessToastShow] = useState(false);
+    const [selectedOnly, setSelectedOnly] = useState(false);
 
     const [schemaShow, setschemaShow] = useState(false);
     const [currentDatabaseInternal, setCurrentDatabase] = useState<DatabaseConfig>({
@@ -47,9 +49,11 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
     const [outputDB, setOutputDB] = useState<Record<string, unknown>[]>([]);
     const [errorDB, setErrorDB] = useState<string>('');
 
+    // Initialize SQL only once on mount
     useEffect(() => {
         useDB.initSQL();
-    }, [useDB]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const showResult = (): boolean => {
         setErrorToastShow(false);
@@ -67,7 +71,7 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
     };
 
     const onClickRun = () => {
-        const blocklyOut: string = useBL.runGen();
+        const blocklyOut: string = selectedOnly ? useBL.runGenSelected() : useBL.runGen();
         useDB.queryDB(blocklyOut);
 
         if (showResult()) {
@@ -91,6 +95,21 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
                 <Button variant="success" onClick={onClickRun}>
                     Αποτέλεσμα
                 </Button>
+
+                <Form.Check
+                    type="checkbox"
+                    id="selected-only-checkbox"
+                    label="Μόνο επιλεγμένο"
+                    checked={selectedOnly}
+                    onChange={(e) => setSelectedOnly(e.target.checked)}
+                    style={{
+                        marginLeft: '15px',
+                        display: 'inline-block',
+                        color: 'white',
+                        userSelect: 'none'
+                    }}
+                    title="Εκτέλεση μόνο του επιλεγμένου block"
+                />
 
                 <Button
                     variant="primary"

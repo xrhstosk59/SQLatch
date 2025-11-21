@@ -1,12 +1,17 @@
-import { memo } from 'react';
+import { memo, useState, useEffect } from 'react';
 import { Badge } from 'react-bootstrap';
 import { useAutoSaveContext } from '../../contexts/AutoSaveContext';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function AutoSaveIndicator() {
     const { isEnabled, lastSaved } = useAutoSaveContext();
+    const [mounted, setMounted] = useState(false);
 
-    if (!isEnabled) {
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!isEnabled || !mounted) {
         return null;
     }
 
