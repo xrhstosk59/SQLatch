@@ -13,6 +13,8 @@ import updateJSON from '../modules/Blockly/Blocks/update.json';
 import deleteJSON from '../modules/Blockly/Blocks/delete.json';
 import orderByJSON from '../modules/Blockly/Blocks/order_by.json';
 import setJSON from '../modules/Blockly/Blocks/set.json';
+import combinerJSON from '../modules/Blockly/Blocks/combiner.json';
+import setClauseJSON from '../modules/Blockly/Blocks/set_clause.json';
 
 const SQL = new Blockly.Generator('SQL');
 
@@ -24,6 +26,7 @@ function parentIsType(block: Blockly.Block, allowedTypes: string[]) {
 }
 
 let BLWorkspace: Blockly.Workspace;
+let lastSelectedBlock: Blockly.Block | null = null;
 
 interface BlocklyContextType {
     initBlockly: () => void;
@@ -147,6 +150,23 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
                 }
             },
         };
+        Blockly.Blocks['combiner'] = {
+            init: function () {
+                this.jsonInit(combinerJSON);
+            },
+        };
+        Blockly.Blocks['set_clause'] = {
+            init: function () {
+                this.jsonInit(setClauseJSON);
+            },
+            onchange: function (e: Blockly.Events.Abstract) {
+                if (this.workspace.isDragging()) return;
+                if (e.type !== Blockly.Events.BLOCK_MOVE) return;
+                if (!parentIsType(this, ['update', 'set_clause'])) {
+                    this.unplug();
+                }
+            },
+        };
     };
 
     const initGen = () => {
@@ -187,7 +207,21 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
         };
         SQL.forBlock['text'] = function (block) {
             const textValue = block.getFieldValue('TEXT');
-            return [textValue, 0];
+
+            // Check the parent block type to determine if we need quotes
+            const parentBlock = (block as any).parentBlock_;
+            const parentType = parentBlock?.type;
+
+            // Add quotes ONLY for values inside VALUE blocks (actual data)
+            // Everything else is an identifier (table names, column names, etc.)
+            const isNumber = !isNaN(Number(textValue));
+            const isInsideValueBlock = parentType === 'value';
+
+            // Only add quotes for string values inside VALUE blocks
+            const needsQuotes = !isNumber && isInsideValueBlock;
+            const sqlValue = needsQuotes ? `'${textValue}'` : textValue;
+
+            return [sqlValue, 0];
         };
         SQL.forBlock['value'] = function (block) {
             const textValue = SQL.valueToCode(block, 'VALUE', 0);
@@ -199,8 +233,9 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
         };
         SQL.forBlock['update'] = function (block) {
             const table = SQL.valueToCode(block, 'TABLE', 0);
-            let setClause = SQL.statementToCode(block, 'SET') || '';
-            const code = 'UPDATE ' + table + ' SET ' + setClause;
+            let setClause = SQL.statementToCode(block, 'SET_CLAUSES') || '';
+            const whereClause = SQL.statementToCode(block, 'UPDATE_CONDITION') || '';
+            const code = 'UPDATE ' + table + ' SET ' + setClause + ' ' + whereClause;
             return code + ';';
         };
         SQL.forBlock['delete'] = function (block) {
@@ -221,6 +256,19 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
             const code = column + ' = ' + value;
             return code;
         };
+        SQL.forBlock['combiner'] = function (block) {
+            const first = SQL.valueToCode(block, 'FIRST', 0);
+            const operation = block.getFieldValue('OPERATION');
+            const second = SQL.valueToCode(block, 'SECOND', 0);
+            const code = '(' + first + ' ' + operation + ' ' + second + ')';
+            return [code, 0];
+        };
+        SQL.forBlock['set_clause'] = function (block) {
+            const column = SQL.valueToCode(block, 'COLUMN_NAME', 0);
+            const value = SQL.valueToCode(block, 'COLUMN_VALUE', 0);
+            const code = column + ' = ' + value;
+            return code;
+        };
         // generate code for all blocks in statements
         SQL.scrub_ = function (block, code, thisOnly) {
             const nextBlock = block.nextConnection && block.nextConnection.targetBlock();
@@ -230,7 +278,8 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
                     nextBlock.type == 'column' ||
                     nextBlock.type == 'column_name' ||
                     nextBlock.type == 'value' ||
-                    nextBlock.type == 'set'
+                    nextBlock.type == 'set' ||
+                    nextBlock.type == 'set_clause'
                 ) {
                     return code + ', ' + SQL.blockToCode(nextBlock);
                 }
@@ -241,17 +290,34 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
 
     const setWorkspace = (workspace: Blockly.Workspace) => {
         BLWorkspace = workspace;
+
+        // Track block selection
+        workspace.addChangeListener((event: Blockly.Events.Abstract) => {
+            if (event.type === Blockly.Events.SELECTED) {
+                const selectedEvent = event as any;
+                if (selectedEvent.newElementId) {
+                    const block = workspace.getBlockById(selectedEvent.newElementId);
+                    if (block) {
+                        lastSelectedBlock = block;
+                        console.log('-- Blockly: Block selected:', block.type);
+                    }
+                }
+            }
+        });
     };
 
     const loadWorkspaceFile = async (path: string) => {
-        console.log('-- Blockly: Setting state --');
+        console.log('-- Blockly: Loading workspace from:', path);
         if (path === '') {
+            console.log('-- Blockly: Clearing workspace --');
             BLWorkspace.clear();
         } else {
             try {
                 const response = await fetch(path);
                 const text = await response.text();
-                loadWorkspaceState(JSON.parse(text));
+                const state = JSON.parse(text);
+                console.log('-- Blockly: Parsed workspace state:', state);
+                loadWorkspaceState(state);
                 // Center the workspace after loading
                 if (
                     'scrollCenter' in BLWorkspace &&
@@ -260,7 +326,8 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
                     (BLWorkspace as Blockly.WorkspaceSvg).scrollCenter();
                 }
             } catch (error) {
-                console.error('Error fetching the file: ', error);
+                console.error('-- Blockly: Error loading workspace from:', path);
+                console.error('-- Blockly: Error details:', error);
                 BLWorkspace.clear();
             }
         }
@@ -291,21 +358,33 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
     const runGenSelected = (): string => {
         console.log('-- Blockly: Running Generator (Selected Only) --');
 
-        // Get selected blocks from workspace
-        const selected = Blockly.getSelected();
+        if (!BLWorkspace) {
+            console.log('-- Blockly: Workspace not initialized --');
+            return '';
+        }
 
-        if (!selected) {
+        console.log('-- Blockly: Last selected block:', lastSelectedBlock?.type);
+
+        if (!lastSelectedBlock) {
             console.log('-- Blockly: No block selected, running all blocks --');
             return runGen();
         }
 
+        // Verify block still exists in workspace
+        const blockExists = BLWorkspace.getBlockById(lastSelectedBlock.id);
+        if (!blockExists) {
+            console.log('-- Blockly: Selected block no longer exists, running all blocks --');
+            lastSelectedBlock = null;
+            return runGen();
+        }
+
         // Get the top-level block (in case a child block is selected)
-        let topBlock = selected;
+        let topBlock = lastSelectedBlock;
         while (topBlock.getParent()) {
             topBlock = topBlock.getParent()!;
         }
 
-        console.log('-- Blockly: Selected block:', topBlock.type);
+        console.log('-- Blockly: Top-level block:', topBlock.type);
 
         // Generate code only for this block
         const code = SQL.blockToCode(topBlock);

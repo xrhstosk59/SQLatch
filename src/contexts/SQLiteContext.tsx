@@ -11,7 +11,7 @@ import sqlite3InitModule, { Database, Sqlite3Static } from '@sqlite.org/sqlite-w
 
 interface SQLiteContextType {
     initSQL: () => void;
-    queryDB: (query: string) => void;
+    queryDB: (query: string) => Record<string, unknown>[];
     getResultDB: () => Record<string, unknown>[];
     getError: () => string;
     loadDB: (path: string) => Promise<void>;
@@ -79,44 +79,67 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
         });
     }, [setupDB, isInitializing, isInitialized]);
 
-    const queryDB = useCallback((query: string) => {
+    const queryDB = useCallback((query: string): Record<string, unknown>[] => {
         setErrors('');
         if (query === '') {
             setErrors('Δεν βρέθηκαν blocks στο workspace!');
-        } else {
-            try {
-                console.log('-- SQLite: Querying --');
-                console.log('-- SQLite: Original query:', query);
+            return [];
+        }
 
-                // Remove trailing semicolons as SQLite.wasm exec() doesn't accept them
-                const cleanQuery = query.trim().replace(/;+\s*$/, '');
-                console.log('-- SQLite: Clean query:', cleanQuery);
-                console.log('-- SQLite: activeDB instance:', activeDB);
+        try {
+            console.log('-- SQLite: Querying --');
+            console.log('-- SQLite: Original query:', query);
 
-                if (activeDB) {
-                    const result = activeDB.exec(cleanQuery, {
-                        rowMode: 'object',
-                        returnValue: 'resultRows',
-                    }) as Record<string, unknown>[];
-                    console.log('-- SQLite: Query result:', result);
-                    setRecentResult(result);
+            // Split multiple statements by semicolon
+            const statements = query
+                .split(';')
+                .map(s => s.trim())
+                .filter(s => s.length > 0);
 
-                    // If CREATE TABLE, verify it was created
-                    if (cleanQuery.trim().toUpperCase().startsWith('CREATE TABLE')) {
-                        const tables = activeDB.exec(
-                            "SELECT name FROM sqlite_schema WHERE type = 'table'",
-                            { rowMode: 'object', returnValue: 'resultRows' }
-                        );
-                        console.log('-- SQLite: Tables after CREATE:', tables);
-                    }
-                } else {
-                    console.log('-- SQLite: ERROR - No activeDB!');
-                }
-            } catch (err) {
-                const message = err instanceof Error ? err.message : String(err);
-                console.log('-- SQLite: Query error:', message);
-                setErrors(message);
+            console.log('-- SQLite: Split into', statements.length, 'statements:', statements);
+
+            if (!activeDB) {
+                console.log('-- SQLite: ERROR - No activeDB!');
+                return [];
             }
+
+            let lastResult: Record<string, unknown>[] = [];
+
+            // Execute each statement separately
+            statements.forEach((statement, index) => {
+                console.log(`-- SQLite: Executing statement ${index + 1}:`, statement);
+
+                const result = activeDB.exec(statement, {
+                    rowMode: 'object',
+                    returnValue: 'resultRows',
+                }) as Record<string, unknown>[];
+
+                console.log(`-- SQLite: Statement ${index + 1} result:`, result);
+
+                // Keep the last non-empty result (typically from SELECT)
+                if (result && result.length > 0) {
+                    lastResult = result;
+                }
+
+                // If CREATE TABLE, verify it was created
+                if (statement.trim().toUpperCase().startsWith('CREATE TABLE')) {
+                    const tables = activeDB.exec(
+                        "SELECT name FROM sqlite_schema WHERE type = 'table'",
+                        { rowMode: 'object', returnValue: 'resultRows' }
+                    );
+                    console.log('-- SQLite: Tables after CREATE:', tables);
+                }
+            });
+
+            console.log('-- SQLite: Final result to return:', lastResult);
+            setRecentResult(lastResult);
+            return lastResult;
+
+        } catch (err) {
+            const message = err instanceof Error ? err.message : String(err);
+            console.log('-- SQLite: Query error:', message);
+            setErrors(message);
+            return [];
         }
     }, [activeDB]);
 

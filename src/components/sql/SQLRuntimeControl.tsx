@@ -37,7 +37,7 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
     const [errortoastShow, setErrorToastShow] = useState(false);
     const [validationtoastShow, setValidationToastShow] = useState(false);
     const [successtoastShow, setSuccessToastShow] = useState(false);
-    const [selectedOnly, setSelectedOnly] = useState(false);
+    const [pendingResult, setPendingResult] = useState<Record<string, unknown>[] | null>(null);
 
     const [schemaShow, setschemaShow] = useState(false);
     const [currentDatabaseInternal, setCurrentDatabase] = useState<DatabaseConfig>({
@@ -55,27 +55,60 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const showResult = (): boolean => {
+    // Open modal after outputDB state updates
+    useEffect(() => {
+        if (pendingResult !== null) {
+            console.log('=== PENDING RESULT EFFECT ===');
+            console.log('Opening modal with result:', pendingResult);
+            const error = useDB.getError();
+            if (error === '') {
+                setModalShow(true);
+            } else {
+                setErrorToastShow(true);
+            }
+            setPendingResult(null);
+        }
+    }, [outputDB, pendingResult, useDB]);
+
+    const showResult = (resultDB: Record<string, unknown>[]): boolean => {
         setErrorToastShow(false);
-        setOutputDB(useDB.getResultDB());
+        console.log('=== SHOW RESULT DEBUG ===');
+        console.log('Result from DB:', resultDB);
+        console.log('Result length:', resultDB?.length);
+        console.log('Result type:', typeof resultDB);
 
         const error = useDB.getError();
+        console.log('Error from DB:', error);
         setErrorDB(error);
-        if (error === '') {
-            setModalShow(true);
-            return true;
-        } else {
-            setErrorToastShow(true);
-            return false;
-        }
+
+        // Set output first
+        setOutputDB(resultDB);
+
+        // Wait for state to update before showing modal
+        setTimeout(() => {
+            console.log('=== OPENING MODAL AFTER TIMEOUT ===');
+            if (error === '') {
+                setModalShow(true);
+            } else {
+                setErrorToastShow(true);
+            }
+        }, 0);
+
+        return error === '';
     };
 
-    const onClickRun = () => {
-        const blocklyOut: string = selectedOnly ? useBL.runGenSelected() : useBL.runGen();
-        useDB.queryDB(blocklyOut);
+    const onClickRun = (runSelectedOnly: boolean = false) => {
+        console.log('=== ONCLICK RUN DEBUG ===');
+        console.log('Selected only mode:', runSelectedOnly);
+        const blocklyOut: string = runSelectedOnly ? useBL.runGenSelected() : useBL.runGen();
+        console.log('Blockly output (query):', blocklyOut);
+        console.log('Query length:', blocklyOut?.length);
 
-        if (showResult()) {
-            if (useVA.validate(blocklyOut, useDB.getResultDB())) {
+        const resultDB = useDB.queryDB(blocklyOut);
+        console.log('Query DB returned:', resultDB);
+
+        if (showResult(resultDB)) {
+            if (useVA.validate(blocklyOut, resultDB)) {
                 console.log('Validation: passed');
                 setValSync(!valSync);
                 setSuccessToastShow(true);
@@ -92,24 +125,23 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
                 style={{ paddingLeft: 0, paddingRight: 0 }}
                 className={styles.container}
             >
-                <Button variant="success" onClick={onClickRun}>
-                    Αποτέλεσμα
-                </Button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <Button
+                        variant="success"
+                        onClick={() => onClickRun(false)}
+                        title="Εκτέλεση όλων των blocks στο workspace"
+                    >
+                        ▶ Τρέξε Όλα
+                    </Button>
 
-                <Form.Check
-                    type="checkbox"
-                    id="selected-only-checkbox"
-                    label="Μόνο επιλεγμένο"
-                    checked={selectedOnly}
-                    onChange={(e) => setSelectedOnly(e.target.checked)}
-                    style={{
-                        marginLeft: '15px',
-                        display: 'inline-block',
-                        color: 'white',
-                        userSelect: 'none'
-                    }}
-                    title="Εκτέλεση μόνο του επιλεγμένου block"
-                />
+                    <Button
+                        variant="primary"
+                        onClick={() => onClickRun(true)}
+                        title="Εκτέλεση μόνο του επιλεγμένου block (πάτησε πάνω σε ένα block για να το επιλέξεις)"
+                    >
+                        ▶ Τρέξε Επιλεγμένο
+                    </Button>
+                </div>
 
                 <Button
                     variant="primary"

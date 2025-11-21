@@ -26,32 +26,49 @@
     }
 }
 
-/* Floating Action Button */
-.floatingButton {
+/* Floating Action Button Group */
+.floatingButtonGroup {
     position: fixed;
     bottom: 30px;
     right: 30px;
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
 
+/* Floating Action Button */
+.floatingButton {
     background: linear-gradient(135deg, #28a745 0%, #20903a 100%);
     color: white;
     border: none;
-    padding: 16px 28px;
+    padding: 14px 24px;
     border-radius: 50px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    min-width: 160px;
+}
+
+.floatingButtonSelected {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
 }
 
 .floatingButton:hover {
     background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
     transform: translateY(-3px);
     box-shadow: 0 8px 30px rgba(40, 167, 69, 0.6);
+}
+
+.floatingButtonSelected:hover {
+    background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+    box-shadow: 0 8px 30px rgba(0, 123, 255, 0.6);
 }
 
 .floatingButton:active {
@@ -71,11 +88,16 @@
 }
 
 @media (max-width: 768px) {
-    .floatingButton {
+    .floatingButtonGroup {
         bottom: 20px;
         right: 20px;
-        padding: 14px 24px;
-        font-size: 15px;
+        gap: 10px;
+    }
+
+    .floatingButton {
+        padding: 12px 20px;
+        font-size: 14px;
+        min-width: 140px;
     }
 
     .floatingButton i {
@@ -84,11 +106,16 @@
 }
 
 @media (max-width: 576px) {
-    .floatingButton {
+    .floatingButtonGroup {
         bottom: 15px;
         right: 15px;
-        padding: 12px 20px;
-        font-size: 14px;
+        gap: 8px;
+    }
+
+    .floatingButton {
+        padding: 10px 16px;
+        font-size: 13px;
+        min-width: auto;
     }
 
     .floatingButton span {
@@ -96,6 +123,6 @@
     }
 
     .floatingButton i {
-        font-size: 24px;
+        font-size: 22px;
     }
 }

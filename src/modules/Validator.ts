@@ -6,14 +6,31 @@ let queryOutput: object[] = [];
 export const useValidation = () => {
     const setRequirements = async (stringReq: string[], outputReqPath: string) => {
         console.log('-- Validator: Loading requirements --');
+        console.log('-- Validator: String requirements:', stringReq);
+        console.log('-- Validator: Output path:', outputReqPath);
         queryString = stringReq;
 
+        // If no output path, skip fetching
+        if (!outputReqPath || outputReqPath === '') {
+            console.log('-- Validator: No output path provided, skipping fetch --');
+            queryOutput = [];
+            return;
+        }
+
         try {
+            console.log('-- Validator: Fetching from:', outputReqPath);
             const response = await fetch(outputReqPath);
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
             const arrayBuf = await response.json();
+            console.log('-- Validator: Loaded output requirements:', arrayBuf);
             queryOutput = arrayBuf;
         } catch (err: any) {
-            console.log(err.message);
+            console.error('-- Validator: Error loading requirements:', err.message);
+            console.error('-- Validator: Failed path:', outputReqPath);
             queryOutput = [];
         }
     };

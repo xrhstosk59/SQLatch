@@ -1,0 +1,29 @@
+{
+    "type": "combiner",
+    "message0": "%1 %2 %3",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "FIRST",
+            "check": "String"
+        },
+        {
+            "type": "field_dropdown",
+            "name": "OPERATION",
+            "options": [
+                ["AND", "AND"],
+                ["OR", "OR"]
+            ]
+        },
+        {
+            "type": "input_value",
+            "name": "SECOND",
+            "check": "String"
+        }
+    ],
+    "output": "String",
+    "inputsInline": true,
+    "colour": 170,
+    "tooltip": "Combine two conditions with AND or OR",
+    "helpUrl": ""
+}

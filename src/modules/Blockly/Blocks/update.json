@@ -1,6 +1,6 @@
 {
     "type": "update",
-    "message0": "UPDATE %1 SET %2 %3",
+    "message0": "UPDATE %1 SET %2 %3 %4",
     "args0": [
         {
             "type": "input_value",
@@ -11,12 +11,17 @@
         },
         {
             "type": "input_statement",
-            "name": "SET",
+            "name": "SET_CLAUSES",
             "check": "SET"
+        },
+        {
+            "type": "input_statement",
+            "name": "UPDATE_CONDITION",
+            "check": "PARAMETERS"
         }
     ],
     "previousStatement": null,
     "colour": 160,
-    "tooltip": "UPDATE table SET column = value",
+    "tooltip": "UPDATE table SET column = value WHERE condition",
     "helpUrl": ""
 }

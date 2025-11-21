@@ -1,0 +1,21 @@
+{
+    "type": "set_clause",
+    "message0": "%1 = %2",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "COLUMN_NAME",
+            "check": "String"
+        },
+        {
+            "type": "input_value",
+            "name": "COLUMN_VALUE",
+            "check": "String"
+        }
+    ],
+    "previousStatement": "SET",
+    "nextStatement": "SET",
+    "colour": 160,
+    "tooltip": "Set column value in UPDATE statement",
+    "helpUrl": ""
+}

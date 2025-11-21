@@ -141,9 +141,12 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
         }
     };
 
-    const onClickRun = () => {
+    const onClickRun = (runSelectedOnly: boolean = false) => {
         // Generate SQL and show preview
-        const blocklyOut: string = useBL.runGen();
+        console.log('=== ONCLICK RUN DEBUG ===');
+        console.log('Run selected only:', runSelectedOnly);
+        const blocklyOut: string = runSelectedOnly ? useBL.runGenSelected() : useBL.runGen();
+        console.log('Generated SQL:', blocklyOut);
         setCurrentSQL(blocklyOut);
         setPreviewModalShow(true);
     };
@@ -194,16 +197,27 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
         <Container style={{ position: 'relative' }}>
             <Container fluid className={styles.container} ref={blocklyDiv} id="blocklyDiv" />
 
-            {/* Floating Action Button */}
-            <button
-                className={styles.floatingButton}
-                onClick={onClickRun}
-                aria-label="Εκτέλεση SQL query (Ctrl+Enter)"
-                title="Ctrl+Enter"
-            >
-                <i className="bi bi-play-circle-fill"></i>
-                <span>Αποτέλεσμα</span>
-            </button>
+            {/* Floating Action Buttons */}
+            <div className={styles.floatingButtonGroup}>
+                <button
+                    className={`${styles.floatingButton} ${styles.floatingButtonAll}`}
+                    onClick={() => onClickRun(false)}
+                    aria-label="Εκτέλεση όλων των blocks (Ctrl+Enter)"
+                    title="Ctrl+Enter"
+                >
+                    <i className="bi bi-play-circle-fill"></i>
+                    <span>Τρέξε Όλα</span>
+                </button>
+                <button
+                    className={`${styles.floatingButton} ${styles.floatingButtonSelected}`}
+                    onClick={() => onClickRun(true)}
+                    aria-label="Εκτέλεση επιλεγμένου block"
+                    title="Τρέξε μόνο το επιλεγμένο block"
+                >
+                    <i className="bi bi-play-fill"></i>
+                    <span>Επιλεγμένο</span>
+                </button>
+            </div>
 
             {/* Modals */}
             <SQLPreviewModal

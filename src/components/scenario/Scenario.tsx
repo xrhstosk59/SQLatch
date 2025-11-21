@@ -30,14 +30,19 @@ const Scenario = ({
     const [inIntro, setInIntro] = useState(true);
 
     useEffect(() => {
+        console.log('-- Scenario: Initializing --');
         setInIntro(true);
         setIdx(0);
         setValidatedList([]);
         setValid(false);
 
         useBL.loadWorkspaceFile('');
-        useVA.setRequirements(scenarioRequirements[0][0], scenPath + scenarioRequirements[0][1]);
-    }, [scenPath, useBL, useVA, scenarioRequirements]);
+
+        if (scenarioRequirements && scenarioRequirements[0]) {
+            useVA.setRequirements(scenarioRequirements[0][0], scenPath + scenarioRequirements[0][1]);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [scenPath]);
 
     useEffect(() => {
         if (!inIntro) {
@@ -56,13 +61,23 @@ const Scenario = ({
     }, [valSync, inIntro, idx, totalVids, validatedList, setScenCompleteSync]);
 
     useEffect(() => {
+        console.log('-- Scenario: Loading requirements for step', idx);
+        console.log('-- Scenario: scenarioRequirements length:', scenarioRequirements?.length);
+
+        if (!scenarioRequirements || !scenarioRequirements[idx]) {
+            console.log('-- Scenario: No requirements for step', idx);
+            return;
+        }
+
         useVA.setRequirements(
             scenarioRequirements[idx][0],
             scenPath + scenarioRequirements[idx][1]
         );
-    }, [idx, useVA, scenarioRequirements, scenPath]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [idx, scenPath]);
 
     const start = () => {
+        console.log('-- Scenario: Starting scenario, setting inIntro=false --');
         setInIntro(false);
     };
 
@@ -75,6 +90,8 @@ const Scenario = ({
         setIdx(idx + 1);
         setValid(false);
     };
+
+    console.log('-- Scenario: Rendering, inIntro=', inIntro, 'idx=', idx);
 
     return (
         <Container>

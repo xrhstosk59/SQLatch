@@ -16,6 +16,16 @@ interface SQLOutputModalProps {
 function SQLOutputModal({ show, onHide, output }: SQLOutputModalProps) {
     const [copySuccess, setCopySuccess] = useState(false);
 
+    // Debugging
+    console.log('=== SQL OUTPUT MODAL DEBUG ===');
+    console.log('Modal show:', show);
+    console.log('Output received:', output);
+    console.log('Output type:', typeof output);
+    console.log('Output is array:', Array.isArray(output));
+    console.log('Output length:', output?.length);
+    console.log('Output[0]:', output?.[0]);
+    console.log('Output[0] != null:', output?.[0] != null);
+
     const handleExportCSV = () => {
         exportAsCSV(output);
     };
