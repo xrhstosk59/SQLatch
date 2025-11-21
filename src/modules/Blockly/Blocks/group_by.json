@@ -1,0 +1,16 @@
+{
+    "type": "group_by",
+    "message0": "GROUP BY %1",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "GROUP_COLUMN",
+            "check": "String"
+        }
+    ],
+    "previousStatement": "PARAMETERS",
+    "nextStatement": "PARAMETERS",
+    "colour": 230,
+    "tooltip": "GROUP BY column",
+    "helpUrl": ""
+}

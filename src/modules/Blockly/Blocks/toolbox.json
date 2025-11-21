@@ -19,6 +19,14 @@
                 },
                 {
                     "kind": "block",
+                    "type": "aggregation_function"
+                },
+                {
+                    "kind": "block",
+                    "type": "group_by"
+                },
+                {
+                    "kind": "block",
                     "type": "order_by"
                 }
             ]

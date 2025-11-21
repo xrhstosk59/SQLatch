@@ -4,7 +4,7 @@
     "args0": [
         {
             "type": "input_value",
-            "name": "COLUMN"
+            "name": "ORDER_COLUMN"
         },
         {
             "type": "field_dropdown",

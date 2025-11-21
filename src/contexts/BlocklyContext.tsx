@@ -15,6 +15,8 @@ import orderByJSON from '../modules/Blockly/Blocks/order_by.json';
 import setJSON from '../modules/Blockly/Blocks/set.json';
 import combinerJSON from '../modules/Blockly/Blocks/combiner.json';
 import setClauseJSON from '../modules/Blockly/Blocks/set_clause.json';
+import aggregationFunctionJSON from '../modules/Blockly/Blocks/aggregation_function.json';
+import groupByJSON from '../modules/Blockly/Blocks/group_by.json';
 
 const SQL = new Blockly.Generator('SQL');
 
@@ -167,6 +169,23 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
                 }
             },
         };
+        Blockly.Blocks['aggregation_function'] = {
+            init: function () {
+                this.jsonInit(aggregationFunctionJSON);
+            },
+        };
+        Blockly.Blocks['group_by'] = {
+            init: function () {
+                this.jsonInit(groupByJSON);
+            },
+            onchange: function (e: Blockly.Events.Abstract) {
+                if (this.workspace.isDragging()) return;
+                if (e.type !== Blockly.Events.BLOCK_MOVE) return;
+                if (!parentIsType(this, ['select'])) {
+                    this.unplug();
+                }
+            },
+        };
     };
 
     const initGen = () => {
@@ -245,7 +264,7 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
             return code + ';';
         };
         SQL.forBlock['order_by'] = function (block) {
-            const column = SQL.valueToCode(block, 'COLUMN', 0);
+            const column = SQL.valueToCode(block, 'ORDER_COLUMN', 0);
             const direction = block.getFieldValue('DIRECTION');
             const code = 'ORDER BY ' + column + ' ' + direction;
             return code;
@@ -267,6 +286,17 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
             const column = SQL.valueToCode(block, 'COLUMN_NAME', 0);
             const value = SQL.valueToCode(block, 'COLUMN_VALUE', 0);
             const code = column + ' = ' + value;
+            return code;
+        };
+        SQL.forBlock['aggregation_function'] = function (block) {
+            const func = block.getFieldValue('AGGREGATION_FUNCTION');
+            const column = SQL.valueToCode(block, 'COLUMN', 0);
+            const code = func.toUpperCase() + '(' + column + ')';
+            return [code, 0];
+        };
+        SQL.forBlock['group_by'] = function (block) {
+            const column = SQL.valueToCode(block, 'GROUP_COLUMN', 0);
+            const code = 'GROUP BY ' + column;
             return code;
         };
         // generate code for all blocks in statements

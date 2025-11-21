@@ -1,0 +1,27 @@
+{
+    "type": "aggregation_function",
+    "message0": "%1 ( %2 )",
+    "args0": [
+        {
+            "type": "field_dropdown",
+            "name": "AGGREGATION_FUNCTION",
+            "options": [
+                ["MIN", "min"],
+                ["MAX", "max"],
+                ["SUM", "sum"],
+                ["AVG", "avg"],
+                ["COUNT", "count"]
+            ]
+        },
+        {
+            "type": "input_value",
+            "name": "COLUMN",
+            "check": "String"
+        }
+    ],
+    "output": "String",
+    "inputsInline": true,
+    "colour": 270,
+    "tooltip": "Aggregation function (MIN, MAX, SUM, AVG, COUNT)",
+    "helpUrl": ""
+}

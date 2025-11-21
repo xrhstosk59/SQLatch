@@ -12,7 +12,8 @@
             "name": "OPERATION",
             "options": [
                 ["AND", "AND"],
-                ["OR", "OR"]
+                ["OR", "OR"],
+                [",", ","]
             ]
         },
         {
