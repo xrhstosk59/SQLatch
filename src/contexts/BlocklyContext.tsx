@@ -1,5 +1,5 @@
-import React, { createContext, useContext, ReactNode, useMemo } from 'react';
-import Blockly from 'blockly';
+import React, { createContext, useContext, ReactNode, useMemo, useCallback } from 'react';
+import * as Blockly from 'blockly';
 
 import createJSON from '../modules/Blockly/Blocks/create.json';
 import selectJSON from '../modules/Blockly/Blocks/select.json';
@@ -221,7 +221,6 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
             return code;
         };
         // generate code for all blocks in statements
-        // @ts-expect-error scrub_ is an internal Blockly API
         SQL.scrub_ = function (block, code, thisOnly) {
             const nextBlock = block.nextConnection && block.nextConnection.targetBlock();
 
@@ -299,6 +298,7 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
             getWorkspaceState,
             runGen,
         }),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         []
     );
 

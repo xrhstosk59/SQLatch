@@ -2,3 +2,29 @@ html,
 body {
     font-family: 'Open Sans', sans-serif;
 }
+
+/* Modal content styling for markdown in dark theme */
+.modal .bg-dark p,
+.modal .bg-dark ul,
+.modal .bg-dark li,
+.modal .bg-dark h1,
+.modal .bg-dark h2,
+.modal .bg-dark h3,
+.modal .bg-dark h4,
+.modal .bg-dark h5,
+.modal .bg-dark h6,
+.modal .bg-dark span,
+.modal .bg-dark div {
+    color: white !important;
+}
+
+.modal .bg-dark a {
+    color: #66b3ff !important;
+}
+
+.modal .bg-dark img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 10px 0;
+}

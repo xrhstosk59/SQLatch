@@ -17,6 +17,7 @@ import Col from 'react-bootstrap/Col';
 
 export default function Home() {
     const [introShow, setIntroShow] = useState(false);
+    const [valSync, setValSync] = useState(false);
 
     useEffect(() => {
         startTransition(() => {
@@ -27,7 +28,10 @@ export default function Home() {
     return (
         <>
             <Head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+                />
                 <link rel="icon" type="image/png" sizes="180x180" href="/favicon.png"></link>
                 <title>SQLatch - POC</title>
             </Head>
@@ -36,11 +40,11 @@ export default function Home() {
                 <Container fluid>
                     <Row>
                         <Col xs={12} lg={7} className="mb-3 mb-lg-0">
-                            <BlocklyField />
+                            <BlocklyField valSync={valSync} setValSync={setValSync} />
                         </Col>
                         <Col xs={12} lg={5}>
                             <Suspense fallback={<LoadingSpinner message="Φόρτωση οδηγού..." />}>
-                                <Guide />
+                                <Guide valSync={valSync} />
                             </Suspense>
                         </Col>
                     </Row>

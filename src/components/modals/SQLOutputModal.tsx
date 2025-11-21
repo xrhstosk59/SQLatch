@@ -76,26 +76,26 @@ function SQLOutputModal({ show, onHide, output }: SQLOutputModalProps) {
         >
             <div style={{ overflowX: 'auto', maxWidth: '100%' }}>
                 <Table responsive striped bordered hover size="sm">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        {output[0] != null &&
-                            Object.keys(output[0]).map((column, colIndex) => (
-                                <th key={colIndex}>{column}</th>
-                            ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {output[0] != null &&
-                        output.map((row, rowIndex) => (
-                            <tr key={rowIndex}>
-                                <td key={rowIndex * 100}>{rowIndex}</td>
-                                {Object.values(row).map((value, valueIndex) => (
-                                    <td key={valueIndex}>{String(value)}</td>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            {output[0] != null &&
+                                Object.keys(output[0]).map((column, colIndex) => (
+                                    <th key={colIndex}>{column}</th>
                                 ))}
-                            </tr>
-                        ))}
-                </tbody>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {output[0] != null &&
+                            output.map((row, rowIndex) => (
+                                <tr key={rowIndex}>
+                                    <td key={rowIndex * 100}>{rowIndex}</td>
+                                    {Object.values(row).map((value, valueIndex) => (
+                                        <td key={valueIndex}>{String(value)}</td>
+                                    ))}
+                                </tr>
+                            ))}
+                    </tbody>
                 </Table>
             </div>
         </BaseModal>

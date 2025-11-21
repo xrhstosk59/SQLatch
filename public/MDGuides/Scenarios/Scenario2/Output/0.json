@@ -1,0 +1,18 @@
+[
+    {
+      "ingredient_id": 1,
+      "count(*)": 3
+    },
+    {
+      "ingredient_id": 2,
+      "count(*)": 2
+    },
+    {
+      "ingredient_id": 3,
+      "count(*)": 2
+    },
+    {
+      "ingredient_id": 4,
+      "count(*)": 2
+    }
+]

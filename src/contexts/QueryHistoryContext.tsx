@@ -54,12 +54,7 @@ export function QueryHistoryProvider({ children }: QueryHistoryProviderProps) {
         }
     }, [history]);
 
-    const addQuery = (
-        query: string,
-        success: boolean,
-        resultCount?: number,
-        error?: string
-    ) => {
+    const addQuery = (query: string, success: boolean, resultCount?: number, error?: string) => {
         const newEntry: QueryHistoryEntry = {
             id: Date.now().toString(),
             query: query.trim(),
