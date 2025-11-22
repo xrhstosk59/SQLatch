@@ -27,6 +27,14 @@
                 },
                 {
                     "kind": "block",
+                    "type": "having"
+                },
+                {
+                    "kind": "block",
+                    "type": "join"
+                },
+                {
+                    "kind": "block",
                     "type": "order_by"
                 }
             ]

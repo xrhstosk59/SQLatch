@@ -1,0 +1,21 @@
+{
+    "type": "join",
+    "message0": "JOIN %1 ON %2",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "TABLE_NAME",
+            "check": "String"
+        },
+        {
+            "type": "input_value",
+            "name": "JOIN_CONDITION",
+            "check": "String"
+        }
+    ],
+    "previousStatement": "PARAMETERS",
+    "nextStatement": "PARAMETERS",
+    "colour": 160,
+    "tooltip": "JOIN table ON condition",
+    "helpUrl": ""
+}

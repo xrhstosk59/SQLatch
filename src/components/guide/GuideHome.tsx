@@ -8,12 +8,29 @@ interface GuideHomeProps {
     lessonNames: string[];
     onLessonClick: (index: number) => void;
     viewed?: boolean[];
+    onResetProgress?: () => void;
 }
 
-export default function GuideHome({ lessonNames, onLessonClick, viewed = [] }: GuideHomeProps) {
+export default function GuideHome({
+    lessonNames,
+    onLessonClick,
+    viewed = [],
+    onResetProgress,
+}: GuideHomeProps) {
     return (
         <Container style={{ maxWidth: 'none', padding: '2%' }}>
-            <h2 style={{ display: 'flex', justifyContent: 'center' }}>Αρχική</h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h2 style={{ margin: 0 }}>Αρχική</h2>
+                {onResetProgress && (
+                    <button
+                        onClick={onResetProgress}
+                        className="btn btn-sm btn-outline-secondary"
+                        title="Επαναφορά προόδου"
+                    >
+                        <i className="bi bi-arrow-clockwise"></i> Επαναφορά Προόδου
+                    </button>
+                )}
+            </div>
             <ul className={styles.link_list}>
                 {lessonNames.map((name, index) => (
                     <li key={index}>

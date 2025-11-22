@@ -1,8 +1,10 @@
 import next from 'eslint-config-next';
 import prettier from 'eslint-plugin-prettier';
+import prettierConfig from 'eslint-config-prettier';
 
 const eslintConfig = [
     ...next,
+    prettierConfig,
     {
         plugins: {
             prettier,

@@ -1,0 +1,16 @@
+{
+    "type": "having",
+    "message0": "HAVING %1",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "HAVING_CONDITION",
+            "check": "String"
+        }
+    ],
+    "previousStatement": "PARAMETERS",
+    "nextStatement": "PARAMETERS",
+    "colour": 230,
+    "tooltip": "HAVING condition for filtering grouped results",
+    "helpUrl": ""
+}

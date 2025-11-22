@@ -52,9 +52,7 @@ function QueryHistory() {
                         ></i>
                     </button>
                     <div>
-                        <span className={styles.badge}>
-                            {mounted ? history.length : 0} queries
-                        </span>
+                        <span className={styles.badge}>{mounted ? history.length : 0} queries</span>
                         {mounted && history.length > 0 && (
                             <button className={styles.clearButton} onClick={clearHistory}>
                                 <i className="bi bi-trash"></i> Καθαρισμός

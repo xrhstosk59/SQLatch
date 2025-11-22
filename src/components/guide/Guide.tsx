@@ -28,7 +28,24 @@ export default function Guide({ valSync }: GuideProps) {
     const [inHome, setInHome] = useState(true);
     const [MDGuides, setMDGuides] = useState<string>('');
     const [isLoading, setIsLoading] = useState(false);
-    const [viewed, setViewed] = useState<boolean[]>(Array(LTS.length).fill(false));
+    const [viewed, setViewed] = useState<boolean[]>(() => {
+        // Load completion status from localStorage on initial render
+        if (typeof window !== 'undefined') {
+            const saved = localStorage.getItem('lessonCompletion');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    // Ensure array has correct length
+                    if (Array.isArray(parsed) && parsed.length === LTS.length) {
+                        return parsed;
+                    }
+                } catch (e) {
+                    console.error('Error loading lesson completion:', e);
+                }
+            }
+        }
+        return Array(LTS.length).fill(false);
+    });
     const [canSync, setCanSync] = useState(false);
     const [scenCompleteSync, setScenCompleteSync] = useState(false);
 
@@ -42,6 +59,13 @@ export default function Guide({ valSync }: GuideProps) {
     };
 
     const handleNextGuide = () => {
+        // Mark current lesson as complete if it has no requirements
+        if (LTS[idxState].requirements.length === 0) {
+            const newViewed = [...viewed];
+            newViewed[idxState] = true;
+            setViewed(newViewed);
+        }
+
         if (idxState < LTS.length - 1) {
             setIdxState(idxState + 1);
         }
@@ -55,6 +79,14 @@ export default function Guide({ valSync }: GuideProps) {
 
     const handlePageClick = (index: number) => {
         setIdxState(index);
+    };
+
+    const handleResetProgress = () => {
+        if (confirm('Είσαι σίγουρος ότι θέλεις να επαναφέρεις όλη την πρόοδό σου;')) {
+            const resetViewed = Array(LTS.length).fill(false);
+            setViewed(resetViewed);
+            localStorage.setItem('lessonCompletion', JSON.stringify(resetViewed));
+        }
     };
 
     useEffect(() => {
@@ -79,6 +111,16 @@ export default function Guide({ valSync }: GuideProps) {
                                 currentLesson.requirements[0][0],
                                 currentLesson.requirements[0][1]
                             );
+                        } else {
+                            // Auto-complete lessons without requirements after a short delay
+                            // This gives the user time to see the content
+                            setTimeout(() => {
+                                setViewed((prev) => {
+                                    const newViewed = [...prev];
+                                    newViewed[idxState] = true;
+                                    return newViewed;
+                                });
+                            }, 2000);
                         }
                     }
 
@@ -116,6 +158,13 @@ export default function Guide({ valSync }: GuideProps) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [valSync, scenCompleteSync]);
 
+    // Save completion status to localStorage whenever it changes
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('lessonCompletion', JSON.stringify(viewed));
+        }
+    }, [viewed]);
+
     const lessonNames = LTS.map((item) => item.name);
 
     return (
@@ -149,6 +198,7 @@ export default function Guide({ valSync }: GuideProps) {
                     lessonNames={lessonNames}
                     onLessonClick={handleLessonClick}
                     viewed={viewed}
+                    onResetProgress={handleResetProgress}
                 />
             )}
             <QueryHistory />

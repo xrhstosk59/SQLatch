@@ -39,7 +39,10 @@ const Scenario = ({
         useBL.loadWorkspaceFile('');
 
         if (scenarioRequirements && scenarioRequirements[0]) {
-            useVA.setRequirements(scenarioRequirements[0][0], scenPath + scenarioRequirements[0][1]);
+            useVA.setRequirements(
+                scenarioRequirements[0][0],
+                scenPath + scenarioRequirements[0][1]
+            );
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [scenPath]);

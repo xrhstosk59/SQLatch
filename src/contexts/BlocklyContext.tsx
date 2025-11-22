@@ -17,6 +17,8 @@ import combinerJSON from '../modules/Blockly/Blocks/combiner.json';
 import setClauseJSON from '../modules/Blockly/Blocks/set_clause.json';
 import aggregationFunctionJSON from '../modules/Blockly/Blocks/aggregation_function.json';
 import groupByJSON from '../modules/Blockly/Blocks/group_by.json';
+import havingJSON from '../modules/Blockly/Blocks/having.json';
+import joinJSON from '../modules/Blockly/Blocks/join.json';
 
 const SQL = new Blockly.Generator('SQL');
 
@@ -186,6 +188,30 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
                 }
             },
         };
+        Blockly.Blocks['having'] = {
+            init: function () {
+                this.jsonInit(havingJSON);
+            },
+            onchange: function (e: Blockly.Events.Abstract) {
+                if (this.workspace.isDragging()) return;
+                if (e.type !== Blockly.Events.BLOCK_MOVE) return;
+                if (!parentIsType(this, ['select'])) {
+                    this.unplug();
+                }
+            },
+        };
+        Blockly.Blocks['join'] = {
+            init: function () {
+                this.jsonInit(joinJSON);
+            },
+            onchange: function (e: Blockly.Events.Abstract) {
+                if (this.workspace.isDragging()) return;
+                if (e.type !== Blockly.Events.BLOCK_MOVE) return;
+                if (!parentIsType(this, ['select'])) {
+                    this.unplug();
+                }
+            },
+        };
     };
 
     const initGen = () => {
@@ -297,6 +323,17 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
         SQL.forBlock['group_by'] = function (block) {
             const column = SQL.valueToCode(block, 'GROUP_COLUMN', 0);
             const code = 'GROUP BY ' + column;
+            return code;
+        };
+        SQL.forBlock['having'] = function (block) {
+            const condition = SQL.valueToCode(block, 'HAVING_CONDITION', 0);
+            const code = 'HAVING ' + condition;
+            return code;
+        };
+        SQL.forBlock['join'] = function (block) {
+            const tableName = SQL.valueToCode(block, 'TABLE_NAME', 0);
+            const joinCondition = SQL.valueToCode(block, 'JOIN_CONDITION', 0);
+            const code = 'JOIN ' + tableName + ' ON ' + joinCondition;
             return code;
         };
         // generate code for all blocks in statements

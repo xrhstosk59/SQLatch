@@ -54,7 +54,7 @@ const convertSchema = (useDB: SQLiteContextType): DatabaseConfig => {
             name,
             columns,
             schemaColor: '#91C4F2',
-            schema: 'public'
+            schema: 'public',
         } as TableConfig;
     });
 
