@@ -2,9 +2,9 @@
 
 > **Visual SQL Learning Platform** - Μάθε SQL με drag-and-drop blocks!
 
-[![Next.js](https://img.shields.io/badge/Next.js-13.5-black?style=flat&logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-18.2-61dafb?style=flat&logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.2-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-15.5-black?style=flat&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-18.3-61dafb?style=flat&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
 [![SQLite WASM](https://img.shields.io/badge/SQLite-WASM-003b57?style=flat&logo=sqlite)](https://sqlite.org/wasm/)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat)](LICENSE)
 
@@ -29,57 +29,86 @@
 
 ### 🎨 Modern User Interface
 
-- **Floating Action Button (FAB)** για query execution
-- **Dark theme** με gradient backgrounds και animations
-- **Responsive design** - Works σε desktop, tablet, και mobile
-- **Touch-optimized** με pinch-to-zoom support
+- **Floating Action Buttons (FAB)** - Dual FAB για "Run All" και "Run Selected"
+- **Dark theme** με gradient backgrounds και smooth animations
+- **Responsive design** - Works σε desktop (≥992px), tablet (768-991px), και mobile (<768px)
+- **Touch-optimized** με pinch-to-zoom support για Blockly workspace
+- **Icon-based UI** - Bootstrap Icons 1.13 throughout interface
+- **Toast notifications** - Success, Error, και Validation toasts με auto-dismiss
+- **Modal system** - Keyboard-accessible modals με focus management
+- **Progress bars** - Visual progress tracking σε scenarios
 
-### 🧩 Visual SQL Builder
+### 🧩 Visual SQL Builder (18 Block Types)
 
 - **Drag-and-drop blocks** για SQL statements
 - **Πλήρες Support για SQL Operations**:
-    - **Data Query**: `SELECT` με `WHERE`, `ORDER BY`
-    - **Table Creation**: `CREATE TABLE` με column definitions και constraints
+    - **Data Query**: `SELECT` με `WHERE`, `ORDER BY`, `GROUP BY`, `HAVING`, `JOIN`
+    - **Table Creation**: `CREATE TABLE` με column definitions και constraints (PRIMARY KEY, UNIQUE, FOREIGN KEY)
     - **Data Manipulation**: `INSERT`, `UPDATE`, `DELETE`
+    - **Aggregation Functions**: `MIN`, `MAX`, `SUM`, `AVG`, `COUNT`
+    - **Logical Operators**: `AND`, `OR`, `NOT`
     - **Advanced**: Multiple column support, chained conditions, SET clauses
-- **Smart Block Validation** - Τα blocks "κουμπώνουν" μόνο σε valid positions
-- **SQL Preview** - Δες το generated SQL πριν το execution
+- **Smart Block Validation** - Τα blocks "κουμπώνουν" μόνο σε valid positions με parent/child checking
+- **Continuous Toolbox** - Innovative flyout design
+- **Selective Execution** - Run all blocks ή run selected block only
+- **SQL Preview Modal** - Δες και review το generated SQL πριν το execution
 - **Syntax highlighting** για better readability
 
 ### 💾 In-Browser Database
 
 - **SQLite WASM** - Πλήρης SQL database στον browser
-- **Pre-loaded scenarios** με databases
+- **Pre-loaded scenarios** με 5 example databases (Bindle, E-commerce, Finance, Live, NBA)
 - **Real-time execution** - Instant results
 - **Error handling** με user-friendly messages
+- **Schema Visualization** - Interactive React Flow diagrams με:
+  - Table relationships και foreign keys
+  - Color-coded tables
+  - Drag-and-drop node positioning
+  - Auto-layout για tables
 
 ### 📖 Interactive Learning
 
-- **3 Μαθήματα**: SELECT, CREATE TABLE, INSERT basics
-- **3 Σενάρια**: Story-based learning (Magic Book, Museum Theft, Planet Exploration)
-- **Ασκήσεις**: Practice exercises με progressive difficulty
+- **10 Μαθήματα**: SELECT, CREATE, INSERT, Logical Operators, UPDATE, DELETE/DROP, Aggregation Functions, ORDER BY, GROUP BY, JOIN
+- **2 Σενάρια**: Story-based learning με video integration (The Magic Book Part 1 & 2)
+  - Part 1: 8 exercises (SELECT, WHERE, OR, INSERT, UPDATE, MIN, ORDER BY, DELETE)
+  - Part 2: 7 exercises (GROUP BY, HAVING, JOIN operations)
+- **3 Task Sets**: Progressive practice exercises με validation
 - **Markdown-based content** - Εύκολη προσθήκη νέων lessons
+- **Progress tracking** - Lesson completion stored locally
 
 ### 📊 Query History
 
-- **Track όλα τα executed queries** με timestamp
-- **Success/Error status** indicators
+- **Track έως 50 executed queries** με timestamp
+- **Success/Error status** indicators με icons
 - **Result count** display για successful queries
-- **Copy to clipboard** functionality
+- **Copy to clipboard** functionality για individual queries
 - **Delete individual** ή clear all queries
+- **Collapsible UI** για space optimization
+- **LocalStorage persistence** - Queries μένουν μετά το reload
 
 ### 💾 Workspace Persistence
 
-- **Auto-save** κάθε 2 δευτερόλεπτα
+- **Auto-save** κάθε 30 δευτερόλεπτα (configurable, με toggle on/off)
 - **LocalStorage** persistence - Δεν χάνεις τη δουλειά σου
-- **Import/Export** workspace files (.json)
+- **Auto-save indicator** - Shows last saved timestamp
+- **Import/Export** workspace files (.json) με drag & drop support
 - **Share URLs** - Base64-encoded workspace sharing
+- **Confirmation dialogs** για destructive actions
 
 ### ⌨️ Power User Features
 
-- **Keyboard shortcuts**: `Ctrl+Enter` για execution, `Ctrl+S` για sharing
-- **Export results** σε CSV/JSON format
+- **Comprehensive Keyboard Shortcuts**:
+  - `Ctrl+Enter` - Execute SQL query (Run All)
+  - `Ctrl+S` - Save workspace as JSON file
+  - `Ctrl+O` - Load workspace from JSON file
+  - `Ctrl+Shift+S` - Generate shareable URL
+  - `Esc` - Close open modals
+  - `Tab` / `Shift+Tab` - Navigate UI elements
+  - `?` - Show keyboard shortcuts help modal
+- **Multiple Export Formats**: CSV, JSON, και clipboard copy (tab-separated)
+- **Export query results** με proper quote handling
 - **Custom scenarios** - Δημιούργησε τα δικά σου μαθήματα
+- **Validation system** - Deep-equal output comparison για lessons
 
 ---
 
@@ -87,9 +116,9 @@
 
 ### Core
 
-- **[Next.js 13](https://nextjs.org/)** - React framework με static export
-- **[React 18](https://react.dev/)** - UI library με Suspense & startTransition
-- **[TypeScript](https://www.typescriptlang.org/)** - Type safety
+- **[Next.js 15.5](https://nextjs.org/)** - React framework με static export
+- **[React 18.3](https://react.dev/)** - UI library με Suspense & startTransition
+- **[TypeScript 5.6](https://www.typescriptlang.org/)** - Type safety με strict mode
 
 ### Visual Programming
 
@@ -102,9 +131,10 @@
 
 ### UI/UX
 
-- **[Bootstrap 5](https://getbootstrap.com/)** & **React Bootstrap** - Responsive components
-- **[Bootstrap Icons](https://icons.getbootstrap.com/)** - Icon library
-- **CSS Modules** - Scoped styling
+- **[Bootstrap 5](https://getbootstrap.com/)** & **React Bootstrap 2.10** - Responsive components
+- **[Bootstrap Icons 1.13](https://icons.getbootstrap.com/)** - Icon library
+- **[React Flow 11.11](https://reactflow.dev/)** - Schema visualization diagrams
+- **CSS Modules** & **SASS 1.94** - Scoped styling με preprocessor
 
 ### Content
 
@@ -159,34 +189,58 @@ npm run build
 ```
 SQLatch/
 ├── src/
-│   ├── components/          # React components
-│   │   ├── blockly/         # Blockly workspace + FAB
-│   │   ├── common/          # Reusable components (BaseModal)
-│   │   ├── guide/           # Tutorial system
-│   │   ├── layout/          # Navbar
-│   │   ├── modals/          # Modal dialogs
-│   │   ├── sql/             # QueryHistory
-│   │   └── ui/              # UI elements (toasts, spinners)
+│   ├── components/          # React components (25+)
+│   │   ├── blockly/         # Blockly workspace + FAB buttons
+│   │   ├── common/          # Reusable components (BaseModal, InfoScenarioButton)
+│   │   ├── guide/           # Tutorial system (Guide, GuideHome, GuideContent, GuidePagination)
+│   │   ├── layout/          # Navbar με file operations
+│   │   ├── modals/          # Modal dialogs (SQL Output, Preview, Schema, Sharing, etc.)
+│   │   ├── scenario/        # Scenario component με video integration
+│   │   ├── sql/             # QueryHistory, SQLRuntimeControl, SchemaButton
+│   │   ├── sql_schema_visualizer/ # React Flow-based schema visualization
+│   │   └── ui/              # UI elements (Toasts, LoadingSpinner, AutoSaveIndicator)
 │   │
-│   ├── contexts/            # React Context providers
-│   │   ├── AutoSaveContext.tsx
-│   │   ├── BlocklyContext.tsx
-│   │   ├── QueryHistoryContext.tsx
-│   │   └── SQLiteContext.tsx
+│   ├── contexts/            # React Context providers (4 total)
+│   │   ├── AutoSaveContext.tsx      # Auto-save management (30s interval, toggle on/off)
+│   │   ├── BlocklyContext.tsx       # Blockly workspace + SQL code generator
+│   │   ├── QueryHistoryContext.tsx  # Query tracking (50 queries max)
+│   │   └── SQLiteContext.tsx        # SQLite WASM database management
 │   │
-│   ├── hooks/               # Custom React hooks
-│   ├── modules/             # Core modules (SQLite, Showdown, Blockly blocks)
-│   │   └── Blockly/Blocks/  # Blockly block JSON definitions
+│   ├── hooks/               # Custom React hooks (2 total)
+│   │   ├── useAutoSave.ts          # Interval-based auto-save hook
+│   │   └── useKeyboardShortcut.ts  # Keyboard shortcut handler
+│   │
+│   ├── modules/             # Core modules
+│   │   ├── Blockly/Blocks/  # 18 Blockly block JSON definitions
+│   │   ├── SchemaGenerator.ts   # Database schema introspection
+│   │   ├── Showdown.ts          # Markdown converter με DOMPurify
+│   │   ├── SQLite.ts            # Legacy SQLite wrapper
+│   │   └── Validator.ts         # Query/output validation system
+│   │
 │   ├── pages/               # Next.js pages
-│   ├── styles/              # CSS Modules
+│   │   ├── index.tsx        # Main application page
+│   │   └── _app.tsx         # App wrapper με global styles
+│   │
+│   ├── styles/              # CSS Modules & global styles
+│   │   ├── blockly.module.css
+│   │   ├── guide.module.css
+│   │   ├── queryHistory.module.css
+│   │   ├── runtimeControl.module.css
+│   │   └── global.css
+│   │
 │   ├── utils/               # Utility functions
-│   └── config/              # Configuration (lessons.ts)
+│   │   ├── exportResults.ts     # CSV/JSON export με quote handling
+│   │   └── fileOperations.ts    # File download/upload helpers
+│   │
+│   └── config/              # Configuration
+│       └── lessons.ts       # 15 lessons/scenarios/tasks configuration
 │
 ├── public/                  # Static assets
-│   ├── MDGuides/            # Educational content (Markdown)
-│   │   ├── Lessons/
-│   │   ├── Scenarios/
-│   │   └── Tasks/
+│   ├── MDGuides/            # Educational content (Markdown + databases)
+│   │   ├── Lessons/         # 10 lessons με theory.md, blocks.json, database.db
+│   │   ├── Scenarios/       # 2 scenarios με videos, blocks, και databases
+│   │   └── Tasks/           # 3 task sets με exercises
+│   ├── sql_schema_visualizer/ # 5 example databases (Bindle, E-commerce, Finance, Live, NBA)
 │   └── favicon.png
 │
 ├── PROJECT_DOCUMENTATION.md # Full technical documentation (1300+ lines)
@@ -280,7 +334,7 @@ export const LTSNames = [
 
 ## 🧩 Blockly Blocks Development
 
-### Available SQL Blocks
+### Available SQL Blocks (18 Total)
 
 Όλα τα blocks ορίζονται στο `src/modules/Blockly/Blocks/` σε JSON format:
 
@@ -289,17 +343,26 @@ export const LTSNames = [
 - **`create.json`** - CREATE TABLE statements
 - **`select.json`** - SELECT queries
 - **`insert.json`** - INSERT statements
-- **`update.json`** - UPDATE statements
-- **`delete.json`** - DELETE statements
+- **`update.json`** - UPDATE statements με SET clauses
+- **`delete.json`** - DELETE statements με WHERE conditions
 
-#### Parameter Blocks (Modifiers)
+#### Clause/Parameter Blocks (Modifiers)
 
-- **`where.json`** - WHERE conditions
-- **`order_by.json`** - ORDER BY clauses
-- **`column.json`** - Column definitions (για CREATE TABLE)
+- **`where.json`** - WHERE conditions (works με SELECT, UPDATE, DELETE)
+- **`order_by.json`** - ORDER BY με ASC/DESC dropdown
+- **`group_by.json`** - GROUP BY για aggregations
+- **`having.json`** - HAVING για post-aggregation filtering
+- **`join.json`** - JOIN με table name και ON condition
+- **`column.json`** - Column definitions με type (INTEGER, REAL, TEXT, BLOB) και constraints (PRIMARY KEY, UNIQUE, FOREIGN KEY)
 - **`column_name.json`** - Column names (για INSERT)
 - **`value.json`** - Values (για INSERT)
-- **`set.json`** - SET clauses (για UPDATE)
+- **`set.json`** & **`set_clause.json`** - SET clauses (για UPDATE)
+
+#### Function & Operator Blocks
+
+- **`aggregation_function.json`** - MIN, MAX, SUM, AVG, COUNT με dropdown
+- **`combiner.json`** - AND/OR/comma operators για combining conditions
+- **`not.json`** - NOT logical operator για negation
 
 ### Block Connections
 
@@ -487,25 +550,42 @@ Contributions are welcome! Παρακαλώ:
 
 ## 🗺️ Roadmap
 
-### ✅ Recently Implemented
+### ✅ Implemented Features
 
-- [x] **UPDATE blocks** - Full support για UPDATE statements με SET clauses
-- [x] **DELETE blocks** - Delete data με WHERE conditions
-- [x] **ORDER BY blocks** - Sort query results
-- [x] **Smart block connections** - Improved validation και chaining
-- [x] **Multiple column/value support** - Chain columns, values και conditions
+**Core SQL Support (18 Blocks):**
+- [x] **SELECT blocks** - με WHERE, ORDER BY, GROUP BY, HAVING, JOIN
+- [x] **CREATE TABLE blocks** - με column types και constraints (PRIMARY KEY, UNIQUE, FOREIGN KEY)
+- [x] **INSERT blocks** - με column names και values
+- [x] **UPDATE blocks** - Full support με SET clauses και WHERE conditions
+- [x] **DELETE blocks** - με optional WHERE conditions
+- [x] **Aggregation functions** - MIN, MAX, SUM, AVG, COUNT
+- [x] **Logical operators** - AND, OR, NOT
+- [x] **JOIN support** - Table joins με ON conditions
 
-### Planned Features
+**Features:**
+- [x] **Schema Visualization** - Interactive React Flow diagrams με table relationships
+- [x] **Query History** - Track 50 queries με timestamps και status
+- [x] **Auto-save** - Configurable interval-based saving (30s default)
+- [x] **Export Results** - Multiple formats (CSV, JSON, Clipboard)
+- [x] **Keyboard Shortcuts** - Comprehensive shortcuts για power users
+- [x] **Selective Execution** - Run all blocks ή selected block only
+- [x] **SQL Preview Modal** - Review generated SQL πριν execution
+- [x] **Progress Tracking** - Lesson completion με localStorage
+- [x] **Video Integration** - Embedded videos σε scenarios
+- [x] **Dark Theme** - Professional dark UI με gradients
 
-- [ ] More SQL blocks (JOIN, GROUP BY, HAVING, subqueries)
-- [ ] Multiple database tabs
-- [ ] Query performance metrics
-- [ ] SQL to Blocks (reverse engineering)
-- [ ] Collaborative editing (realtime)
-- [ ] Dark/Light theme toggle
-- [ ] More educational scenarios
-- [ ] Database schema visualization
-- [ ] Export workspace to SQL file
+### 🔮 Planned Features
+
+- [ ] **Subqueries support** - Nested SELECT statements
+- [ ] **Multiple database tabs** - Work με πολλαπλές databases ταυτόχρονα
+- [ ] **Query performance metrics** - Execution time και optimization hints
+- [ ] **SQL to Blocks** - Reverse engineering από raw SQL
+- [ ] **Collaborative editing** - Realtime collaboration features
+- [ ] **Light theme toggle** - Alternative light color scheme
+- [ ] **More scenarios** - Additional story-based learning content
+- [ ] **Export to SQL file** - Save workspace ως .sql script
+- [ ] **Undo/Redo** - Workspace history management
+- [ ] **Block search** - Quick search στη toolbox
 
 ---
 
