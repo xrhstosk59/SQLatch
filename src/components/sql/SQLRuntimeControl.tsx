@@ -33,11 +33,9 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
     const useBL = useBlocklyContext();
     const useVA = useValidation();
 
-    const [modalShow, setModalShow] = useState(false);
     const [errortoastShow, setErrorToastShow] = useState(false);
     const [validationtoastShow, setValidationToastShow] = useState(false);
     const [successtoastShow, setSuccessToastShow] = useState(false);
-    const [pendingResult, setPendingResult] = useState<Record<string, unknown>[] | null>(null);
 
     const [schemaShow, setschemaShow] = useState(false);
     const [currentDatabaseInternal, setCurrentDatabase] = useState<DatabaseConfig>({
@@ -46,8 +44,17 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
         schemaColors: {},
         tablePositions: {},
     });
-    const [outputDB, setOutputDB] = useState<Record<string, unknown>[]>([]);
-    const [errorDB, setErrorDB] = useState<string>('');
+
+    // Combined state for modal data and visibility
+    const [modalState, setModalState] = useState<{
+        show: boolean;
+        output: Record<string, unknown>[];
+        error: string;
+    }>({
+        show: false,
+        output: [],
+        error: '',
+    });
 
     // Initialize SQL only once on mount
     useEffect(() => {
@@ -55,23 +62,7 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Open modal after outputDB state updates
-    useEffect(() => {
-        if (pendingResult !== null) {
-            console.log('=== PENDING RESULT EFFECT ===');
-            console.log('Opening modal with result:', pendingResult);
-            const error = useDB.getError();
-            if (error === '') {
-                setModalShow(true);
-            } else {
-                setErrorToastShow(true);
-            }
-            setPendingResult(null);
-        }
-    }, [outputDB, pendingResult, useDB]);
-
     const showResult = (resultDB: Record<string, unknown>[]): boolean => {
-        setErrorToastShow(false);
         console.log('=== SHOW RESULT DEBUG ===');
         console.log('Result from DB:', resultDB);
         console.log('Result length:', resultDB?.length);
@@ -79,20 +70,20 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
 
         const error = useDB.getError();
         console.log('Error from DB:', error);
-        setErrorDB(error);
 
-        // Set output first
-        setOutputDB(resultDB);
+        // Single atomic state update with all data
+        setModalState({
+            show: error === '',
+            output: resultDB,
+            error: error,
+        });
 
-        // Wait for state to update before showing modal
-        setTimeout(() => {
-            console.log('=== OPENING MODAL AFTER TIMEOUT ===');
-            if (error === '') {
-                setModalShow(true);
-            } else {
-                setErrorToastShow(true);
-            }
-        }, 0);
+        // Show error toast if there's an error
+        if (error !== '') {
+            setErrorToastShow(true);
+        } else {
+            setErrorToastShow(false);
+        }
 
         return error === '';
     };
