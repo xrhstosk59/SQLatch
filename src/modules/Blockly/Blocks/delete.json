@@ -8,7 +8,7 @@
         },
         {
             "type": "input_statement",
-            "name": "WHERE",
+            "name": "DELETE_CONDITION",
             "check": "PARAMETERS"
         }
     ],

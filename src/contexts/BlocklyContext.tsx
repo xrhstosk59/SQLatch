@@ -291,7 +291,7 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
         };
         SQL.forBlock['delete'] = function (block) {
             const table = SQL.valueToCode(block, 'TABLE', 0);
-            const whereClause = SQL.statementToCode(block, 'WHERE') || '';
+            const whereClause = SQL.statementToCode(block, 'DELETE_CONDITION') || '';
             const code = 'DELETE FROM ' + table + ' ' + whereClause;
             return code + ';';
         };
