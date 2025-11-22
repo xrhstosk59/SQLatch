@@ -19,6 +19,7 @@ interface SQLiteContextType {
     getTableNames: () => Record<string, unknown>[];
     getColumnNames: (name: string) => Record<string, unknown>[];
     getForeignKeys: (name: string) => Record<string, unknown>[];
+    isInitialized: boolean;
 }
 
 const SQLiteContext = createContext<SQLiteContextType | undefined>(undefined);
@@ -263,6 +264,7 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
             getTableNames,
             getColumnNames,
             getForeignKeys,
+            isInitialized,
         }),
         [
             initSQL,
@@ -274,6 +276,7 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
             getTableNames,
             getColumnNames,
             getForeignKeys,
+            isInitialized,
         ]
     );
 

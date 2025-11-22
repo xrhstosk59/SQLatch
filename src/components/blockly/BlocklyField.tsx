@@ -153,11 +153,10 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
 
     const executeSQL = () => {
         // Execute the SQL and close preview
-        useDB.queryDB(currentSQL);
+        const results = useDB.queryDB(currentSQL);
         setPreviewModalShow(false);
 
-        // Get results and error
-        const results = useDB.getResultDB();
+        // Get error
         const error = useDB.getError();
 
         // Add to query history
@@ -168,6 +167,9 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
             error !== '' ? error : undefined
         );
 
+        // Update output FIRST, then show modal
+        setOutputDB(results);
+
         // Show result and perform validation
         setToastShow(false);
         if (error === '') {
@@ -176,17 +178,16 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
                 console.log('Validation: passed');
                 setValSync(!valSync);
                 setSuccessToastShow(true);
-                setModalShow(true);
+                // Modal will show after output is set
+                setTimeout(() => setModalShow(true), 0);
             } else {
                 setValidationToastShow(true);
-                setModalShow(true);
+                setTimeout(() => setModalShow(true), 0);
             }
         } else {
             // Query failed, show error
             setToastShow(true);
         }
-
-        setOutputDB(results);
         setErrorDB(error);
     };
 

@@ -28,8 +28,14 @@ export default function Guide({ valSync }: GuideProps) {
     const [inHome, setInHome] = useState(true);
     const [MDGuides, setMDGuides] = useState<string>('');
     const [isLoading, setIsLoading] = useState(false);
-    const [viewed, setViewed] = useState<boolean[]>(() => {
-        // Load completion status from localStorage on initial render
+    const [isMounted, setIsMounted] = useState(false);
+    const [viewed, setViewed] = useState<boolean[]>(Array(LTS.length).fill(false));
+    const [canSync, setCanSync] = useState(false);
+    const [scenCompleteSync, setScenCompleteSync] = useState(false);
+
+    // Load completion status from localStorage after mount (client-side only)
+    useEffect(() => {
+        setIsMounted(true);
         if (typeof window !== 'undefined') {
             const saved = localStorage.getItem('lessonCompletion');
             if (saved) {
@@ -37,17 +43,14 @@ export default function Guide({ valSync }: GuideProps) {
                     const parsed = JSON.parse(saved);
                     // Ensure array has correct length
                     if (Array.isArray(parsed) && parsed.length === LTS.length) {
-                        return parsed;
+                        setViewed(parsed);
                     }
                 } catch (e) {
                     console.error('Error loading lesson completion:', e);
                 }
             }
         }
-        return Array(LTS.length).fill(false);
-    });
-    const [canSync, setCanSync] = useState(false);
-    const [scenCompleteSync, setScenCompleteSync] = useState(false);
+    }, []);
 
     const handleHomeClick = () => {
         setInHome(true);
@@ -85,7 +88,9 @@ export default function Guide({ valSync }: GuideProps) {
         if (confirm('Είσαι σίγουρος ότι θέλεις να επαναφέρεις όλη την πρόοδό σου;')) {
             const resetViewed = Array(LTS.length).fill(false);
             setViewed(resetViewed);
-            localStorage.setItem('lessonCompletion', JSON.stringify(resetViewed));
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('lessonCompletion', JSON.stringify(resetViewed));
+            }
         }
     };
 
@@ -158,12 +163,12 @@ export default function Guide({ valSync }: GuideProps) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [valSync, scenCompleteSync]);
 
-    // Save completion status to localStorage whenever it changes
+    // Save completion status to localStorage whenever it changes (after mount)
     useEffect(() => {
-        if (typeof window !== 'undefined') {
+        if (isMounted && typeof window !== 'undefined') {
             localStorage.setItem('lessonCompletion', JSON.stringify(viewed));
         }
-    }, [viewed]);
+    }, [viewed, isMounted]);
 
     const lessonNames = LTS.map((item) => item.name);
 

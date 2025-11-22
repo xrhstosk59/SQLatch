@@ -63,7 +63,7 @@ export function AutoSaveProvider({ children }: AutoSaveProviderProps) {
 
     // Auto-save function
     const handleAutoSave = () => {
-        if (!isMounted) return; // Don't save during hydration
+        if (!isMounted || typeof window === 'undefined') return; // Don't save during hydration or SSR
         try {
             const workspaceState = blockly.getWorkspaceState();
             localStorage.setItem(AUTOSAVE_STATE_KEY, JSON.stringify(workspaceState));
@@ -84,12 +84,16 @@ export function AutoSaveProvider({ children }: AutoSaveProviderProps) {
     const toggleAutoSave = useCallback(() => {
         const newEnabled = !isEnabled;
         setIsEnabled(newEnabled);
-        localStorage.setItem(AUTOSAVE_ENABLED_KEY, String(newEnabled));
+        if (typeof window !== 'undefined') {
+            localStorage.setItem(AUTOSAVE_ENABLED_KEY, String(newEnabled));
+        }
     }, [isEnabled]);
 
     const setInterval = (newInterval: number) => {
         setIntervalState(newInterval);
-        localStorage.setItem(AUTOSAVE_INTERVAL_KEY, String(newInterval));
+        if (typeof window !== 'undefined') {
+            localStorage.setItem(AUTOSAVE_INTERVAL_KEY, String(newInterval));
+        }
     };
 
     const value: AutoSaveContextType = useMemo(
@@ -119,6 +123,7 @@ export function useAutoSaveContext(): AutoSaveContextType {
  * @returns The saved workspace state or null if not available
  */
 export function loadAutoSavedWorkspace(): object | null {
+    if (typeof window === 'undefined') return null;
     try {
         const saved = localStorage.getItem(AUTOSAVE_STATE_KEY);
         if (saved) {

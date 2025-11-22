@@ -45,16 +45,10 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
         tablePositions: {},
     });
 
-    // Combined state for modal data and visibility
-    const [modalState, setModalState] = useState<{
-        show: boolean;
-        output: Record<string, unknown>[];
-        error: string;
-    }>({
-        show: false,
-        output: [],
-        error: '',
-    });
+    // Separate state for output and modal visibility
+    const [queryOutput, setQueryOutput] = useState<Record<string, unknown>[]>([]);
+    const [queryError, setQueryError] = useState<string>('');
+    const [showOutputModal, setShowOutputModal] = useState(false);
 
     // Initialize SQL only once on mount
     useEffect(() => {
@@ -62,27 +56,45 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // Show modal AFTER output is updated
+    useEffect(() => {
+        console.log('=== USE EFFECT TRIGGERED ===');
+        console.log('queryOutput:', queryOutput);
+        console.log('queryOutput length:', queryOutput.length);
+        console.log('queryError:', queryError);
+
+        if (queryOutput.length > 0 && queryError === '') {
+            console.log('Opening modal with data!');
+            // Small delay to ensure state is fully updated
+            setTimeout(() => setShowOutputModal(true), 0);
+        } else {
+            console.log('NOT opening modal - length:', queryOutput.length, 'error:', queryError);
+        }
+    }, [queryOutput, queryError]);
+
     const showResult = (resultDB: Record<string, unknown>[]): boolean => {
-        console.log('=== SHOW RESULT DEBUG ===');
-        console.log('Result from DB:', resultDB);
-        console.log('Result length:', resultDB?.length);
-        console.log('Result type:', typeof resultDB);
+        console.log('=== SHOW RESULT CALLED ===');
+        console.log('resultDB:', resultDB);
+        console.log('resultDB length:', resultDB?.length);
+        console.log('resultDB is array:', Array.isArray(resultDB));
 
         const error = useDB.getError();
-        console.log('Error from DB:', error);
+        console.log('Error:', error);
 
-        // Single atomic state update with all data
-        setModalState({
-            show: error === '',
-            output: resultDB,
-            error: error,
-        });
+        // Close modal first
+        setShowOutputModal(false);
+
+        // Update output state
+        console.log('Setting queryOutput to:', resultDB);
+        setQueryOutput(resultDB);
+        setQueryError(error);
 
         // Show error toast if there's an error
         if (error !== '') {
             setErrorToastShow(true);
         } else {
             setErrorToastShow(false);
+            // Modal will open via useEffect when queryOutput updates
         }
 
         return error === '';
@@ -90,13 +102,18 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
 
     const onClickRun = (runSelectedOnly: boolean = false) => {
         console.log('=== ONCLICK RUN DEBUG ===');
+        console.log('DB Initialized:', useDB.isInitialized);
         console.log('Selected only mode:', runSelectedOnly);
+
         const blocklyOut: string = runSelectedOnly ? useBL.runGenSelected() : useBL.runGen();
         console.log('Blockly output (query):', blocklyOut);
         console.log('Query length:', blocklyOut?.length);
 
         const resultDB = useDB.queryDB(blocklyOut);
         console.log('Query DB returned:', resultDB);
+        console.log('Result is array:', Array.isArray(resultDB));
+        console.log('Result length:', resultDB?.length);
+        console.log('Result[0]:', resultDB?.[0]);
 
         if (showResult(resultDB)) {
             if (useVA.validate(blocklyOut, resultDB)) {
@@ -121,6 +138,7 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
                         variant="success"
                         onClick={() => onClickRun(false)}
                         title="Εκτέλεση όλων των blocks στο workspace"
+                        disabled={!useDB.isInitialized}
                     >
                         ▶ Τρέξε Όλα
                     </Button>
@@ -129,6 +147,7 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
                         variant="primary"
                         onClick={() => onClickRun(true)}
                         title="Εκτέλεση μόνο του επιλεγμένου block (πάτησε πάνω σε ένα block για να το επιλέξεις)"
+                        disabled={!useDB.isInitialized}
                     >
                         ▶ Τρέξε Επιλεγμένο
                     </Button>
@@ -145,9 +164,9 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
                     Σχήμα Βάσης
                 </Button>
                 <SQLOutputModal
-                    show={modalShow}
-                    output={outputDB}
-                    onHide={() => setModalShow(false)}
+                    show={showOutputModal}
+                    output={queryOutput}
+                    onHide={() => setShowOutputModal(false)}
                 />
                 <SchemaModal
                     show={schemaShow}
@@ -160,7 +179,7 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
                         onHide={() => {
                             setErrorToastShow(false);
                         }}
-                        error={errorDB}
+                        error={queryError}
                     />
                     <ValidationToast
                         show={validationtoastShow}

@@ -47,6 +47,7 @@ export function QueryHistoryProvider({ children }: QueryHistoryProviderProps) {
 
     // Save history to localStorage whenever it changes
     useEffect(() => {
+        if (typeof window === 'undefined') return;
         try {
             localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
         } catch (error) {
