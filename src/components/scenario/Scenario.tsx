@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { useValidation } from '../../modules/Validator';
@@ -28,6 +28,7 @@ const Scenario = ({
     const [validatedList, setValidatedList] = useState<boolean[]>([]);
     const [valid, setValid] = useState(false);
     const [inIntro, setInIntro] = useState(true);
+    const prevValSyncRef = useRef(valSync);
 
     useEffect(() => {
         console.log('-- Scenario: Initializing --');
@@ -35,6 +36,7 @@ const Scenario = ({
         setIdx(0);
         setValidatedList([]);
         setValid(false);
+        prevValSyncRef.current = valSync; // Reset ref on scenario change
 
         useBL.loadWorkspaceFile('');
 
@@ -48,20 +50,28 @@ const Scenario = ({
     }, [scenPath]);
 
     useEffect(() => {
-        if (!inIntro) {
-            if (idx < totalVids) {
-                const tmp = [...validatedList];
-                tmp[idx] = true;
-                setValidatedList(tmp);
+        // Only react to valSync changes, not to idx changes
+        if (!inIntro && idx < totalVids && prevValSyncRef.current !== valSync) {
+            // Only set validated and show "Next" when validation actually passed
+            // valSync toggles only when validation succeeds in SQLRuntimeControl
+            console.log('-- Scenario: Validation passed for step', idx);
 
-                if (idx + 1 === totalVids) {
-                    setScenCompleteSync(true);
-                } else {
-                    setValid(true);
-                }
+            setValidatedList(prev => {
+                const tmp = [...prev];
+                tmp[idx] = true;
+                return tmp;
+            });
+
+            if (idx + 1 === totalVids) {
+                setScenCompleteSync(true);
+            } else {
+                setValid(true);
             }
+
+            // Update the ref to the current value
+            prevValSyncRef.current = valSync;
         }
-    }, [valSync, inIntro, idx, totalVids, validatedList, setScenCompleteSync]);
+    }, [valSync, inIntro, idx, totalVids, setScenCompleteSync]);
 
     useEffect(() => {
         console.log('-- Scenario: Loading requirements for step', idx);
