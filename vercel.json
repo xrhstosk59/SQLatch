@@ -19,10 +19,14 @@
             ]
         }
     ],
-    "rewrites": [
+    "routes": [
         {
-            "source": "/((?!.*\\.db$).*)",
-            "destination": "/$1.html"
+            "src": "/(.*\\.db)",
+            "dest": "/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/$1.html"
         }
     ]
 }
