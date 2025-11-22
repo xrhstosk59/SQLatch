@@ -19,6 +19,10 @@
                 },
                 {
                     "kind": "block",
+                    "type": "not"
+                },
+                {
+                    "kind": "block",
                     "type": "aggregation_function"
                 },
                 {

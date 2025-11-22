@@ -14,6 +14,7 @@ import deleteJSON from '../modules/Blockly/Blocks/delete.json';
 import orderByJSON from '../modules/Blockly/Blocks/order_by.json';
 import setJSON from '../modules/Blockly/Blocks/set.json';
 import combinerJSON from '../modules/Blockly/Blocks/combiner.json';
+import notJSON from '../modules/Blockly/Blocks/not.json';
 import setClauseJSON from '../modules/Blockly/Blocks/set_clause.json';
 import aggregationFunctionJSON from '../modules/Blockly/Blocks/aggregation_function.json';
 import groupByJSON from '../modules/Blockly/Blocks/group_by.json';
@@ -74,7 +75,7 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
             onchange: function (e: Blockly.Events.Abstract) {
                 if (this.workspace.isDragging()) return;
                 if (e.type !== Blockly.Events.BLOCK_MOVE) return;
-                if (!parentIsType(this, ['select', 'delete'])) {
+                if (!parentIsType(this, ['select', 'delete', 'update'])) {
                     this.unplug();
                 }
             },
@@ -157,6 +158,11 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
         Blockly.Blocks['combiner'] = {
             init: function () {
                 this.jsonInit(combinerJSON);
+            },
+        };
+        Blockly.Blocks['not'] = {
+            init: function () {
+                this.jsonInit(notJSON);
             },
         };
         Blockly.Blocks['set_clause'] = {
@@ -306,6 +312,11 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
             const operation = block.getFieldValue('OPERATION');
             const second = SQL.valueToCode(block, 'SECOND', 0);
             const code = '(' + first + ' ' + operation + ' ' + second + ')';
+            return [code, 0];
+        };
+        SQL.forBlock['not'] = function (block) {
+            const condition = SQL.valueToCode(block, 'CONDITION', 0);
+            const code = 'NOT ' + condition;
             return [code, 0];
         };
         SQL.forBlock['set_clause'] = function (block) {

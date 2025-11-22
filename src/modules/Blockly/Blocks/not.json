@@ -1,0 +1,16 @@
+{
+    "type": "not",
+    "message0": "NOT %1",
+    "args0": [
+        {
+            "type": "input_value",
+            "name": "CONDITION",
+            "check": "String"
+        }
+    ],
+    "output": "String",
+    "inputsInline": true,
+    "colour": 170,
+    "tooltip": "Negate a condition with NOT",
+    "helpUrl": ""
+}
