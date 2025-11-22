@@ -58,34 +58,19 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
 
     // Show modal AFTER output is updated
     useEffect(() => {
-        console.log('=== USE EFFECT TRIGGERED ===');
-        console.log('queryOutput:', queryOutput);
-        console.log('queryOutput length:', queryOutput.length);
-        console.log('queryError:', queryError);
-
         if (queryOutput.length > 0 && queryError === '') {
-            console.log('Opening modal with data!');
             // Small delay to ensure state is fully updated
             setTimeout(() => setShowOutputModal(true), 0);
-        } else {
-            console.log('NOT opening modal - length:', queryOutput.length, 'error:', queryError);
         }
     }, [queryOutput, queryError]);
 
     const showResult = (resultDB: Record<string, unknown>[]): boolean => {
-        console.log('=== SHOW RESULT CALLED ===');
-        console.log('resultDB:', resultDB);
-        console.log('resultDB length:', resultDB?.length);
-        console.log('resultDB is array:', Array.isArray(resultDB));
-
         const error = useDB.getError();
-        console.log('Error:', error);
 
         // Close modal first
         setShowOutputModal(false);
 
         // Update output state
-        console.log('Setting queryOutput to:', resultDB);
         setQueryOutput(resultDB);
         setQueryError(error);
 
@@ -101,23 +86,11 @@ export default function SQLRuntimeControl({ valSync, setValSync }: SQLRuntimeCon
     };
 
     const onClickRun = (runSelectedOnly: boolean = false) => {
-        console.log('=== ONCLICK RUN DEBUG ===');
-        console.log('DB Initialized:', useDB.isInitialized);
-        console.log('Selected only mode:', runSelectedOnly);
-
         const blocklyOut: string = runSelectedOnly ? useBL.runGenSelected() : useBL.runGen();
-        console.log('Blockly output (query):', blocklyOut);
-        console.log('Query length:', blocklyOut?.length);
-
         const resultDB = useDB.queryDB(blocklyOut);
-        console.log('Query DB returned:', resultDB);
-        console.log('Result is array:', Array.isArray(resultDB));
-        console.log('Result length:', resultDB?.length);
-        console.log('Result[0]:', resultDB?.[0]);
 
         if (showResult(resultDB)) {
             if (useVA.validate(blocklyOut, resultDB)) {
-                console.log('Validation: passed');
                 setValSync(!valSync);
                 setSuccessToastShow(true);
             } else {

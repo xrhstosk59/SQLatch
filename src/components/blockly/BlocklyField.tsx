@@ -143,10 +143,7 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
 
     const onClickRun = (runSelectedOnly: boolean = false) => {
         // Generate SQL and show preview
-        console.log('=== ONCLICK RUN DEBUG ===');
-        console.log('Run selected only:', runSelectedOnly);
         const blocklyOut: string = runSelectedOnly ? useBL.runGenSelected() : useBL.runGen();
-        console.log('Generated SQL:', blocklyOut);
         setCurrentSQL(blocklyOut);
         setPreviewModalShow(true);
     };
@@ -175,7 +172,6 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
         if (error === '') {
             // Query succeeded, now validate
             if (useVA.validate(currentSQL, results)) {
-                console.log('Validation: passed');
                 setValSync(!valSync);
                 setSuccessToastShow(true);
                 // Modal will show after output is set
