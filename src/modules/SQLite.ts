@@ -8,10 +8,7 @@ let errors: string = '';
 export const useSQL = () => {
     const initSQL = () => {
         console.log('-- SQLite: Initializing module --');
-        sqlite3InitModule({
-            print: console.log,
-            printErr: console.error,
-        }).then((sqlite3) => {
+        sqlite3InitModule().then((sqlite3) => {
             try {
                 sqlite3Global = sqlite3;
                 setupDB(sqlite3);

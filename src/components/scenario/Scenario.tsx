@@ -56,7 +56,7 @@ const Scenario = ({
             // valSync toggles only when validation succeeds in SQLRuntimeControl
             console.log('-- Scenario: Validation passed for step', idx);
 
-            setValidatedList(prev => {
+            setValidatedList((prev) => {
                 const tmp = [...prev];
                 tmp[idx] = true;
                 return tmp;

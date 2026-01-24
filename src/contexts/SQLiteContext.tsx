@@ -60,10 +60,7 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
         }
 
         setIsInitializing(true);
-        sqlite3InitModule({
-            print: console.log,
-            printErr: console.error,
-        }).then((sqlite3) => {
+        sqlite3InitModule().then((sqlite3) => {
             try {
                 setSqlite3Global(sqlite3);
                 setupDB(sqlite3);

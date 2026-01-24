@@ -17,7 +17,7 @@ export function useAutoSave({
     intervalMs = DEFAULT_INTERVAL,
     onSave,
 }: UseAutoSaveOptions) {
-    const savedCallback = useRef<() => void>();
+    const savedCallback = useRef<(() => void) | undefined>(undefined);
 
     // Remember the latest callback
     useEffect(() => {
