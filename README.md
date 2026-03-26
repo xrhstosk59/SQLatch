@@ -14,7 +14,7 @@
 
 Το **SQLatch** είναι μια εκπαιδευτική πλατφόρμα που κάνει τη μάθηση SQL **εύκολη και διασκεδαστική**! Χρησιμοποιώντας visual programming με **Blockly blocks**, οι μαθητές μπορούν να δημιουργήσουν SQL queries χωρίς να θυμούνται syntax.
 
-Η τρέχουσα υλοποίηση αυτού του repository περιλαμβάνει δική μου δουλειά σε συντήρηση, επεκτάσεις, βελτιώσεις UI/UX και τεκμηρίωση, πάνω στην αρχική βάση του project.
+Το project ξεκίνησε ως πανεπιστημιακή εργασία. Η τρέχουσα υλοποίηση αυτού του repository περιλαμβάνει δική μου δουλειά μετά την εργασία σε συντήρηση, επεκτάσεις, βελτιώσεις UI/UX και τεκμηρίωση, με επιλεκτική χρήση AI-assisted tooling.
 
 ### 🎯 Γιατί SQLatch;
 
@@ -603,8 +603,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **[SQLite](https://sqlite.org/)** - Database engine
 - **[Next.js](https://nextjs.org/)** - React framework
 - **[Bootstrap](https://getbootstrap.com/)** - UI components
-- **Original project foundation**: [BillisC](https://github.com/BillisC/SQLatch)
-- **Current repository work**: Maintenance, feature development, UI improvements, and documentation updates by [xrhstosk59](https://github.com/xrhstosk59)
+- **Original university project foundation**: [BillisC](https://github.com/BillisC/SQLatch)
+- **Current repository work**: Post-course maintenance, feature development, UI improvements, and documentation updates by [xrhstosk59](https://github.com/xrhstosk59)
 
 ---
 
