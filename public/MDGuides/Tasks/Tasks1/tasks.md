@@ -6,7 +6,7 @@
 - Την ημερομηνία γέννησης του φοιτητή (<span style="color:aquamarine">ΗμερομηνίαΓέννησης</span>)
 
 <details>
-  <summary>Δείξε την λύση</summary>
+  <summary>Δείξε την ενδεικτική λύση</summary>
   ![Screenshot](MDGuides/Tasks/Tasks1/images/first.png)
 </details>
 
@@ -14,7 +14,7 @@ ___
 Στην συνέχεια εισάγετε στον πίνακα στοιχεία για δύο φοιτητές της επιλογής σας.
 
 <details>
-  <summary>Δείξε την λύση (παράδειγμα)</summary>
+  <summary>Δείξε την ενδεικτική λύση (παράδειγμα)</summary>
   ![Screenshot](MDGuides/Tasks/Tasks1/images/second.png)
 </details>
 
@@ -26,6 +26,6 @@ ___
 όταν ο αριθμός μητρώου είναι μεγαλύτερος του 100
 
 <details>
-  <summary>Δείξε την λύση</summary>
+  <summary>Δείξε την ενδεικτική λύση</summary>
   ![Screenshot](MDGuides/Tasks/Tasks1/images/third.png)
 </details>

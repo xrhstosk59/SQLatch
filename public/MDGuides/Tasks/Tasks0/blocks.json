@@ -1,0 +1,108 @@
+{
+    "blocks": {
+        "languageVersion": 0,
+        "blocks": [
+            {
+                "type": "create",
+                "id": "create_employees",
+                "x": 72,
+                "y": 52,
+                "inputs": {
+                    "TABLE": {
+                        "block": {
+                            "type": "text",
+                            "id": "table_employees",
+                            "fields": {
+                                "TEXT": "employees"
+                            }
+                        }
+                    },
+                    "COLUMNS": {
+                        "block": {
+                            "type": "column",
+                            "id": "column_id",
+                            "fields": {
+                                "TYPE": "INTEGER",
+                                "CONSTRAIN": "PRIMARY KEY"
+                            },
+                            "inputs": {
+                                "COLUMN": {
+                                    "block": {
+                                        "type": "text",
+                                        "id": "text_id",
+                                        "fields": {
+                                            "TEXT": "id"
+                                        }
+                                    }
+                                }
+                            },
+                            "next": {
+                                "block": {
+                                    "type": "column",
+                                    "id": "column_firstname",
+                                    "fields": {
+                                        "TYPE": "TEXT",
+                                        "CONSTRAIN": ""
+                                    },
+                                    "inputs": {
+                                        "COLUMN": {
+                                            "block": {
+                                                "type": "text",
+                                                "id": "text_firstname",
+                                                "fields": {
+                                                    "TEXT": "firstname"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "next": {
+                                        "block": {
+                                            "type": "column",
+                                            "id": "column_lastname",
+                                            "fields": {
+                                                "TYPE": "TEXT",
+                                                "CONSTRAIN": ""
+                                            },
+                                            "inputs": {
+                                                "COLUMN": {
+                                                    "block": {
+                                                        "type": "text",
+                                                        "id": "text_lastname",
+                                                        "fields": {
+                                                            "TEXT": "lastname"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "next": {
+                                                "block": {
+                                                    "type": "column",
+                                                    "id": "column_salary",
+                                                    "fields": {
+                                                        "TYPE": "REAL",
+                                                        "CONSTRAIN": ""
+                                                    },
+                                                    "inputs": {
+                                                        "COLUMN": {
+                                                            "block": {
+                                                                "type": "text",
+                                                                "id": "text_salary",
+                                                                "fields": {
+                                                                    "TEXT": "salary"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -41,8 +41,24 @@ export const useShowdown = () => {
                     'td',
                     'span',
                     'div',
+                    'details',
+                    'summary',
                 ],
-                ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'style', 'target', 'rel'],
+                ALLOWED_ATTR: [
+                    'href',
+                    'src',
+                    'alt',
+                    'title',
+                    'class',
+                    'style',
+                    'target',
+                    'rel',
+                    'data-answer-key',
+                    'data-label',
+                    'data-placeholder',
+                    'data-helper',
+                    'data-rows',
+                ],
             });
             return sanitizedHtml;
         } catch (error) {

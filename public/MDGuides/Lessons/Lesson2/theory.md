@@ -56,4 +56,4 @@ REFERENCES
 </span> Customers(CustomerID)
 );
 
-*photo coming soon*
+Στο παραπάνω παράδειγμα, η στήλη <span style="color:aquamarine">CustomerID</span> του πίνακα <span style="color:aquamarine">Orders</span> συνδέεται με το πρωτεύον κλειδί του πίνακα <span style="color:aquamarine">Customers</span>.

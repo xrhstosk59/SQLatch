@@ -41,9 +41,11 @@ export default function Guide({ valSync }: GuideProps) {
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
-                    // Ensure array has correct length
-                    if (Array.isArray(parsed) && parsed.length === LTS.length) {
-                        setViewed(parsed);
+                    if (Array.isArray(parsed)) {
+                        const normalized = Array.from({ length: LTS.length }, (_, index) =>
+                            Boolean(parsed[index])
+                        );
+                        setViewed(normalized);
                     }
                 } catch (e) {
                     console.error('Error loading lesson completion:', e);

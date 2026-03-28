@@ -65,6 +65,16 @@ export const LTS: LessonItem[] = [
         numVideos: 0,
     },
     {
+        blocks: 'Tasks/Tasks0/blocks.json',
+        theory: 'Tasks/Tasks0/tasks.md',
+        info: 'Άσκηση παρατήρησης και περιγραφής της δομής μιας βάσης δεδομένων',
+        name: 'Άσκηση: Δομή βάσης δεδομένων',
+        database: '',
+        isScenario: false,
+        requirements: [],
+        numVideos: 0,
+    },
+    {
         blocks: 'Lessons/Lesson1/blocks.json',
         theory: 'Lessons/Lesson1/theory.md',
         info: 'Παρουσίαση εντολής SELECT',
