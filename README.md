@@ -63,19 +63,20 @@
 - **Real-time execution** - Instant results
 - **Error handling** με user-friendly messages
 - **Schema Visualization** - Interactive React Flow diagrams με:
-  - Table relationships και foreign keys
-  - Color-coded tables
-  - Drag-and-drop node positioning
-  - Auto-layout για tables
+    - Table relationships και foreign keys
+    - Color-coded tables
+    - Drag-and-drop node positioning
+    - Auto-layout για tables
 
 ### 📖 Interactive Learning
 
-- **10 Μαθήματα**: SELECT, CREATE, INSERT, Logical Operators, UPDATE, DELETE/DROP, Aggregation Functions, ORDER BY, GROUP BY, JOIN
+- **1 Εισαγωγική ενότητα**
+- **11 Μαθήματα**: CREATE TABLE, SELECT, INSERT INTO, WHERE, Logical Operators, UPDATE, DELETE/DROP, Aggregation Functions, ORDER BY, GROUP BY, INNER JOIN
+- **7 Φύλλα εργασίας**: Δομή βάσης, CREATE/INSERT, WHERE, Λογικοί Τελεστές, Επανάληψη, ORDER BY/GROUP BY, INNER JOIN
 - **2 Σενάρια**: Story-based learning με video integration (The Magic Book Part 1 & 2)
-  - Part 1: 8 exercises (SELECT, WHERE, OR, INSERT, UPDATE, MIN, ORDER BY, DELETE)
-  - Part 2: 7 exercises (GROUP BY, HAVING, JOIN operations)
-- **3 Task Sets**: Progressive practice exercises με validation
-- **Markdown-based content** - Εύκολη προσθήκη νέων lessons
+    - Part 1: 8 exercises (SELECT, WHERE, OR, INSERT, UPDATE, MIN, ORDER BY, DELETE)
+    - Part 2: 7 exercises (GROUP BY, HAVING, JOIN operations)
+- **Markdown-based content** - Εύκολη προσθήκη νέων lessons, tasks και scenarios
 - **Progress tracking** - Lesson completion stored locally
 
 ### 📊 Query History
@@ -100,13 +101,13 @@
 ### ⌨️ Power User Features
 
 - **Comprehensive Keyboard Shortcuts**:
-  - `Ctrl+Enter` - Execute SQL query (Run All)
-  - `Ctrl+S` - Save workspace as JSON file
-  - `Ctrl+O` - Load workspace from JSON file
-  - `Ctrl+Shift+S` - Generate shareable URL
-  - `Esc` - Close open modals
-  - `Tab` / `Shift+Tab` - Navigate UI elements
-  - `?` - Show keyboard shortcuts help modal
+    - `Ctrl+Enter` - Execute SQL query (Run All)
+    - `Ctrl+S` - Save workspace as JSON file
+    - `Ctrl+O` - Load workspace from JSON file
+    - `Ctrl+Shift+S` - Generate shareable URL
+    - `Esc` - Close open modals
+    - `Tab` / `Shift+Tab` - Navigate UI elements
+    - `?` - Show keyboard shortcuts help modal
 - **Multiple Export Formats**: CSV, JSON, και clipboard copy (tab-separated)
 - **Export query results** με proper quote handling
 - **Custom scenarios** - Δημιούργησε τα δικά σου μαθήματα
@@ -235,13 +236,13 @@ SQLatch/
 │   │   └── fileOperations.ts    # File download/upload helpers
 │   │
 │   └── config/              # Configuration
-│       └── lessons.ts       # 15 lessons/scenarios/tasks configuration
+│       └── lessons.ts       # Learning flow configuration (intro, lessons, worksheets, scenarios)
 │
 ├── public/                  # Static assets
 │   ├── MDGuides/            # Educational content (Markdown + databases)
-│   │   ├── Lessons/         # 10 lessons με theory.md, blocks.json, database.db
+│   │   ├── Lessons/         # 11 lessons + intro με theory.md, blocks.json, database.db
 │   │   ├── Scenarios/       # 2 scenarios με videos, blocks, και databases
-│   │   └── Tasks/           # 3 task sets με exercises
+│   │   └── Tasks/           # Worksheets και επιπλέον exercise sets
 │   ├── sql_schema_visualizer/ # 5 example databases (Bindle, E-commerce, Finance, Live, NBA)
 │   └── favicon.png
 │
@@ -289,7 +290,7 @@ npm run type-check       # TypeScript validation
 
 ## 📖 Creating Custom Content
 
-### Lessons & Scenarios
+### Lessons, Tasks & Scenarios
 
 Τα lessons βρίσκονται στο `public/MDGuides/` και είναι σε **Markdown format**.
 
@@ -320,13 +321,17 @@ public/MDGuides/
 
 ```typescript
 export const LTS = [
-    // ... existing lessons
-    'Lessons/MyNewLesson/theory.md',
-];
-
-export const LTSNames = [
-    // ... existing names
-    'Το Νέο μου Μάθημα',
+    // ... existing entries
+    {
+        blocks: 'Lessons/MyNewLesson/blocks.json',
+        theory: 'Lessons/MyNewLesson/theory.md',
+        info: 'Σύντομη περιγραφή της νέας ενότητας',
+        name: 'Το Νέο μου Μάθημα',
+        database: 'Lessons/MyNewLesson/database.db',
+        isScenario: false,
+        requirements: [],
+        numVideos: 0,
+    },
 ];
 ```
 
@@ -555,6 +560,7 @@ Contributions are welcome! Παρακαλώ:
 ### ✅ Implemented Features
 
 **Core SQL Support (18 Blocks):**
+
 - [x] **SELECT blocks** - με WHERE, ORDER BY, GROUP BY, HAVING, JOIN
 - [x] **CREATE TABLE blocks** - με column types και constraints (PRIMARY KEY, UNIQUE, FOREIGN KEY)
 - [x] **INSERT blocks** - με column names και values
@@ -565,6 +571,7 @@ Contributions are welcome! Παρακαλώ:
 - [x] **JOIN support** - Table joins με ON conditions
 
 **Features:**
+
 - [x] **Schema Visualization** - Interactive React Flow diagrams με table relationships
 - [x] **Query History** - Track 50 queries με timestamps και status
 - [x] **Auto-save** - Configurable interval-based saving (30s default)

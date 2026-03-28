@@ -1,4 +1,4 @@
-## Άσκηση
+## Φύλλο εργασίας με CREATE και INSERT
 Δημιουργήστε έναν πίνακα με το όνομα <span style="color:aquamarine">Φοιτητές</span> που θα περιέχει:
 - Τον αριθμό μητρώου του Φοιτητή (<span style="color:aquamarine">ΑΜ</span>) το οποίο θα είναι το πρωτεύων κλειδί
 - Το όνομα του φοιτητή (<span style="color:aquamarine">Όνομα</span>)
