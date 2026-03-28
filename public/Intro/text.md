@@ -16,7 +16,7 @@
 
 ![using a color picker](Intro/guide.gif)
 
-- Κάθε επερώτηση SQL απεικονίζεται με γραφικό τρόπο
+- Κάθε ερώτημα SQL απεικονίζεται με γραφικό τρόπο
 
 
 ![using a color picker](Intro/output.gif)
