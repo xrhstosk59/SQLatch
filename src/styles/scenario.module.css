@@ -1,0 +1,44 @@
+.taskStack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 24px 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.taskCard {
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.taskLabel {
+    margin: 0 0 8px;
+    color: #9ec5fe;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.taskTitle {
+    margin: 0 0 10px;
+    color: white;
+    font-size: 1.25rem;
+}
+
+.taskText {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.84);
+    line-height: 1.6;
+}
+
+@media (max-width: 576px) {
+    .taskCard {
+        padding: 14px;
+    }
+
+    .taskTitle {
+        font-size: 1.1rem;
+    }
+}

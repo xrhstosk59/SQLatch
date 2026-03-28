@@ -3,6 +3,9 @@ import { Button, Container } from 'react-bootstrap';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { useValidation } from '../../modules/Validator';
 import { useBlocklyContext } from '../../contexts/BlocklyContext';
+import ExerciseAnswerBox from '../guide/ExerciseAnswerBox';
+import GuideContent from '../guide/GuideContent';
+import styles from '../../styles/scenario.module.css';
 
 interface ScenarioProps {
     md: string;
@@ -12,6 +15,53 @@ interface ScenarioProps {
     scenarioRequirements: [string[], string][];
     setScenCompleteSync: (value: boolean) => void;
 }
+
+interface ScenarioIntroTaskContent {
+    noteLabel: string;
+    noteTitle: string;
+    noteText: string;
+    answerKey: string;
+    placeholder: string;
+    solutionLabel: string;
+    solutionTitle: string;
+    solutionText: string;
+}
+
+const getScenarioIntroTaskContent = (scenPath: string): ScenarioIntroTaskContent | null => {
+    if (scenPath.includes('Scenario1')) {
+        return {
+            noteLabel: 'Βήμα 1',
+            noteTitle: 'Περιέγραψε το σενάριο',
+            noteText:
+                'Κράτησε σύντομες σημειώσεις για το τι προσπαθεί να πετύχει ο μάγος, ποια δεδομένα χρειάζεται να οργανώσει και πώς πιστεύεις ότι θα βοηθήσει η βάση δεδομένων.',
+            answerKey: 'scenario1-part1-notes',
+            placeholder:
+                'Παράδειγμα: Ο μάγος θέλει να οργανώσει τα ξόρκια και τα υλικά τους, ώστε να μπορεί να τα βρίσκει και να τα διαχειρίζεται σωστά...',
+            solutionLabel: 'Βήμα 2',
+            solutionTitle: 'Βρες τα σωστά blocks και φτιάξε τη λύση',
+            solutionText:
+                'Χρησιμοποίησε τα blocks του workspace για να συνθέσεις τη λύση της άσκησης. Όταν είσαι έτοιμος, πάτησε Τρέξε Όλα για να γίνει η επικύρωση και, αν θέλεις να συγκρίνεις το αποτέλεσμα, χρησιμοποίησε το κουμπί της λύσης πιο κάτω.',
+        };
+    }
+
+    if (scenPath.includes('Scenario2')) {
+        return {
+            noteLabel: 'Βήμα 1',
+            noteTitle: 'Περιέγραψε το δεύτερο μέρος του σεναρίου',
+            noteText:
+                'Σημείωσε τι έχει ήδη καταφέρει ο μάγος στο πρώτο μέρος και τι χρειάζεται να ολοκληρώσεις τώρα με πιο σύνθετες SQL εντολές.',
+            answerKey: 'scenario2-part2-notes',
+            placeholder:
+                'Παράδειγμα: Στο δεύτερο μέρος πρέπει να οργανώσω καλύτερα τα δεδομένα του βιβλίου και να χρησιμοποιήσω πιο σύνθετα queries, όπως group by και join...',
+            solutionLabel: 'Βήμα 2',
+            solutionTitle: 'Βρες τα σωστά blocks και φτιάξε τη λύση',
+            solutionText:
+                'Χρησιμοποίησε τα blocks του workspace για να φτιάξεις τη λύση της άσκησης. Όταν είσαι έτοιμος, πάτησε Τρέξε Όλα για επικύρωση και χρησιμοποίησε το κουμπί της λύσης πιο κάτω μόνο για έλεγχο.',
+        };
+    }
+
+    return null;
+};
 
 const Scenario = ({
     md,
@@ -29,6 +79,7 @@ const Scenario = ({
     const [valid, setValid] = useState(false);
     const [inIntro, setInIntro] = useState(true);
     const prevValSyncRef = useRef(valSync);
+    const introTaskContent = idx === 0 ? getScenarioIntroTaskContent(scenPath) : null;
 
     useEffect(() => {
         console.log('-- Scenario: Initializing --');
@@ -116,10 +167,9 @@ const Scenario = ({
             />
             {inIntro ? (
                 <>
-                    <Container
-                        style={{ maxWidth: 'none' }}
-                        dangerouslySetInnerHTML={{ __html: md }}
-                    />
+                    <Container style={{ maxWidth: 'none', paddingLeft: 0, paddingRight: 0 }}>
+                        <GuideContent content={md} isLoading={false} />
+                    </Container>
                     <Container
                         style={{
                             display: 'flex',
@@ -171,6 +221,30 @@ const Scenario = ({
                             />
                         </Container>
                     </Container>
+                    {introTaskContent ? (
+                        <Container className={styles.taskStack}>
+                            <section className={styles.taskCard}>
+                                <p className={styles.taskLabel}>{introTaskContent.noteLabel}</p>
+                                <h3 className={styles.taskTitle}>{introTaskContent.noteTitle}</h3>
+                                <p className={styles.taskText}>{introTaskContent.noteText}</p>
+                                <ExerciseAnswerBox
+                                    answerKey={introTaskContent.answerKey}
+                                    label="Σημειώσεις για το σενάριο"
+                                    placeholder={introTaskContent.placeholder}
+                                    helper="Οι σημειώσεις αποθηκεύονται τοπικά σε αυτόν τον browser, ώστε να μπορείς να τις συμπληρώνεις σταδιακά."
+                                    rows={7}
+                                />
+                            </section>
+
+                            <section className={styles.taskCard}>
+                                <p className={styles.taskLabel}>{introTaskContent.solutionLabel}</p>
+                                <h3 className={styles.taskTitle}>
+                                    {introTaskContent.solutionTitle}
+                                </h3>
+                                <p className={styles.taskText}>{introTaskContent.solutionText}</p>
+                            </section>
+                        </Container>
+                    ) : null}
                     <Container
                         style={{
                             display: 'flex',
@@ -182,7 +256,7 @@ const Scenario = ({
                     >
                         {validatedList.filter(Boolean).length !== totalVids ? (
                             <Button variant="secondary" onClick={() => onClickShowSolution()}>
-                                Δείξε την λύση
+                                Δείξε τη λύση για έλεγχο
                             </Button>
                         ) : (
                             <></>
