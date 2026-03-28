@@ -18,7 +18,7 @@ interface GuideProps {
     valSync: boolean;
 }
 
-const LESSON_COMPLETION_STORAGE_KEY = 'lessonCompletion.v7';
+const LESSON_COMPLETION_STORAGE_KEY = 'lessonCompletion.v8';
 
 export default function Guide({ valSync }: GuideProps) {
     const useMD = useShowdown();

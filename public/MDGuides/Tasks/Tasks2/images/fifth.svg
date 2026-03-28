@@ -1,0 +1,15 @@
+<svg width="430" height="130" viewBox="0 0 430 130" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font: 700 15px Arial, sans-serif; fill: #ffffff; }
+      .chiptext { font: 700 13px Arial, sans-serif; fill: #24443d; }
+    </style>
+  </defs>
+  <rect x="8" y="10" width="220" height="92" rx="12" fill="#8261b2"/>
+  <text class="title" x="24" y="39">SELECT</text>
+  <text class="title" x="36" y="74">FROM</text>
+  <rect x="116" y="18" width="92" height="24" rx="8" fill="#b7ddd4"/>
+  <text class="chiptext" x="128" y="35">COUNT(*)</text>
+  <rect x="116" y="52" width="108" height="24" rx="8" fill="#b7ddd4"/>
+  <text class="chiptext" x="126" y="69">Φοιτητές</text>
+</svg>
