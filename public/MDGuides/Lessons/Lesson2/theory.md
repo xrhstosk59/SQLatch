@@ -1,4 +1,4 @@
-## 2. CREATE TABLE
+## 1. CREATE TABLE
 
 Η εντολή <span style="color:coral">
 CREATE TABLE

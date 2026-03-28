@@ -1,4 +1,4 @@
-## 1. SELECT
+## 2. SELECT
 
 Η εντολή <span style="color:coral">
 SELECT

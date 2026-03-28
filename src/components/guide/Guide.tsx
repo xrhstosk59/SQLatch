@@ -18,6 +18,8 @@ interface GuideProps {
     valSync: boolean;
 }
 
+const LESSON_COMPLETION_STORAGE_KEY = 'lessonCompletion.v7';
+
 export default function Guide({ valSync }: GuideProps) {
     const useMD = useShowdown();
     const useBL = useBlocklyContext();
@@ -37,7 +39,7 @@ export default function Guide({ valSync }: GuideProps) {
     useEffect(() => {
         setIsMounted(true);
         if (typeof window !== 'undefined') {
-            const saved = localStorage.getItem('lessonCompletion');
+            const saved = localStorage.getItem(LESSON_COMPLETION_STORAGE_KEY);
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
@@ -91,7 +93,7 @@ export default function Guide({ valSync }: GuideProps) {
             const resetViewed = Array(LTS.length).fill(false);
             setViewed(resetViewed);
             if (typeof window !== 'undefined') {
-                localStorage.setItem('lessonCompletion', JSON.stringify(resetViewed));
+                localStorage.setItem(LESSON_COMPLETION_STORAGE_KEY, JSON.stringify(resetViewed));
             }
         }
     };
@@ -168,7 +170,7 @@ export default function Guide({ valSync }: GuideProps) {
     // Save completion status to localStorage whenever it changes (after mount)
     useEffect(() => {
         if (isMounted && typeof window !== 'undefined') {
-            localStorage.setItem('lessonCompletion', JSON.stringify(viewed));
+            localStorage.setItem(LESSON_COMPLETION_STORAGE_KEY, JSON.stringify(viewed));
         }
     }, [viewed, isMounted]);
 

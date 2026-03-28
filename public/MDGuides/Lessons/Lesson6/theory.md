@@ -1,4 +1,4 @@
-## DELETE FROM / DROP TABLE
+## 7. DELETE FROM / DROP TABLE
 Η εντολή <span style="color:coral">
    **DELETE FROM**</span> χρησιμοποιείται για τη διαγραφή εγγραφών από έναν πίνακα σε μια βάση δεδομένων. 
    

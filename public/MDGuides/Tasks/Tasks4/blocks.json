@@ -1,0 +1,106 @@
+{
+    "blocks": {
+        "languageVersion": 0,
+        "blocks": [
+            {
+                "type": "select",
+                "id": "task4_select",
+                "x": 70,
+                "y": 52
+            },
+            {
+                "type": "text",
+                "id": "task4_star",
+                "x": 292,
+                "y": 18,
+                "fields": {
+                    "TEXT": "*"
+                }
+            },
+            {
+                "type": "text",
+                "id": "task4_employees",
+                "x": 280,
+                "y": 152,
+                "fields": {
+                    "TEXT": "employees"
+                }
+            },
+            {
+                "type": "where",
+                "id": "task4_where",
+                "x": 90,
+                "y": 248
+            },
+            {
+                "type": "combiner",
+                "id": "task4_and",
+                "x": 308,
+                "y": 250,
+                "fields": {
+                    "OPERATION": "AND"
+                }
+            },
+            {
+                "type": "combiner",
+                "id": "task4_or",
+                "x": 308,
+                "y": 366,
+                "fields": {
+                    "OPERATION": "OR"
+                }
+            },
+            {
+                "type": "not",
+                "id": "task4_not",
+                "x": 308,
+                "y": 482
+            },
+            {
+                "type": "text",
+                "id": "task4_id1",
+                "x": 560,
+                "y": 224,
+                "fields": {
+                    "TEXT": "id=1"
+                }
+            },
+            {
+                "type": "text",
+                "id": "task4_salary100",
+                "x": 560,
+                "y": 274,
+                "fields": {
+                    "TEXT": "salary>100"
+                }
+            },
+            {
+                "type": "text",
+                "id": "task4_id2",
+                "x": 560,
+                "y": 392,
+                "fields": {
+                    "TEXT": "id=2"
+                }
+            },
+            {
+                "type": "text",
+                "id": "task4_salary200",
+                "x": 560,
+                "y": 442,
+                "fields": {
+                    "TEXT": "salary>200"
+                }
+            },
+            {
+                "type": "text",
+                "id": "task4_id1_second",
+                "x": 560,
+                "y": 516,
+                "fields": {
+                    "TEXT": "id=1"
+                }
+            }
+        ]
+    }
+}

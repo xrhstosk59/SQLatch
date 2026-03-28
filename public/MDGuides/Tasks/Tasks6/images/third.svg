@@ -1,0 +1,28 @@
+<svg width="840" height="220" viewBox="0 0 840 220" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font: 700 15px Arial, sans-serif; fill: #ffffff; }
+      .chiptext { font: 700 13px Arial, sans-serif; fill: #24443d; }
+      .subtext { font: 700 14px Arial, sans-serif; fill: #ffffff; }
+    </style>
+  </defs>
+  <rect x="8" y="10" width="350" height="92" rx="12" fill="#8261b2"/>
+  <text class="title" x="24" y="39">SELECT</text>
+  <text class="title" x="36" y="74">FROM</text>
+  <rect x="116" y="18" width="264" height="24" rx="8" fill="#b7ddd4"/>
+  <text class="chiptext" x="126" y="35">employees.firstname, departments.dep_name</text>
+  <rect x="116" y="52" width="96" height="24" rx="8" fill="#b7ddd4"/>
+  <text class="chiptext" x="127" y="69">employees</text>
+  <rect x="24" y="98" width="96" height="34" rx="10" fill="#6bb7a2"/>
+  <text class="subtext" x="42" y="120">JOIN</text>
+  <rect x="126" y="103" width="82" height="24" rx="8" fill="#b7ddd4"/>
+  <text class="chiptext" x="146" y="120">workson</text>
+  <rect x="214" y="103" width="226" height="24" rx="8" fill="#b7ddd4"/>
+  <text class="chiptext" x="225" y="120">employees.id = workson.emp_id</text>
+  <rect x="24" y="138" width="96" height="34" rx="10" fill="#6bb7a2"/>
+  <text class="subtext" x="42" y="160">JOIN</text>
+  <rect x="126" y="143" width="102" height="24" rx="8" fill="#b7ddd4"/>
+  <text class="chiptext" x="137" y="160">departments</text>
+  <rect x="234" y="143" width="256" height="24" rx="8" fill="#b7ddd4"/>
+  <text class="chiptext" x="245" y="160">workson.dep_id = departments.dep_id</text>
+</svg>

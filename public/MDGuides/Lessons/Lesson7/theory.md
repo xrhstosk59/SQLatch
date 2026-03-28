@@ -1,4 +1,4 @@
-## MIN / MAX / AVG / SUM / COUNT
+## 8. MIN / MAX / AVG / SUM / COUNT
 
 Στην SQL, οι συναρτήσεις <span style="color:coral">
    **MIN**</span>, <span style="color:coral">

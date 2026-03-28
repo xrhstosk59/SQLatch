@@ -1,0 +1,46 @@
+{
+    "blocks": {
+        "languageVersion": 0,
+        "blocks": [
+            {
+                "type": "select",
+                "id": "where_select",
+                "x": 121,
+                "y": 72
+            },
+            {
+                "type": "text",
+                "id": "where_columns",
+                "x": 331,
+                "y": 26,
+                "fields": {
+                    "TEXT": "*"
+                }
+            },
+            {
+                "type": "text",
+                "id": "where_table",
+                "x": 304,
+                "y": 188,
+                "fields": {
+                    "TEXT": "employees"
+                }
+            },
+            {
+                "type": "where",
+                "id": "where_clause",
+                "x": 150,
+                "y": 300
+            },
+            {
+                "type": "text",
+                "id": "where_condition",
+                "x": 356,
+                "y": 314,
+                "fields": {
+                    "TEXT": "salary > 500"
+                }
+            }
+        ]
+    }
+}
