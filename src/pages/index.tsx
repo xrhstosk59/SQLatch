@@ -1,15 +1,12 @@
 /* Next components   */
 import Head from 'next/head';
-import { useEffect, useState, lazy, Suspense, startTransition } from 'react';
+import { useEffect, useState } from 'react';
 
 /* Our Components */
 import NavBar from '../components/layout/Navbar';
 import BlocklyField from '../components/blockly/BlocklyField';
-import LoadingSpinner from '../components/ui/LoadingSpinner';
-
-// Lazy load components that aren't critical for initial render
-const Guide = lazy(() => import('../components/guide/Guide'));
-const IntroModal = lazy(() => import('../components/modals/IntroModal'));
+import Guide from '../components/guide/Guide';
+import IntroModal from '../components/modals/IntroModal';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -20,9 +17,7 @@ export default function Home() {
     const [valSync, setValSync] = useState(false);
 
     useEffect(() => {
-        startTransition(() => {
-            setIntroShow(true);
-        });
+        setIntroShow(true);
     }, []);
 
     return (
@@ -43,15 +38,11 @@ export default function Home() {
                             <BlocklyField valSync={valSync} setValSync={setValSync} />
                         </Col>
                         <Col xs={12} lg={5}>
-                            <Suspense fallback={<LoadingSpinner message="Φόρτωση οδηγού..." />}>
-                                <Guide valSync={valSync} />
-                            </Suspense>
+                            <Guide valSync={valSync} />
                         </Col>
                     </Row>
                 </Container>
-                <Suspense fallback={null}>
-                    <IntroModal show={introShow} onHide={() => setIntroShow(false)} />
-                </Suspense>
+                {introShow && <IntroModal show={introShow} onHide={() => setIntroShow(false)} />}
             </Container>
         </>
     );
