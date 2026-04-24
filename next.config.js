@@ -3,6 +3,9 @@
  */
 const nextConfig = {
     output: 'export',
+    // Keep Next.js anchored to this project root even if parent directories
+    // also contain lockfiles.
+    outputFileTracingRoot: __dirname,
     images: {
         unoptimized: true,
     },

@@ -1,4 +1,4 @@
-## 2. SELECT
+## 3. SELECT
 
 Η εντολή <span style="color:coral">
 SELECT
@@ -37,15 +37,6 @@ FROM
 
 ![Screenshot](MDGuides/Lessons/Lesson1/images/second.png)
 
-Επιλογή με φίλτρο (π.χ., επιλογή όλων των υπαλλήλων που έχουν μισθό πάνω
-από 50000):
-
-*   <span style="color:aquamarine">
-SELECT
-</span> \* <span style="color:aquamarine">
-FROM
-</span> employees WHERE salary \> <span style="color:coral">
-50000
-</span>;
-
-![Screenshot](MDGuides/Lessons/Lesson1/images/third.png)
+Σε επόμενο μάθημα θα δούμε πώς μπορούμε να προσθέσουμε συνθήκες με την
+εντολή <span style="color:coral">WHERE</span>, ώστε να εμφανίζονται μόνο
+οι εγγραφές που μας ενδιαφέρουν.
