@@ -1,6 +1,7 @@
 /* Next components   */
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 /* Our Components */
 import NavBar from '../components/layout/Navbar';
@@ -13,12 +14,18 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 export default function Home() {
+    const router = useRouter();
     const [introShow, setIntroShow] = useState(false);
     const [valSync, setValSync] = useState(false);
+    const [hasInitializedIntro, setHasInitializedIntro] = useState(false);
 
     useEffect(() => {
-        setIntroShow(true);
-    }, []);
+        if (!router.isReady || hasInitializedIntro) return;
+
+        const hasLessonDeepLink = typeof router.query.lesson !== 'undefined';
+        setIntroShow(!hasLessonDeepLink);
+        setHasInitializedIntro(true);
+    }, [router.isReady, router.query.lesson, hasInitializedIntro]);
 
     return (
         <>

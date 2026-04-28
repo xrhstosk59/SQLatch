@@ -1,5 +1,6 @@
 import styles from '../../styles/guide.module.css';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import Container from 'react-bootstrap/Container';
 
@@ -20,7 +21,35 @@ interface GuideProps {
 
 const LESSON_COMPLETION_STORAGE_KEY = 'lessonCompletion.v8';
 
+const getFirstQueryValue = (value: string | string[] | undefined): string | undefined => {
+    return Array.isArray(value) ? value[0] : value;
+};
+
+const lessonNameToSlug = (name: string): string => {
+    return name
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+};
+
+const resolveLessonParam = (lessonParam: string): number | null => {
+    const numericValue = Number(lessonParam);
+    if (Number.isInteger(numericValue) && numericValue >= 1 && numericValue <= LTS.length) {
+        return numericValue - 1;
+    }
+
+    const normalizedLessonParam = lessonNameToSlug(lessonParam);
+    const lessonIndex = LTS.findIndex(
+        (lesson) => lessonNameToSlug(lesson.name) === normalizedLessonParam
+    );
+
+    return lessonIndex >= 0 ? lessonIndex : null;
+};
+
 export default function Guide({ valSync }: GuideProps) {
+    const router = useRouter();
     const useMD = useShowdown();
     const useBL = useBlocklyContext();
     const useDB = useSQLite();
@@ -34,6 +63,27 @@ export default function Guide({ valSync }: GuideProps) {
     const [viewed, setViewed] = useState<boolean[]>(Array(LTS.length).fill(false));
     const [canSync, setCanSync] = useState(false);
     const [scenCompleteSync, setScenCompleteSync] = useState(false);
+
+    const syncLessonQuery = (lessonIndex: number | null) => {
+        if (!router.isReady) return;
+
+        const nextQuery = { ...router.query };
+
+        if (lessonIndex === null) {
+            delete nextQuery.lesson;
+        } else {
+            nextQuery.lesson = String(lessonIndex + 1);
+        }
+
+        router.replace(
+            {
+                pathname: router.pathname,
+                query: nextQuery,
+            },
+            undefined,
+            { shallow: true }
+        );
+    };
 
     // Load completion status from localStorage after mount (client-side only)
     useEffect(() => {
@@ -56,13 +106,28 @@ export default function Guide({ valSync }: GuideProps) {
         }
     }, []);
 
+    useEffect(() => {
+        if (!router.isReady) return;
+
+        const lessonParam = getFirstQueryValue(router.query.lesson);
+        if (!lessonParam) return;
+
+        const targetLessonIndex = resolveLessonParam(lessonParam);
+        if (targetLessonIndex === null) return;
+
+        setIdxState(targetLessonIndex);
+        setInHome(false);
+    }, [router.isReady, router.query.lesson]);
+
     const handleHomeClick = () => {
         setInHome(true);
+        syncLessonQuery(null);
     };
 
     const handleLessonClick = (index: number) => {
         setIdxState(index);
         setInHome(false);
+        syncLessonQuery(index);
     };
 
     const handleNextGuide = () => {
@@ -74,18 +139,24 @@ export default function Guide({ valSync }: GuideProps) {
         }
 
         if (idxState < LTS.length - 1) {
-            setIdxState(idxState + 1);
+            const nextIndex = idxState + 1;
+            setIdxState(nextIndex);
+            syncLessonQuery(nextIndex);
         }
     };
 
     const handlePrevGuide = () => {
         if (idxState > 0) {
-            setIdxState(idxState - 1);
+            const prevIndex = idxState - 1;
+            setIdxState(prevIndex);
+            syncLessonQuery(prevIndex);
         }
     };
 
     const handlePageClick = (index: number) => {
         setIdxState(index);
+        setInHome(false);
+        syncLessonQuery(index);
     };
 
     const handleResetProgress = () => {
