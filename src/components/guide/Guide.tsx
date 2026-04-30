@@ -178,12 +178,16 @@ export default function Guide({ valSync }: GuideProps) {
                 setMDGuides(html);
 
                 if (!inHome) {
+                    if (!useDB.isInitialized) {
+                        return;
+                    }
+
                     // Load blocks for non-scenario lessons
                     if (!currentLesson.isScenario) {
                         if (currentLesson.blocks === '' || currentLesson.blocks === undefined) {
-                            useBL.loadWorkspaceFile('');
+                            await useBL.loadWorkspaceFile('');
                         } else {
-                            useBL.loadWorkspaceFile('/MDGuides/' + currentLesson.blocks);
+                            await useBL.loadWorkspaceFile('/MDGuides/' + currentLesson.blocks);
                         }
                         // Set validation requirements
                         if (currentLesson.requirements.length > 0) {
@@ -208,7 +212,7 @@ export default function Guide({ valSync }: GuideProps) {
                     if (currentLesson.database === '' || currentLesson.database === undefined) {
                         useDB.resetDB();
                     } else {
-                        useDB.loadDB('/MDGuides/' + currentLesson.database);
+                        await useDB.loadDB('/MDGuides/' + currentLesson.database);
                     }
                 }
             } finally {
@@ -218,7 +222,7 @@ export default function Guide({ valSync }: GuideProps) {
 
         setHTML();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [idxState, inHome]);
+    }, [idxState, inHome, useDB.isInitialized]);
 
     useEffect(() => {
         if (canSync) {

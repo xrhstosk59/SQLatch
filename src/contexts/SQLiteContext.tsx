@@ -6,6 +6,7 @@ import React, {
     ReactNode,
     useMemo,
     useCallback,
+    useRef,
 } from 'react';
 import sqlite3InitModule, { Database, Sqlite3Static } from '@sqlite.org/sqlite-wasm';
 
@@ -35,6 +36,19 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
     const [errors, setErrors] = useState<string>('');
     const [isInitializing, setIsInitializing] = useState(false);
     const [isInitialized, setIsInitialized] = useState(false);
+    const recentResultRef = useRef<Record<string, unknown>[]>([]);
+    const activeDBRef = useRef<Database | null>(null);
+    const errorsRef = useRef('');
+
+    const updateError = useCallback((message: string) => {
+        errorsRef.current = message;
+        setErrors(message);
+    }, []);
+
+    const updateRecentResult = useCallback((result: Record<string, unknown>[]) => {
+        recentResultRef.current = result;
+        setRecentResult(result);
+    }, []);
 
     const setupDB = useCallback((sqlite3: Sqlite3Static) => {
         try {
@@ -43,6 +57,7 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
                 if (prevDB) {
                     prevDB.close();
                 }
+                activeDBRef.current = db;
                 return db;
             });
             setIsInitialized(true);
@@ -73,9 +88,10 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
 
     const queryDB = useCallback(
         (query: string): Record<string, unknown>[] => {
-            setErrors('');
+            updateError('');
             if (query === '') {
-                setErrors('Δεν βρέθηκαν blocks στο workspace!');
+                updateError('Δεν βρέθηκαν blocks στο workspace!');
+                updateRecentResult([]);
                 return [];
             }
 
@@ -86,7 +102,10 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
                     .map((s) => s.trim())
                     .filter((s) => s.length > 0);
 
-                if (!activeDB) {
+                const db = activeDBRef.current;
+                if (!db) {
+                    updateError('Η βάση δεδομένων δεν έχει φορτωθεί ακόμα. Δοκίμασε ξανά σε λίγο.');
+                    updateRecentResult([]);
                     return [];
                 }
 
@@ -94,7 +113,7 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
 
                 // Execute each statement separately
                 statements.forEach((statement) => {
-                    const result = activeDB.exec(statement, {
+                    const result = db.exec(statement, {
                         rowMode: 'object',
                         returnValue: 'resultRows',
                     }) as Record<string, unknown>[];
@@ -105,28 +124,34 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
                     }
                 });
 
-                setRecentResult(lastResult);
+                updateRecentResult(lastResult);
                 return lastResult;
             } catch (err) {
                 const message = err instanceof Error ? err.message : String(err);
-                setErrors(message);
+                updateError(message);
+                updateRecentResult([]);
                 return [];
             }
         },
-        [activeDB]
+        [updateError, updateRecentResult]
     );
 
     const getResultDB = useCallback((): Record<string, unknown>[] => {
-        return recentResult;
-    }, [recentResult]);
+        return recentResultRef.current;
+    }, []);
 
     const getError = useCallback((): string => {
-        return errors;
-    }, [errors]);
+        return errorsRef.current;
+    }, []);
 
     const requestDB = async (path: string): Promise<ArrayBuffer | ''> => {
         try {
             const response = await fetch(path);
+            if (!response.ok) {
+                throw new Error(
+                    `Αποτυχία φόρτωσης βάσης: ${response.status} ${response.statusText}`
+                );
+            }
             const arrayBuf = await response.arrayBuffer();
             return arrayBuf;
         } catch (err) {
@@ -142,40 +167,48 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
                 if (prevDB) {
                     prevDB.close();
                 }
+                activeDBRef.current = db;
                 return db;
             });
+            updateError('');
+            updateRecentResult([]);
         }
-    }, [sqlite3Global]);
+    }, [sqlite3Global, updateError, updateRecentResult]);
 
     const loadDB = useCallback(
         async (path: string) => {
+            updateError('');
+            updateRecentResult([]);
             if (path === '') {
                 resetDB();
             } else {
+                if (!sqlite3Global) {
+                    updateError('Η SQLite δεν έχει αρχικοποιηθεί ακόμα. Δοκίμασε ξανά σε λίγο.');
+                    return;
+                }
                 const arrayBuffer = await requestDB(path);
                 if (arrayBuffer !== '') {
-                    if (sqlite3Global) {
-                        const p = sqlite3Global.wasm.allocFromTypedArray(arrayBuffer);
-                        const db = new sqlite3Global.oo1.DB();
-                        const rc = sqlite3Global.capi.sqlite3_deserialize(
-                            db.pointer!,
-                            'main',
-                            p,
-                            arrayBuffer.byteLength,
-                            arrayBuffer.byteLength,
-                            sqlite3Global.capi.SQLITE_DESERIALIZE_FREEONCLOSE |
-                                sqlite3Global.capi.SQLITE_DESERIALIZE_RESIZEABLE
-                        );
-                        db.checkRc(rc);
-                        setActiveDB((prevDB) => {
-                            if (prevDB) prevDB.close();
-                            return db;
-                        });
-                    }
+                    const p = sqlite3Global.wasm.allocFromTypedArray(arrayBuffer);
+                    const db = new sqlite3Global.oo1.DB();
+                    const rc = sqlite3Global.capi.sqlite3_deserialize(
+                        db.pointer!,
+                        'main',
+                        p,
+                        arrayBuffer.byteLength,
+                        arrayBuffer.byteLength,
+                        sqlite3Global.capi.SQLITE_DESERIALIZE_FREEONCLOSE |
+                            sqlite3Global.capi.SQLITE_DESERIALIZE_RESIZEABLE
+                    );
+                    db.checkRc(rc);
+                    setActiveDB((prevDB) => {
+                        if (prevDB) prevDB.close();
+                        activeDBRef.current = db;
+                        return db;
+                    });
                 }
             }
         },
-        [sqlite3Global, resetDB]
+        [sqlite3Global, resetDB, updateError, updateRecentResult]
     );
 
     const getTableNames = useCallback((): Record<string, unknown>[] => {
