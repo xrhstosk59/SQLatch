@@ -225,7 +225,7 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
             const table = SQL.valueToCode(block, 'TABLE', 0);
             let columns = SQL.statementToCode(block, 'COLUMNS') || ' ';
             if (columns != ' ') columns = '(' + columns + ')';
-            const code = 'CREATE TABLE ' + table + columns;
+            const code = 'CREATE TABLE IF NOT EXISTS ' + table + columns;
             return code + ';';
         };
         SQL.forBlock['insert'] = function (block) {

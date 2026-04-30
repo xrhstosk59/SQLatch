@@ -65,24 +65,23 @@ function QueryHistory() {
         }
     };
 
-    const handleDeleteQuery = (id: string) => {
-        deleteQuery(id);
-        if (activeEntryId === id) {
-            setActiveEntryId(null);
-            setModalShow(false);
-            setToastShow(false);
-            setOutputDB([]);
-            setErrorDB('');
-        }
-    };
-
-    const handleClearHistory = () => {
-        clearHistory();
+    const resetQueryState = async () => {
+        await useDB.resetCurrentDB();
         setActiveEntryId(null);
         setModalShow(false);
         setToastShow(false);
         setOutputDB([]);
         setErrorDB('');
+    };
+
+    const handleDeleteQuery = async (id: string) => {
+        deleteQuery(id);
+        await resetQueryState();
+    };
+
+    const handleClearHistory = async () => {
+        clearHistory();
+        await resetQueryState();
     };
 
     return (

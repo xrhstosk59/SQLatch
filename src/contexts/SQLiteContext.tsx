@@ -17,6 +17,7 @@ interface SQLiteContextType {
     getError: () => string;
     loadDB: (path: string) => Promise<void>;
     resetDB: () => void;
+    resetCurrentDB: () => Promise<void>;
     getTableNames: () => Record<string, unknown>[];
     getColumnNames: (name: string) => Record<string, unknown>[];
     getForeignKeys: (name: string) => Record<string, unknown>[];
@@ -39,6 +40,7 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
     const recentResultRef = useRef<Record<string, unknown>[]>([]);
     const activeDBRef = useRef<Database | null>(null);
     const errorsRef = useRef('');
+    const currentDBPathRef = useRef('');
 
     const updateError = useCallback((message: string) => {
         errorsRef.current = message;
@@ -162,6 +164,7 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
 
     const resetDB = useCallback(() => {
         if (sqlite3Global) {
+            currentDBPathRef.current = '';
             const db = new sqlite3Global.oo1.DB();
             setActiveDB((prevDB) => {
                 if (prevDB) {
@@ -177,6 +180,7 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
 
     const loadDB = useCallback(
         async (path: string) => {
+            currentDBPathRef.current = path;
             updateError('');
             updateRecentResult([]);
             if (path === '') {
@@ -210,6 +214,15 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
         },
         [sqlite3Global, resetDB, updateError, updateRecentResult]
     );
+
+    const resetCurrentDB = useCallback(async () => {
+        const currentPath = currentDBPathRef.current;
+        if (currentPath) {
+            await loadDB(currentPath);
+        } else {
+            resetDB();
+        }
+    }, [loadDB, resetDB]);
 
     const getTableNames = useCallback((): Record<string, unknown>[] => {
         if (!activeDB) {
@@ -252,6 +265,7 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
             getError,
             loadDB,
             resetDB,
+            resetCurrentDB,
             getTableNames,
             getColumnNames,
             getForeignKeys,
@@ -264,6 +278,7 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
             getError,
             loadDB,
             resetDB,
+            resetCurrentDB,
             getTableNames,
             getColumnNames,
             getForeignKeys,
