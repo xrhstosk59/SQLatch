@@ -4,6 +4,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { ToastContainer, Form } from 'react-bootstrap';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 import { useBlocklyContext } from '../../contexts/BlocklyContext';
 import { useSQLite } from '../../contexts/SQLiteContext';
@@ -26,6 +27,7 @@ import {
 } from '../../utils/fileOperations';
 
 export default function NavBar() {
+    const router = useRouter();
     const useBL = useBlocklyContext();
     const useDB = useSQLite();
     const autoSave = useAutoSaveContext();
@@ -102,6 +104,11 @@ export default function NavBar() {
         setSchemaModalShow(true);
     };
 
+    const onClickHomeButton = (event: React.MouseEvent<HTMLElement>) => {
+        event.preventDefault();
+        router.replace('/', undefined, { shallow: true });
+    };
+
     // Keyboard shortcuts
     useKeyboardShortcuts([
         {
@@ -132,7 +139,8 @@ export default function NavBar() {
                 aria-label="Κύριο μενού πλοήγησης"
             >
                 <Navbar.Brand
-                    href=""
+                    href="/"
+                    onClick={onClickHomeButton}
                     aria-label="SQLatch - Αρχική σελίδα"
                     style={{ display: 'flex', alignItems: 'center', gap: '10px' }}
                 >
