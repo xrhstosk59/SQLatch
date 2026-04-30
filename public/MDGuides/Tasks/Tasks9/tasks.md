@@ -34,7 +34,7 @@ ___
   <summary>Δείξε την ενδεικτική απάντηση</summary>
 
   Το παράθυρο <span style="color:coral">Σχήμα Βάσης</span> με βοηθά να δω πιο καθαρά και οργανωμένα τη δομή της βάσης δεδομένων.
-  Εκεί φαίνεται ο πίνακας <span style="color:aquamarine">employees</span> μαζί με τις στήλες <span style="color:aquamarine">id</span>, <span style="color:aquamarine">firstname</span>, <span style="color:aquamarine">lastname</span> και <span style="color:aquamarine">salary</span>.
+  Εκεί φαίνεται ο πίνακας <span style="color:aquamarine">employees</span> μαζί με τις στήλες <span style="color:aquamarine">id</span>, <span style="color:aquamarine">firstname</span>, <span style="color:aquamarine">lastname</span>, <span style="color:aquamarine">salary</span>, <span style="color:aquamarine">workhours</span> και <span style="color:aquamarine">department</span>.
   Επίσης, μπορώ να καταλάβω πιο εύκολα ότι η στήλη <span style="color:aquamarine">id</span> είναι το πρωτεύον κλειδί και ότι το σχήμα της βάσης παρουσιάζει συνολικά τη δομή του πίνακα με πιο οπτικό τρόπο.
 
 </details>

@@ -92,6 +92,48 @@
                                                                 }
                                                             }
                                                         }
+                                                    },
+                                                    "next": {
+                                                        "block": {
+                                                            "type": "column",
+                                                            "id": "column_workhours",
+                                                            "fields": {
+                                                                "TYPE": "INTEGER",
+                                                                "CONSTRAIN": ""
+                                                            },
+                                                            "inputs": {
+                                                                "COLUMN": {
+                                                                    "block": {
+                                                                        "type": "text",
+                                                                        "id": "text_workhours",
+                                                                        "fields": {
+                                                                            "TEXT": "workhours"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "next": {
+                                                                "block": {
+                                                                    "type": "column",
+                                                                    "id": "column_department",
+                                                                    "fields": {
+                                                                        "TYPE": "TEXT",
+                                                                        "CONSTRAIN": ""
+                                                                    },
+                                                                    "inputs": {
+                                                                        "COLUMN": {
+                                                                            "block": {
+                                                                                "type": "text",
+                                                                                "id": "text_department",
+                                                                                "fields": {
+                                                                                    "TEXT": "department"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }

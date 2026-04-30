@@ -35,6 +35,16 @@
       <td>REAL</td>
       <td>Μισθός</td>
     </tr>
+    <tr>
+      <td>workhours</td>
+      <td>INTEGER</td>
+      <td>Ώρες εργασίας</td>
+    </tr>
+    <tr>
+      <td>department</td>
+      <td>TEXT</td>
+      <td>Τμήμα εργαζομένου</td>
+    </tr>
   </tbody>
 </table>
 
@@ -63,8 +73,8 @@ ___
   <summary>Δείξε την ενδεικτική απάντηση</summary>
 
   Η βάση δεδομένων περιέχει έναν πίνακα με όνομα <span style="color:aquamarine">employees</span>.
-  Ο πίνακας έχει τις στήλες <span style="color:aquamarine">id</span>, <span style="color:aquamarine">firstname</span>, <span style="color:aquamarine">lastname</span> και <span style="color:aquamarine">salary</span>.
+  Ο πίνακας έχει τις στήλες <span style="color:aquamarine">id</span>, <span style="color:aquamarine">firstname</span>, <span style="color:aquamarine">lastname</span>, <span style="color:aquamarine">salary</span>, <span style="color:aquamarine">workhours</span> και <span style="color:aquamarine">department</span>.
   Η στήλη <span style="color:aquamarine">id</span> είναι το πρωτεύον κλειδί.
-  Στον πίνακα πρόκειται να αποθηκεύονται βασικά στοιχεία εργαζομένων, όπως το όνομα, το επίθετο και ο μισθός τους.
+  Στον πίνακα πρόκειται να αποθηκεύονται βασικά στοιχεία εργαζομένων, όπως το όνομα, το επίθετο, ο μισθός, οι ώρες εργασίας και το τμήμα τους.
 
 </details>
