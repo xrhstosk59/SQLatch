@@ -11,7 +11,11 @@ interface GuideContentProps {
     onScrolledToBottom?: () => void;
 }
 
-export default function GuideContent({ content, isLoading, onScrolledToBottom }: GuideContentProps) {
+export default function GuideContent({
+    content,
+    isLoading,
+    onScrolledToBottom,
+}: GuideContentProps) {
     const endMarkerRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
