@@ -1,0 +1,73 @@
+{
+    "blocks": {
+        "languageVersion": 0,
+        "blocks": [
+            {
+                "type": "select",
+                "id": "group_select",
+                "x": 95,
+                "y": 60
+            },
+            {
+                "type": "combiner",
+                "id": "group_columns",
+                "x": 315,
+                "y": 15,
+                "fields": {
+                    "OPERATION": ","
+                }
+            },
+            {
+                "type": "text",
+                "id": "group_column_salary",
+                "x": 570,
+                "y": -35,
+                "fields": {
+                    "TEXT": "salary"
+                }
+            },
+            {
+                "type": "aggregation_function",
+                "id": "group_count_salary",
+                "x": 570,
+                "y": 80,
+                "fields": {
+                    "AGGREGATION_FUNCTION": "count"
+                }
+            },
+            {
+                "type": "text",
+                "id": "group_count_column",
+                "x": 780,
+                "y": 84,
+                "fields": {
+                    "TEXT": "salary"
+                }
+            },
+            {
+                "type": "text",
+                "id": "group_table",
+                "x": 280,
+                "y": 210,
+                "fields": {
+                    "TEXT": "employees"
+                }
+            },
+            {
+                "type": "group_by",
+                "id": "group_clause",
+                "x": 125,
+                "y": 325
+            },
+            {
+                "type": "text",
+                "id": "group_by_column",
+                "x": 335,
+                "y": 340,
+                "fields": {
+                    "TEXT": "salary"
+                }
+            }
+        ]
+    }
+}

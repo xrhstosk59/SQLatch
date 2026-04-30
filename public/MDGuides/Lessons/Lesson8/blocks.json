@@ -1,0 +1,49 @@
+{
+    "blocks": {
+        "languageVersion": 0,
+        "blocks": [
+            {
+                "type": "select",
+                "id": "order_select",
+                "x": 120,
+                "y": 70
+            },
+            {
+                "type": "text",
+                "id": "order_columns",
+                "x": 330,
+                "y": 25,
+                "fields": {
+                    "TEXT": "*"
+                }
+            },
+            {
+                "type": "text",
+                "id": "order_table",
+                "x": 305,
+                "y": 185,
+                "fields": {
+                    "TEXT": "employees"
+                }
+            },
+            {
+                "type": "order_by",
+                "id": "order_clause",
+                "x": 150,
+                "y": 300,
+                "fields": {
+                    "DIRECTION": "DESC"
+                }
+            },
+            {
+                "type": "text",
+                "id": "order_column",
+                "x": 360,
+                "y": 314,
+                "fields": {
+                    "TEXT": "salary"
+                }
+            }
+        ]
+    }
+}

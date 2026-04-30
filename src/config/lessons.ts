@@ -191,7 +191,7 @@ export const LTS: LessonItem[] = [
         numVideos: 0,
     },
     {
-        blocks: '',
+        blocks: 'Lessons/Lesson8/blocks.json',
         theory: 'Lessons/Lesson8/theory.md',
         info: 'Παρουσίαση συνάρτησης ORDER BY',
         name: 'Μάθημα με ORDER BY',
@@ -201,7 +201,7 @@ export const LTS: LessonItem[] = [
         numVideos: 0,
     },
     {
-        blocks: '',
+        blocks: 'Lessons/Lesson9/blocks.json',
         theory: 'Lessons/Lesson9/theory.md',
         info: 'Παρουσίαση συνάρτησης GROUP BY',
         name: 'Μάθημα με GROUP BY',
@@ -211,7 +211,7 @@ export const LTS: LessonItem[] = [
         numVideos: 0,
     },
     {
-        blocks: '',
+        blocks: 'Lessons/Lesson10/blocks.json',
         theory: 'Lessons/Lesson10/theory.md',
         info: 'Παρουσίαση συνάρτησης INNER JOIN',
         name: 'Μάθημα με INNER JOIN',

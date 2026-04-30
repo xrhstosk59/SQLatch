@@ -1,0 +1,55 @@
+{
+    "blocks": {
+        "languageVersion": 0,
+        "blocks": [
+            {
+                "type": "select",
+                "id": "join_select",
+                "x": 105,
+                "y": 65
+            },
+            {
+                "type": "text",
+                "id": "join_columns",
+                "x": 315,
+                "y": 20,
+                "fields": {
+                    "TEXT": "*"
+                }
+            },
+            {
+                "type": "text",
+                "id": "join_base_table",
+                "x": 290,
+                "y": 205,
+                "fields": {
+                    "TEXT": "employees"
+                }
+            },
+            {
+                "type": "join",
+                "id": "join_clause",
+                "x": 135,
+                "y": 320
+            },
+            {
+                "type": "text",
+                "id": "join_second_table",
+                "x": 315,
+                "y": 310,
+                "fields": {
+                    "TEXT": "workson"
+                }
+            },
+            {
+                "type": "text",
+                "id": "join_condition",
+                "x": 315,
+                "y": 410,
+                "fields": {
+                    "TEXT": "employees.id=workson.emp_id"
+                }
+            }
+        ]
+    }
+}
