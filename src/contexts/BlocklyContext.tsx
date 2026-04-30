@@ -311,7 +311,10 @@ export function BlocklyProvider({ children }: BlocklyProviderProps) {
             const first = SQL.valueToCode(block, 'FIRST', 0);
             const operation = block.getFieldValue('OPERATION');
             const second = SQL.valueToCode(block, 'SECOND', 0);
-            const code = '(' + first + ' ' + operation + ' ' + second + ')';
+            const code =
+                operation === ','
+                    ? first + ', ' + second
+                    : '(' + first + ' ' + operation + ' ' + second + ')';
             return [code, 0];
         };
         SQL.forBlock['not'] = function (block) {
