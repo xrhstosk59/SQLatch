@@ -284,6 +284,18 @@
     color: #4a9eff;
 }
 
+.runButton {
+    border-color: rgba(40, 167, 69, 0.35);
+    color: #28a745;
+}
+
+.runButton:hover {
+    background: rgba(40, 167, 69, 0.15);
+    border-color: #28a745;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
 .copyButton:hover {
     background: rgba(74, 158, 255, 0.15);
     border-color: #4a9eff;

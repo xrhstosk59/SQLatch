@@ -1,13 +1,22 @@
 import { memo, useState, useEffect } from 'react';
-import { Collapse } from 'react-bootstrap';
+import { Collapse, ToastContainer } from 'react-bootstrap';
 import { useQueryHistory } from '../../contexts/QueryHistoryContext';
+import { useSQLite } from '../../contexts/SQLiteContext';
+import SQLOutputModal from '../modals/SQLOutputModal';
+import ErrorToast from '../ui/ErrorToast';
 import styles from '../../styles/queryHistory.module.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function QueryHistory() {
-    const { history, clearHistory, deleteQuery } = useQueryHistory();
+    const { history, addQuery, clearHistory, deleteQuery } = useQueryHistory();
+    const useDB = useSQLite();
     const [isOpen, setIsOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [modalShow, setModalShow] = useState(false);
+    const [toastShow, setToastShow] = useState(false);
+    const [outputDB, setOutputDB] = useState<Record<string, unknown>[]>([]);
+    const [errorDB, setErrorDB] = useState('');
+    const [activeEntryId, setActiveEntryId] = useState<string | null>(null);
 
     useEffect(() => {
         setMounted(true);
@@ -35,6 +44,49 @@ function QueryHistory() {
             });
     };
 
+    const rerunQuery = (id: string, query: string) => {
+        const results = useDB.queryDB(query);
+        const error = useDB.getError();
+
+        setActiveEntryId(id);
+        setErrorDB(error);
+        setOutputDB(results);
+        addQuery(
+            query,
+            error === '',
+            error === '' ? results.length : undefined,
+            error !== '' ? error : undefined
+        );
+
+        if (error === '') {
+            setModalShow(true);
+            setToastShow(false);
+        } else {
+            setModalShow(false);
+            setToastShow(true);
+        }
+    };
+
+    const handleDeleteQuery = (id: string) => {
+        deleteQuery(id);
+        if (activeEntryId === id) {
+            setActiveEntryId(null);
+            setModalShow(false);
+            setToastShow(false);
+            setOutputDB([]);
+            setErrorDB('');
+        }
+    };
+
+    const handleClearHistory = () => {
+        clearHistory();
+        setActiveEntryId(null);
+        setModalShow(false);
+        setToastShow(false);
+        setOutputDB([]);
+        setErrorDB('');
+    };
+
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -54,7 +106,7 @@ function QueryHistory() {
                     <div>
                         <span className={styles.badge}>{mounted ? history.length : 0} queries</span>
                         {mounted && history.length > 0 && (
-                            <button className={styles.clearButton} onClick={clearHistory}>
+                            <button className={styles.clearButton} onClick={handleClearHistory}>
                                 <i className="bi bi-trash"></i> Καθαρισμός
                             </button>
                         )}
@@ -104,6 +156,15 @@ function QueryHistory() {
                                             </div>
                                             <div className={styles.actions}>
                                                 <button
+                                                    className={`${styles.actionButton} ${styles.runButton}`}
+                                                    onClick={() =>
+                                                        rerunQuery(entry.id, entry.query)
+                                                    }
+                                                    title="Τρέξε ξανά"
+                                                >
+                                                    <i className="bi bi-play-fill"></i>
+                                                </button>
+                                                <button
                                                     className={`${styles.actionButton} ${styles.copyButton}`}
                                                     onClick={() => copyToClipboard(entry.query)}
                                                     title="Αντιγραφή"
@@ -112,7 +173,7 @@ function QueryHistory() {
                                                 </button>
                                                 <button
                                                     className={`${styles.actionButton} ${styles.deleteButton}`}
-                                                    onClick={() => deleteQuery(entry.id)}
+                                                    onClick={() => handleDeleteQuery(entry.id)}
                                                     title="Διαγραφή"
                                                 >
                                                     <i className="bi bi-trash"></i>
@@ -126,6 +187,10 @@ function QueryHistory() {
                     </div>
                 </div>
             </Collapse>
+            <SQLOutputModal show={modalShow} output={outputDB} onHide={() => setModalShow(false)} />
+            <ToastContainer position="bottom-end" style={{ padding: '20px' }}>
+                <ErrorToast show={toastShow} onHide={() => setToastShow(false)} error={errorDB} />
+            </ToastContainer>
         </div>
     );
 }
