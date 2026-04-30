@@ -1,5 +1,6 @@
 import { memo, useState } from 'react';
 import { Button, Form, Modal, InputGroup } from 'react-bootstrap';
+import { copyTextToClipboard } from '../../utils/clipboard';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 interface ShareModalProps {
@@ -13,11 +14,12 @@ function ShareModal({ show, onHide, output }: ShareModalProps) {
 
     const handleCopy = async () => {
         try {
-            await navigator.clipboard.writeText(output);
+            await copyTextToClipboard(output);
             setCopied(true);
             setTimeout(() => setCopied(false), 2000);
         } catch (error) {
             console.error('Failed to copy:', error);
+            alert('Αποτυχία αντιγραφής στο clipboard');
         }
     };
 

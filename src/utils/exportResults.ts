@@ -1,6 +1,7 @@
 /**
  * Utility functions for exporting query results
  */
+import { copyTextToClipboard } from './clipboard';
 
 /**
  * Converts array of objects to CSV format
@@ -94,5 +95,5 @@ export async function copyResultsToClipboard(data: Record<string, unknown>[]): P
 
     const formattedData = [headerRow, ...dataRows].join('\n');
 
-    await navigator.clipboard.writeText(formattedData);
+    await copyTextToClipboard(formattedData);
 }

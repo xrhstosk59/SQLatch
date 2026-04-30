@@ -19,7 +19,7 @@ interface GuideProps {
     valSync: boolean;
 }
 
-const LESSON_COMPLETION_STORAGE_KEY = 'lessonCompletion.v8';
+const LESSON_COMPLETION_STORAGE_KEY = 'lessonCompletion.v9';
 
 const getFirstQueryValue = (value: string | string[] | undefined): string | undefined => {
     return Array.isArray(value) ? value[0] : value;
@@ -61,8 +61,34 @@ export default function Guide({ valSync }: GuideProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
     const [viewed, setViewed] = useState<boolean[]>(Array(LTS.length).fill(false));
+    const [validated, setValidated] = useState<boolean[]>(Array(LTS.length).fill(false));
+    const [reachedTheoryEnd, setReachedTheoryEnd] = useState<boolean[]>(
+        Array(LTS.length).fill(false)
+    );
     const [canSync, setCanSync] = useState(false);
     const [scenCompleteSync, setScenCompleteSync] = useState(false);
+
+    const markLessonCompleteIfReady = (
+        lessonIndex: number,
+        nextValidated = validated,
+        nextReachedTheoryEnd = reachedTheoryEnd
+    ) => {
+        const currentLesson = LTS[lessonIndex];
+        const hasValidationRequirement =
+            !currentLesson.isScenario && currentLesson.requirements.length > 0;
+        const hasReachedEnd = Boolean(nextReachedTheoryEnd[lessonIndex]);
+        const hasPassedValidation =
+            !hasValidationRequirement || Boolean(nextValidated[lessonIndex]);
+
+        if (!currentLesson.isScenario && hasReachedEnd && hasPassedValidation) {
+            setViewed((prev) => {
+                if (prev[lessonIndex]) return prev;
+                const newViewed = [...prev];
+                newViewed[lessonIndex] = true;
+                return newViewed;
+            });
+        }
+    };
 
     const syncLessonQuery = (lessonIndex: number | null) => {
         if (!router.isReady) return;
@@ -131,13 +157,6 @@ export default function Guide({ valSync }: GuideProps) {
     };
 
     const handleNextGuide = () => {
-        // Mark current lesson as complete if it has no requirements
-        if (LTS[idxState].requirements.length === 0) {
-            const newViewed = [...viewed];
-            newViewed[idxState] = true;
-            setViewed(newViewed);
-        }
-
         if (idxState < LTS.length - 1) {
             const nextIndex = idxState + 1;
             setIdxState(nextIndex);
@@ -163,10 +182,22 @@ export default function Guide({ valSync }: GuideProps) {
         if (confirm('Είσαι σίγουρος ότι θέλεις να επαναφέρεις όλη την πρόοδό σου;')) {
             const resetViewed = Array(LTS.length).fill(false);
             setViewed(resetViewed);
+            setValidated(Array(LTS.length).fill(false));
+            setReachedTheoryEnd(Array(LTS.length).fill(false));
             if (typeof window !== 'undefined') {
                 localStorage.setItem(LESSON_COMPLETION_STORAGE_KEY, JSON.stringify(resetViewed));
             }
         }
+    };
+
+    const handleTheoryEndReached = () => {
+        setReachedTheoryEnd((prev) => {
+            if (prev[idxState]) return prev;
+            const newReachedTheoryEnd = [...prev];
+            newReachedTheoryEnd[idxState] = true;
+            markLessonCompleteIfReady(idxState, validated, newReachedTheoryEnd);
+            return newReachedTheoryEnd;
+        });
     };
 
     useEffect(() => {
@@ -195,16 +226,6 @@ export default function Guide({ valSync }: GuideProps) {
                                 currentLesson.requirements[0][0],
                                 currentLesson.requirements[0][1]
                             );
-                        } else {
-                            // Auto-complete lessons without requirements after a short delay
-                            // This gives the user time to see the content
-                            setTimeout(() => {
-                                setViewed((prev) => {
-                                    const newViewed = [...prev];
-                                    newViewed[idxState] = true;
-                                    return newViewed;
-                                });
-                            }, 2000);
                         }
                     }
 
@@ -232,9 +253,13 @@ export default function Guide({ valSync }: GuideProps) {
                 setViewed(newViewed);
                 setScenCompleteSync(false);
             } else if (!LTS[idxState].isScenario) {
-                const newViewed = [...viewed];
-                newViewed[idxState] = true;
-                setViewed(newViewed);
+                setValidated((prev) => {
+                    if (prev[idxState]) return prev;
+                    const newValidated = [...prev];
+                    newValidated[idxState] = true;
+                    markLessonCompleteIfReady(idxState, newValidated, reachedTheoryEnd);
+                    return newValidated;
+                });
             }
         } else {
             setCanSync(true);
@@ -274,7 +299,11 @@ export default function Guide({ valSync }: GuideProps) {
                             setScenCompleteSync={setScenCompleteSync}
                         />
                     ) : (
-                        <GuideContent content={MDGuides} isLoading={isLoading} />
+                        <GuideContent
+                            content={MDGuides}
+                            isLoading={isLoading}
+                            onScrolledToBottom={handleTheoryEndReached}
+                        />
                     )}
                 </Container>
             ) : (

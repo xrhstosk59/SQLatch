@@ -4,6 +4,7 @@ import { useQueryHistory } from '../../contexts/QueryHistoryContext';
 import { useSQLite } from '../../contexts/SQLiteContext';
 import SQLOutputModal from '../modals/SQLOutputModal';
 import ErrorToast from '../ui/ErrorToast';
+import { copyTextToClipboard } from '../../utils/clipboard';
 import styles from '../../styles/queryHistory.module.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
@@ -32,16 +33,13 @@ function QueryHistory() {
         });
     };
 
-    const copyToClipboard = (query: string) => {
-        navigator.clipboard
-            .writeText(query)
-            .then(() => {
-                // Could add a toast notification here
-                console.log('Query copied to clipboard');
-            })
-            .catch((err) => {
-                console.error('Failed to copy query:', err);
-            });
+    const copyToClipboard = async (query: string) => {
+        try {
+            await copyTextToClipboard(query);
+        } catch (err) {
+            console.error('Failed to copy query:', err);
+            alert('Αποτυχία αντιγραφής στο clipboard');
+        }
     };
 
     const rerunQuery = (id: string, query: string) => {
