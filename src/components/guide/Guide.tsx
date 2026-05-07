@@ -14,6 +14,7 @@ import GuideHome from './GuideHome';
 import GuideContent from './GuideContent';
 import QueryHistory from '../sql/QueryHistory';
 import Scenario from '../scenario/Scenario';
+import FinalAssignmentTimer from './FinalAssignmentTimer';
 
 interface GuideProps {
     valSync: boolean;
@@ -275,6 +276,7 @@ export default function Guide({ valSync }: GuideProps) {
     }, [viewed, isMounted]);
 
     const lessonNames = LTS.map((item) => item.name);
+    const isFinalAssignment = LTS[idxState].theory === 'Tasks/FinalAssignment/tasks.md';
 
     return (
         <Container className={styles.container}>
@@ -299,11 +301,14 @@ export default function Guide({ valSync }: GuideProps) {
                             setScenCompleteSync={setScenCompleteSync}
                         />
                     ) : (
-                        <GuideContent
-                            content={MDGuides}
-                            isLoading={isLoading}
-                            onScrolledToBottom={handleTheoryEndReached}
-                        />
+                        <>
+                            {isFinalAssignment && <FinalAssignmentTimer />}
+                            <GuideContent
+                                content={MDGuides}
+                                isLoading={isLoading}
+                                onScrolledToBottom={handleTheoryEndReached}
+                            />
+                        </>
                     )}
                 </Container>
             ) : (
