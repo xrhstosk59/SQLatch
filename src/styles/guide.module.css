@@ -110,6 +110,25 @@
     cursor: default;
 }
 
+.finalTimerSecondaryButton {
+    min-width: 96px;
+    min-height: 42px;
+    padding: 9px 16px;
+    color: #ffffff;
+    font-weight: 800;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+}
+
+.finalTimerStatus {
+    margin: 8px 0 0;
+    color: #9ec5fe;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
 .finalTimerDone {
     color: #ffda6a;
     font-weight: 700;
@@ -156,10 +175,9 @@
 }
 
 .guideContent table {
-    display: block;
+    display: table;
     width: 100%;
     margin: 16px 0 20px;
-    overflow-x: auto;
     border-collapse: separate;
     border-spacing: 0;
     background: rgba(255, 255, 255, 0.04);
@@ -174,7 +192,7 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     text-align: left;
     vertical-align: top;
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .guideContent th {
@@ -289,6 +307,8 @@
 
     .guideContent table {
         font-size: 0.95rem;
+        display: block;
+        overflow-x: auto;
     }
 
     .answerBoxHeader {

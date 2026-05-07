@@ -27,6 +27,9 @@ import ErrorToast from '../ui/ErrorToast';
 import ValidationToast from '../ui/ValidationToast';
 import SuccessToast from '../ui/SuccessToast';
 
+const TIMER_AUTO_PAUSE_EVENT = 'final-assignment-timer:auto-pause';
+const TIMER_AUTO_RESUME_EVENT = 'final-assignment-timer:auto-resume';
+
 interface BlocklyFieldProps {
     valSync: boolean;
     setValSync: (value: boolean) => void;
@@ -142,10 +145,17 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
     };
 
     const onClickRun = (runSelectedOnly: boolean = false) => {
+        window.dispatchEvent(new Event(TIMER_AUTO_PAUSE_EVENT));
+
         // Generate SQL and show preview
         const blocklyOut: string = runSelectedOnly ? useBL.runGenSelected() : useBL.runGen();
         setCurrentSQL(blocklyOut);
         setPreviewModalShow(true);
+    };
+
+    const closePreviewModal = () => {
+        setPreviewModalShow(false);
+        window.dispatchEvent(new Event(TIMER_AUTO_RESUME_EVENT));
     };
 
     const executeSQL = () => {
@@ -185,6 +195,7 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
             setToastShow(true);
         }
         setErrorDB(error);
+        window.dispatchEvent(new Event(TIMER_AUTO_RESUME_EVENT));
     };
 
     // Keyboard shortcut for running query (Ctrl+Enter)
@@ -219,7 +230,7 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
             {/* Modals */}
             <SQLPreviewModal
                 show={previewModalShow}
-                onHide={() => setPreviewModalShow(false)}
+                onHide={closePreviewModal}
                 onConfirm={executeSQL}
                 sqlCode={currentSQL}
             />
