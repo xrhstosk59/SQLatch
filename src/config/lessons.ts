@@ -250,4 +250,14 @@ export const LTS: LessonItem[] = [
         requirements: scenarioP2Requirements,
         numVideos: 7,
     },
+    {
+        blocks: '',
+        theory: 'Tasks/FinalAssignment/tasks.md',
+        info: 'Τελική εργασία δημιουργίας βάσης δεδομένων και SQL ερωτημάτων με θέμα τη σχολική βιβλιοθήκη',
+        name: 'Τελική εργασία: Η Σχολική Βιβλιοθήκη',
+        database: '',
+        isScenario: false,
+        requirements: [],
+        numVideos: 0,
+    },
 ];
