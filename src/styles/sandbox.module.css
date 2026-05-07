@@ -1,0 +1,95 @@
+.panel {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 20px;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+.header i {
+    font-size: 2rem;
+    color: #79dfc1;
+}
+
+.kicker {
+    margin: 0 0 4px;
+    color: #79dfc1;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.description {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+.editorGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.editor {
+    min-height: 280px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+        'Courier New', monospace;
+    color: #f8f9fa;
+    background: #111827;
+    border-color: rgba(255, 255, 255, 0.18);
+    resize: vertical;
+}
+
+.editor:focus {
+    color: #f8f9fa;
+    background: #111827;
+    border-color: rgba(121, 223, 193, 0.75);
+    box-shadow: 0 0 0 0.2rem rgba(121, 223, 193, 0.18);
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.actions :global(.btn) {
+    border-radius: 999px !important;
+}
+
+.note {
+    padding: 12px 14px;
+    color: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(121, 223, 193, 0.25);
+    border-radius: 10px;
+    background: rgba(121, 223, 193, 0.08);
+}
+
+@media (max-width: 576px) {
+    .panel {
+        padding: 16px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .editor {
+        min-height: 220px;
+    }
+}

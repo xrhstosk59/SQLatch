@@ -14,9 +14,11 @@ import GuideHome from './GuideHome';
 import GuideContent from './GuideContent';
 import QueryHistory from '../sql/QueryHistory';
 import Scenario from '../scenario/Scenario';
+import SandboxPanel from '../sandbox/SandboxPanel';
 
 interface GuideProps {
     valSync: boolean;
+    sandboxMode: boolean;
 }
 
 const LESSON_COMPLETION_STORAGE_KEY = 'lessonCompletion.v9';
@@ -48,7 +50,7 @@ const resolveLessonParam = (lessonParam: string): number | null => {
     return lessonIndex >= 0 ? lessonIndex : null;
 };
 
-export default function Guide({ valSync }: GuideProps) {
+export default function Guide({ valSync, sandboxMode }: GuideProps) {
     const router = useRouter();
     const useMD = useShowdown();
     const useBL = useBlocklyContext();
@@ -202,6 +204,13 @@ export default function Guide({ valSync }: GuideProps) {
 
     useEffect(() => {
         const setHTML = async () => {
+            if (sandboxMode) {
+                setMDGuides('');
+                setIsLoading(false);
+                useVA.setRequirements([], '');
+                return;
+            }
+
             setIsLoading(true);
             try {
                 const currentLesson = LTS[idxState];
@@ -243,7 +252,7 @@ export default function Guide({ valSync }: GuideProps) {
 
         setHTML();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [idxState, inHome, useDB.isInitialized]);
+    }, [idxState, inHome, sandboxMode, useDB.isInitialized]);
 
     useEffect(() => {
         if (canSync) {
@@ -278,7 +287,9 @@ export default function Guide({ valSync }: GuideProps) {
 
     return (
         <Container className={styles.container}>
-            {!inHome ? (
+            {sandboxMode ? (
+                <SandboxPanel />
+            ) : !inHome ? (
                 <Container>
                     <GuidePagination
                         currentIndex={idxState}

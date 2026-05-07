@@ -18,6 +18,7 @@ export default function Home() {
     const [introShow, setIntroShow] = useState(false);
     const [valSync, setValSync] = useState(false);
     const [hasInitializedIntro, setHasInitializedIntro] = useState(false);
+    const [sandboxMode, setSandboxMode] = useState(false);
 
     useEffect(() => {
         if (!router.isReady || hasInitializedIntro) return;
@@ -38,14 +39,22 @@ export default function Home() {
                 <title>SQLatch - POC</title>
             </Head>
             <Container fluid className="wh-100 bg-dark" data-bs-theme="dark">
-                <NavBar />
+                <NavBar
+                    sandboxMode={sandboxMode}
+                    onToggleSandbox={() => setSandboxMode((currentMode) => !currentMode)}
+                    onExitSandbox={() => setSandboxMode(false)}
+                />
                 <Container fluid>
                     <Row>
                         <Col xs={12} lg={7} className="mb-3 mb-lg-0">
-                            <BlocklyField valSync={valSync} setValSync={setValSync} />
+                            <BlocklyField
+                                valSync={valSync}
+                                setValSync={setValSync}
+                                sandboxMode={sandboxMode}
+                            />
                         </Col>
                         <Col xs={12} lg={5}>
-                            <Guide valSync={valSync} />
+                            <Guide valSync={valSync} sandboxMode={sandboxMode} />
                         </Col>
                     </Row>
                 </Container>
