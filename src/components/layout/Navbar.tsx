@@ -26,13 +26,7 @@ import {
     generateShareURL,
 } from '../../utils/fileOperations';
 
-interface NavBarProps {
-    sandboxMode: boolean;
-    onToggleSandbox: () => void;
-    onExitSandbox: () => void;
-}
-
-export default function NavBar({ sandboxMode, onToggleSandbox, onExitSandbox }: NavBarProps) {
+export default function NavBar() {
     const router = useRouter();
     const useBL = useBlocklyContext();
     const useDB = useSQLite();
@@ -112,7 +106,6 @@ export default function NavBar({ sandboxMode, onToggleSandbox, onExitSandbox }: 
 
     const onClickHomeButton = (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
-        onExitSandbox();
         router.replace('/', undefined, { shallow: true });
     };
 
@@ -218,23 +211,6 @@ export default function NavBar({ sandboxMode, onToggleSandbox, onExitSandbox }: 
                             aria-label="Σχήμα Βάσης Δεδομένων"
                         >
                             <i className="bi bi-diagram-3" aria-hidden="true"></i> Σχήμα Βάσης
-                        </Nav.Link>
-                        <Nav.Link
-                            onClick={onToggleSandbox}
-                            href=""
-                            active={sandboxMode}
-                            aria-pressed={sandboxMode}
-                            aria-label={
-                                sandboxMode
-                                    ? 'Έξοδος από λειτουργία sandbox'
-                                    : 'Είσοδος σε λειτουργία sandbox'
-                            }
-                        >
-                            <i
-                                className={sandboxMode ? 'bi bi-journal-text' : 'bi bi-terminal'}
-                                aria-hidden="true"
-                            ></i>{' '}
-                            {sandboxMode ? 'Μαθήματα' : 'Sandbox'}
                         </Nav.Link>
                         <Nav.Link
                             onClick={onClickShareButton}

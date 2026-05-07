@@ -2,7 +2,11 @@ import showdown from 'showdown';
 import DOMPurify from 'dompurify';
 
 export const useShowdown = () => {
-    const converter = new showdown.Converter();
+    const converter = new showdown.Converter({
+        tables: true,
+        tasklists: true,
+        simpleLineBreaks: false,
+    });
 
     const convertMd = async (path: string): Promise<string> => {
         try {

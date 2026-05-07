@@ -50,6 +50,10 @@
 
 .guideContent {
     color: white;
+    max-width: 920px;
+    padding-bottom: 40px;
+    font-size: 1rem;
+    line-height: 1.65;
 }
 
 .guideEndMarker {
@@ -57,27 +61,75 @@
     height: 1px;
 }
 
+.guideContent h2 {
+    margin: 10px 0 8px;
+    font-size: clamp(2rem, 4vw, 2.7rem);
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.guideContent h3 {
+    margin: 20px 0 12px;
+    font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.guideContent h4 {
+    margin: 22px 0 10px;
+    color: #9ec5fe;
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+
+.guideContent p {
+    margin: 0 0 14px;
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.guideContent code {
+    padding: 2px 6px;
+    color: #f0a6ca;
+    background: rgba(240, 166, 202, 0.1);
+    border: 1px solid rgba(240, 166, 202, 0.18);
+    border-radius: 6px;
+    font-size: 0.95em;
+}
+
 .guideContent table {
+    display: block;
     width: 100%;
     margin: 16px 0 20px;
-    border-collapse: collapse;
+    overflow-x: auto;
+    border-collapse: separate;
+    border-spacing: 0;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 10px;
-    overflow: hidden;
 }
 
 .guideContent th,
 .guideContent td {
-    padding: 10px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 11px 13px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     text-align: left;
     vertical-align: top;
+    white-space: nowrap;
 }
 
 .guideContent th {
-    background: rgba(13, 110, 253, 0.18);
+    color: #d9ecff;
+    background: rgba(13, 110, 253, 0.22);
     font-weight: 700;
+}
+
+.guideContent td:first-child {
+    font-weight: 700;
+}
+
+.guideContent hr {
+    margin: 24px 0;
 }
 
 .guideContent details {

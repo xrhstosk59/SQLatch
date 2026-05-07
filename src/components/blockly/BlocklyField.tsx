@@ -30,10 +30,9 @@ import SuccessToast from '../ui/SuccessToast';
 interface BlocklyFieldProps {
     valSync: boolean;
     setValSync: (value: boolean) => void;
-    sandboxMode: boolean;
 }
 
-export default function BlocklyField({ valSync, setValSync, sandboxMode }: BlocklyFieldProps) {
+export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps) {
     const useBL = useBlocklyContext();
     const useDB = useSQLite();
     const queryHistory = useQueryHistory();
@@ -42,7 +41,6 @@ export default function BlocklyField({ valSync, setValSync, sandboxMode }: Block
     const primaryWorkspace = useRef<Blockly.WorkspaceSvg | null>(null);
     const blocklyDiv = useRef<HTMLDivElement | null>(null);
     const pluginsRegistered = useRef(false);
-    const sandboxInitialized = useRef(false);
     const [isMounted, setIsMounted] = useState(false);
 
     const [modalShow, setModalShow] = useState(false);
@@ -131,28 +129,6 @@ export default function BlocklyField({ valSync, setValSync, sandboxMode }: Block
         };
     }, [isMounted, useBL]); // Run when component is mounted
 
-    useEffect(() => {
-        if (!sandboxMode) {
-            sandboxInitialized.current = false;
-            return;
-        }
-
-        if (
-            !isMounted ||
-            !primaryWorkspace.current ||
-            !useDB.isInitialized ||
-            sandboxInitialized.current
-        ) {
-            return;
-        }
-
-        useBL.loadWorkspaceFile('');
-        useDB.resetDB();
-        useVA.setRequirements([], '');
-        sandboxInitialized.current = true;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isMounted, sandboxMode, useDB.isInitialized]);
-
     const showResult = () => {
         setOutputDB(useDB.getResultDB());
 
@@ -194,11 +170,6 @@ export default function BlocklyField({ valSync, setValSync, sandboxMode }: Block
         // Show result and perform validation
         setToastShow(false);
         if (error === '') {
-            if (sandboxMode) {
-                setTimeout(() => setModalShow(true), 0);
-                return;
-            }
-
             // Query succeeded, now validate
             if (useVA.validate(currentSQL, results)) {
                 setValSync(!valSync);
