@@ -397,7 +397,11 @@ const buildDocxBlobFromDocumentXml = (documentXml: string): Blob => {
         },
     ];
 
-    return new Blob([buildZip(files)], {
+    const zipBytes = buildZip(files);
+    const zipBuffer = new ArrayBuffer(zipBytes.byteLength);
+    new Uint8Array(zipBuffer).set(zipBytes);
+
+    return new Blob([zipBuffer], {
         type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     });
 };
