@@ -23,19 +23,15 @@ SELECT
 SELECT
 </span> \* <span style="color:aquamarine">
 FROM
-</span> employees;
-
-![Screenshot](MDGuides/Lessons/Lesson1/images/first.png)
+</span> books;
 
 Επιλογή συγκεκριμένων στηλών από έναν πίνακα:
 
 *   <span style="color:aquamarine">
 SELECT
-</span> firstname, lastname <span style="color:aquamarine">
+</span> title, author <span style="color:aquamarine">
 FROM
-</span> employees;
-
-![Screenshot](MDGuides/Lessons/Lesson1/images/second.png)
+</span> books;
 
 Σε επόμενο μάθημα θα δούμε πώς μπορούμε να προσθέσουμε συνθήκες με την
 εντολή <span style="color:coral">WHERE</span>, ώστε να εμφανίζονται μόνο

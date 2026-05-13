@@ -5,16 +5,19 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Table from 'react-bootstrap/Table';
 import BaseModal from '../common/BaseModal';
 import { exportAsCSV, exportAsJSON, copyResultsToClipboard } from '../../utils/exportResults';
+import StudentAnswerExportModal, { StudentAnswerExportContext } from './StudentAnswerExportModal';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 interface SQLOutputModalProps {
     show: boolean;
     onHide: () => void;
     output: Record<string, unknown>[];
+    answerExportContext?: StudentAnswerExportContext;
 }
 
-function SQLOutputModal({ show, onHide, output }: SQLOutputModalProps) {
+function SQLOutputModal({ show, onHide, output, answerExportContext }: SQLOutputModalProps) {
     const [copySuccess, setCopySuccess] = useState(false);
+    const [showAnswerExport, setShowAnswerExport] = useState(false);
 
     const handleExportCSV = () => {
         exportAsCSV(output);
@@ -37,6 +40,14 @@ function SQLOutputModal({ show, onHide, output }: SQLOutputModalProps) {
 
     const footer = (
         <>
+            <Button
+                variant="success"
+                onClick={() => setShowAnswerExport(true)}
+                disabled={!answerExportContext?.sqlQuery}
+                title="Κατέβασε αρχείο απάντησης για παράδοση στο Moodle"
+            >
+                <i className="bi bi-download"></i> Λήψη απάντησης
+            </Button>
             <Dropdown as={ButtonGroup}>
                 <Button variant="primary" onClick={handleCopy} disabled={output.length === 0}>
                     <i className={`bi bi-${copySuccess ? 'check-lg' : 'clipboard'}`}></i>{' '}
@@ -66,39 +77,55 @@ function SQLOutputModal({ show, onHide, output }: SQLOutputModalProps) {
     );
 
     return (
-        <BaseModal
-            show={show}
-            onHide={onHide}
-            title="Έξοδος"
-            size="lg"
-            footer={footer}
-            fullscreenMobile={true}
-        >
-            <div style={{ overflowX: 'auto', maxWidth: '100%' }}>
-                <Table responsive striped bordered hover size="sm">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            {output[0] != null &&
-                                Object.keys(output[0]).map((column, colIndex) => (
-                                    <th key={colIndex}>{column}</th>
-                                ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {output[0] != null &&
-                            output.map((row, rowIndex) => (
-                                <tr key={rowIndex}>
-                                    <td key={rowIndex * 100}>{rowIndex}</td>
-                                    {Object.values(row).map((value, valueIndex) => (
-                                        <td key={valueIndex}>{String(value)}</td>
-                                    ))}
+        <>
+            <BaseModal
+                show={show && !showAnswerExport}
+                onHide={onHide}
+                title="Έξοδος"
+                size="lg"
+                footer={footer}
+                fullscreenMobile={true}
+            >
+                <div style={{ overflowX: 'auto', maxWidth: '100%' }}>
+                    {output.length === 0 ? (
+                        <p style={{ margin: 0 }}>
+                            Το query εκτελέστηκε χωρίς γραμμές αποτελέσματος.
+                        </p>
+                    ) : (
+                        <Table responsive striped bordered hover size="sm">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    {output[0] != null &&
+                                        Object.keys(output[0]).map((column, colIndex) => (
+                                            <th key={colIndex}>{column}</th>
+                                        ))}
                                 </tr>
-                            ))}
-                    </tbody>
-                </Table>
-            </div>
-        </BaseModal>
+                            </thead>
+                            <tbody>
+                                {output[0] != null &&
+                                    output.map((row, rowIndex) => (
+                                        <tr key={rowIndex}>
+                                            <td key={rowIndex * 100}>{rowIndex}</td>
+                                            {Object.values(row).map((value, valueIndex) => (
+                                                <td key={valueIndex}>{String(value)}</td>
+                                            ))}
+                                        </tr>
+                                    ))}
+                            </tbody>
+                        </Table>
+                    )}
+                </div>
+            </BaseModal>
+            {answerExportContext ? (
+                <StudentAnswerExportModal
+                    show={show && showAnswerExport}
+                    onHide={() => setShowAnswerExport(false)}
+                    output={output}
+                    exportContext={answerExportContext}
+                />
+            ) : null}
+        </>
     );
 }
 

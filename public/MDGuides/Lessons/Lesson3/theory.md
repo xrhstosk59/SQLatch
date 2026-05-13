@@ -20,16 +20,13 @@
 
 - <span style="color:aquamarine">
  INSERT INTO
-</span> employees <span style="color:aquamarine">
+</span> books <span style="color:aquamarine">
  VALUES
- </span> (6,"Ioannis","Perpatitis",660);
-![Screenshot](MDGuides/Lessons/Lesson3/images/first.png)
+ </span> (1,"Το Μυστικό Βιβλίο","Μ. Παπαδάκη",2024);
 
 Επίσης επιτρέπεται η χειροκίνητη εισαγωγή των columns σε περίπτωση που θέλουμε να τα βάλουμε με διαφορετική σειρά.
 - <span style="color:aquamarine">
  INSERT INTO
-</span> employees(id, lastname, firstname, salary) <span style="color:aquamarine">
+</span> books(id, author, title, published_year) <span style="color:aquamarine">
  VALUES
- </span> (6,"Ioannis","Perpatitis",660);
-
-![Screenshot](MDGuides/Lessons/Lesson3/images/second.png)
+ </span> (2,"Ν. Ιωάννου","Βάσεις Δεδομένων",2023);

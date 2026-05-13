@@ -14,11 +14,9 @@ FROM table1
    **ON**</span> table1.column\_name = table2.column\_name;
 
 **Παράδειγμα:**
-* SELECT * FROM employees <span style="color:aquamarine">
-   **JOIN**</span> workson <span style="color:aquamarine">
-   **ON**</span> employees.id=workson.emp\_id;
-
-![Screenshot](MDGuides/Lessons/Lesson10/images/first.png)
+* SELECT * FROM students <span style="color:aquamarine">
+   **JOIN**</span> enrollments <span style="color:aquamarine">
+   **ON**</span> students.id=enrollments.student\_id;
 
 <details><summary>
 **TIP💡**
@@ -41,15 +39,13 @@ INNER JOIN <span style="color:aquamarine">
    **WHERE**</span> και τις υπόλοιπες εντολές και συναρτήσεις που έχετε διδαχτεί έως τώρα.
 
 **Παράδειγμα:**
-* SELECT employees.firstname,employees.salary,workson.dep\_id
-FROM employees
+* SELECT students.firstname,students.lastname,enrollments.course\_id
+FROM students
 <span style="color:aquamarine">
-   **JOIN**</span> workson <span style="color:aquamarine">
-   **ON**</span> employees.id=workson.emp\_id
+   **JOIN**</span> enrollments <span style="color:aquamarine">
+   **ON**</span> students.id=enrollments.student\_id
 <span style="color:aquamarine">
-   **WHERE**</span> salary>800
+   **WHERE**</span> enrollments.grade>8
 <span style="color:aquamarine">
-   **ORDER BY**</span> employees.salary <span style="color:aquamarine">
+   **ORDER BY**</span> enrollments.grade <span style="color:aquamarine">
    **DESC**</span>;
-
-![Screenshot](MDGuides/Lessons/Lesson10/images/second.png)

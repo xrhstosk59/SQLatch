@@ -23,37 +23,38 @@ CREATE TABLE
 Δημιουργία table με πρωτεύον κλειδί:
 * <span style="color:aquamarine">
 CREATE TABLE
-</span> Customers (
-    CustomerID <span style="color:aquamarine">
+</span> Books (
+    BookID <span style="color:aquamarine">
 INTEGER
 </span> PRIMARY KEY,
-    CustomerName <span style="color:aquamarine">
+    Title <span style="color:aquamarine">
+TEXT
+</span>,
+    Author <span style="color:aquamarine">
 TEXT
 </span>
 );
 
-![Screenshot](MDGuides/Lessons/Lesson2/images/first.png)
-
 Δημιουργία table με ξένο κλειδί, από τον προηγούμενο πίνακα:
 * <span style="color:aquamarine">
 CREATE TABLE
-</span> Orders (
-    OrderID <span style="color:aquamarine">
+</span> Reviews (
+    ReviewID <span style="color:aquamarine">
 INTEGER
 </span> <span style="color:aquamarine">
 PRIMARY KEY
 </span>,
-    OrderDate <span style="color:aquamarine">
+    Comment <span style="color:aquamarine">
 TEXT
 </span>,
-    CustomerID <span style="color:aquamarine">
+    BookID <span style="color:aquamarine">
 INTEGER
 </span>,
     <span style="color:aquamarine">
 FOREIGN KEY
-</span> (CustomerID) <span style="color:aquamarine">
+</span> (BookID) <span style="color:aquamarine">
 REFERENCES
-</span> Customers(CustomerID)
+</span> Books(BookID)
 );
 
-Στο παραπάνω παράδειγμα, η στήλη <span style="color:aquamarine">CustomerID</span> του πίνακα <span style="color:aquamarine">Orders</span> συνδέεται με το πρωτεύον κλειδί του πίνακα <span style="color:aquamarine">Customers</span>.
+Στο παραπάνω παράδειγμα, η στήλη <span style="color:aquamarine">BookID</span> του πίνακα <span style="color:aquamarine">Reviews</span> συνδέεται με το πρωτεύον κλειδί του πίνακα <span style="color:aquamarine">Books</span>.

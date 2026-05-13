@@ -13,11 +13,9 @@ FROM table
    **GROUP BY**</span> column1, column2;
 
 **Παράδειγμα:**
-* SELECT salary, <span style="color:aquamarine">
-   **COUNT**</span>(salary) FROM employees <span style="color:aquamarine">
-   **GROUP BY**</span> salary;
-
-![Screenshot](MDGuides/Lessons/Lesson9/images/first.png)
+* SELECT category, <span style="color:aquamarine">
+   **COUNT**</span>(*) FROM products <span style="color:aquamarine">
+   **GROUP BY**</span> category;
 
 Πολλές φορές η <span style="color:coral">
    **GROUP BY**</span> χρησιμοποιει την εντολή <span style="color:coral">
@@ -30,9 +28,7 @@ FROM table
 
 **Παράδειγμα:**
 
-* SELECT salary, <span style="color:aquamarine">
-   **COUNT**</span>(salary) FROM employees <span style="color:aquamarine">
-   **GROUP BY**</span> salary <span style="color:aquamarine">
-   **HAVING**</span> salary>800;
-
-![Screenshot](MDGuides/Lessons/Lesson9/images/second.png)
+* SELECT category, <span style="color:aquamarine">
+   **COUNT**</span>(*) FROM products <span style="color:aquamarine">
+   **GROUP BY**</span> category <span style="color:aquamarine">
+   **HAVING**</span> COUNT(*) > 2;

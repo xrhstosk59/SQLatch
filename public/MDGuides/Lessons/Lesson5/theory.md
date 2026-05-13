@@ -14,10 +14,8 @@
 
 **Παράδειγμα:**
 * <span style="color:aquamarine">
-   **UPDATE**</span> employees 
+   **UPDATE**</span> books 
 <span style="color:aquamarine">
-   **SET**</span> salary=5000 
+   **SET**</span> available=0 
 <span style="color:aquamarine">
    **WHERE**</span> id=3;
-
-![Screenshot](MDGuides/Lessons/Lesson5/images/first.png)

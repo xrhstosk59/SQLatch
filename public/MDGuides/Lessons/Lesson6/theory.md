@@ -19,8 +19,6 @@
 **Παράδειγμα:**
 
 * <span style="color:aquamarine">
-**DELETE FROM**</span> employees
+**DELETE FROM**</span> reservations
 <span style="color:aquamarine">
-**WHERE**</span> id=1;
-
-![Screenshot](MDGuides/Lessons/Lesson6/images/first.png)
+**WHERE**</span> status='cancelled';

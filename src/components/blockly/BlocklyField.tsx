@@ -1,14 +1,17 @@
 import styles from '../../styles/blockly.module.css';
 
 import React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import * as Blockly from 'blockly';
 import { useBlocklyContext } from '../../contexts/BlocklyContext';
 import { useSQLite } from '../../contexts/SQLiteContext';
 import { useQueryHistory } from '../../contexts/QueryHistoryContext';
 import { useValidation } from '../../modules/Validator';
+import { LTS } from '../../config/lessons';
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
+import { downloadBlocklyWorkspacePng } from '../../utils/blocklyWorkspaceImage';
 import { ZoomToFitControl } from '@blockly/zoom-to-fit';
 import {
     ContinuousToolbox,
@@ -29,13 +32,42 @@ import SuccessToast from '../ui/SuccessToast';
 
 const TIMER_AUTO_PAUSE_EVENT = 'final-assignment-timer:auto-pause';
 const TIMER_AUTO_RESUME_EVENT = 'final-assignment-timer:auto-resume';
+const QUERY_ATTEMPT_EVENT = 'sqlatch:query-attempt';
 
 interface BlocklyFieldProps {
     valSync: boolean;
     setValSync: (value: boolean) => void;
 }
 
+const getFirstQueryValue = (value: string | string[] | undefined): string | undefined => {
+    return Array.isArray(value) ? value[0] : value;
+};
+
+const lessonNameToSlug = (name: string): string => {
+    return name
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+};
+
+const resolveLessonParam = (lessonParam: string): number | null => {
+    const numericValue = Number(lessonParam);
+    if (Number.isInteger(numericValue) && numericValue >= 1 && numericValue <= LTS.length) {
+        return numericValue - 1;
+    }
+
+    const normalizedLessonParam = lessonNameToSlug(lessonParam);
+    const lessonIndex = LTS.findIndex(
+        (lesson) => lessonNameToSlug(lesson.name) === normalizedLessonParam
+    );
+
+    return lessonIndex >= 0 ? lessonIndex : null;
+};
+
 export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps) {
+    const router = useRouter();
     const useBL = useBlocklyContext();
     const useDB = useSQLite();
     const queryHistory = useQueryHistory();
@@ -54,6 +86,30 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
     const [outputDB, setOutputDB] = useState<Record<string, unknown>[]>([]);
     const [errorDB, setErrorDB] = useState<string>('');
     const [currentSQL, setCurrentSQL] = useState<string>('');
+    const [lastWorkspaceState, setLastWorkspaceState] = useState<object | null>(null);
+    const [lastValidationPassed, setLastValidationPassed] = useState<boolean | undefined>(
+        undefined
+    );
+
+    const currentExerciseMeta = useMemo(() => {
+        const fallback = {
+            title: 'Ελεύθερη εργασία SQLatch',
+            allowTeamSubmission: false,
+        };
+
+        if (!router.isReady) return fallback;
+
+        const lessonParam = getFirstQueryValue(router.query.lesson);
+        if (!lessonParam) return fallback;
+
+        const lessonIndex = resolveLessonParam(lessonParam);
+        if (lessonIndex === null) return fallback;
+
+        return {
+            title: LTS[lessonIndex].name,
+            allowTeamSubmission: LTS[lessonIndex].isScenario,
+        };
+    }, [router.isReady, router.query.lesson]);
 
     // Initialize SQL after hydration (only once on mount)
     useEffect(() => {
@@ -161,6 +217,11 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
     const executeSQL = () => {
         // Execute the SQL and close preview
         const results = useDB.queryDB(currentSQL);
+        window.dispatchEvent(
+            new CustomEvent(QUERY_ATTEMPT_EVENT, {
+                detail: { sql: currentSQL, success: useDB.getError() === '' },
+            })
+        );
         setPreviewModalShow(false);
 
         // Get error
@@ -181,7 +242,11 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
         setToastShow(false);
         if (error === '') {
             // Query succeeded, now validate
-            if (useVA.validate(currentSQL, results)) {
+            const validationPassed = useVA.validate(currentSQL, results);
+            setLastWorkspaceState(useBL.getWorkspaceState());
+            setLastValidationPassed(validationPassed);
+
+            if (validationPassed) {
                 setValSync(!valSync);
                 setSuccessToastShow(true);
                 // Modal will show after output is set
@@ -196,6 +261,14 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
         }
         setErrorDB(error);
         window.dispatchEvent(new Event(TIMER_AUTO_RESUME_EVENT));
+    };
+
+    const handleDownloadBlocks = async () => {
+        try {
+            await downloadBlocklyWorkspacePng(primaryWorkspace.current, currentExerciseMeta.title);
+        } catch (error) {
+            alert(error instanceof Error ? error.message : 'Δεν ήταν δυνατή η λήψη των blocks.');
+        }
     };
 
     // Keyboard shortcut for running query (Ctrl+Enter)
@@ -225,6 +298,15 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
                     <i className="bi bi-play-fill"></i>
                     <span>Επιλεγμένο</span>
                 </button>
+                <button
+                    className={`${styles.floatingButton} ${styles.floatingButtonDownload}`}
+                    onClick={handleDownloadBlocks}
+                    aria-label="Λήψη εικόνας με τα blocks"
+                    title="Κατέβασε εικόνα PNG με τα blocks που έφτιαξες"
+                >
+                    <i className="bi bi-file-earmark-image"></i>
+                    <span>Λήψη Blocks</span>
+                </button>
             </div>
 
             {/* Modals */}
@@ -234,7 +316,18 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
                 onConfirm={executeSQL}
                 sqlCode={currentSQL}
             />
-            <SQLOutputModal show={modalShow} output={outputDB} onHide={() => setModalShow(false)} />
+            <SQLOutputModal
+                show={modalShow}
+                output={outputDB}
+                onHide={() => setModalShow(false)}
+                answerExportContext={{
+                    exerciseTitle: currentExerciseMeta.title,
+                    sqlQuery: currentSQL,
+                    workspaceState: lastWorkspaceState,
+                    allowTeamSubmission: currentExerciseMeta.allowTeamSubmission,
+                    validationPassed: lastValidationPassed,
+                }}
+            />
             <ToastContainer position="bottom-end" style={{ padding: '20px' }}>
                 <ErrorToast
                     show={toastShow}

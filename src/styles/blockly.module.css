@@ -60,6 +60,11 @@
     box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
 }
 
+.floatingButtonDownload {
+    background: linear-gradient(135deg, #f59f00 0%, #d9480f 100%);
+    box-shadow: 0 4px 15px rgba(245, 159, 0, 0.28);
+}
+
 .floatingButton:hover {
     background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
     transform: translateY(-3px);
@@ -69,6 +74,11 @@
 .floatingButtonSelected:hover {
     background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
     box-shadow: 0 8px 30px rgba(0, 123, 255, 0.6);
+}
+
+.floatingButtonDownload:hover {
+    background: linear-gradient(135deg, #e67700 0%, #bf360c 100%);
+    box-shadow: 0 8px 30px rgba(245, 159, 0, 0.5);
 }
 
 .floatingButton:active {

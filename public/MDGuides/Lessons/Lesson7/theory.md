@@ -31,27 +31,16 @@ FROM table\_name;
 
 **Παραδείγματα:**
 * SELECT <span style="color:aquamarine">
-   **MIN**</span>(salary) FROM employees;
-
-![Screenshot](MDGuides/Lessons/Lesson7/images/first.png)
+   **MIN**</span>(total_amount) FROM orders;
 
 * SELECT <span style="color:aquamarine">
-   **MAX**</span>(salary) FROM employees;
-
-
-![Screenshot](MDGuides/Lessons/Lesson7/images/second.png)
+   **MAX**</span>(total_amount) FROM orders;
 
 * SELECT <span style="color:aquamarine">
-   **AVG**</span>(salary) FROM employees;
-
-![Screenshot](MDGuides/Lessons/Lesson7/images/third.png)
+   **AVG**</span>(total_amount) FROM orders;
 
 * SELECT <span style="color:aquamarine">
-   **SUM**</span>(salary) FROM employees;
-
-![Screenshot](MDGuides/Lessons/Lesson7/images/fourth.png)
+   **SUM**</span>(total_amount) FROM orders;
 
 * SELECT <span style="color:aquamarine">
-   **COUNT**</span>(*) FROM employees;
-
-![Screenshot](MDGuides/Lessons/Lesson7/images/fifth.png)
+   **COUNT**</span>(*) FROM orders;

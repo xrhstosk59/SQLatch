@@ -25,20 +25,14 @@
 </details>
 
 **Παράδειγμα:**
-* SELECT * FROM employees <span style="color:aquamarine">
+* SELECT * FROM products <span style="color:aquamarine">
    **WHERE**</span> <span style="color:coral">
-   **NOT**</span> id=1;
+   **NOT**</span> category='Προσφορά';
 
-![Screenshot](MDGuides/Lessons/Lesson4/images/first.png)
-
-* SELECT * FROM employees <span style="color:aquamarine">
+* SELECT * FROM products <span style="color:aquamarine">
    **WHERE**</span> id=1 <span style="color:coral">
-   **AND**</span> salary > 100;
+   **AND**</span> price > 100;
 
-![Screenshot](MDGuides/Lessons/Lesson4/images/second.png)
-
-* SELECT * FROM employees <span style="color:aquamarine">
+* SELECT * FROM products <span style="color:aquamarine">
    **WHERE**</span> id=2 <span style="color:coral">
-   **OR**</span> salary > 200;
-
-![Screenshot](MDGuides/Lessons/Lesson4/images/third.png)
+   **OR**</span> stock > 20;

@@ -21,8 +21,6 @@ FROM table_name
    **DESC**</span> παραλειφθούν τότε ως προεπιλογή εφαρμόζεται αύξουσα ταξινόμηση.
 
 **Παράδειγμα:**
-* SELECT * FROM employees <span style="color:aquamarine">
-   **ORDER BY**</span> salary <span style="color:aquamarine">
+* SELECT * FROM products <span style="color:aquamarine">
+   **ORDER BY**</span> price <span style="color:aquamarine">
    **DESC**</span>;
-
-![Screenshot](MDGuides/Lessons/Lesson8/images/first.png)

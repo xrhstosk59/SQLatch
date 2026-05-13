@@ -21,6 +21,7 @@ interface GuideProps {
 }
 
 const LESSON_COMPLETION_STORAGE_KEY = 'lessonCompletion.v9';
+const NAVIGATE_HOME_EVENT = 'sqlatch:navigate-home';
 
 const getFirstQueryValue = (value: string | string[] | undefined): string | undefined => {
     return Array.isArray(value) ? value[0] : value;
@@ -150,6 +151,12 @@ export default function Guide({ valSync }: GuideProps) {
         setInHome(true);
         syncLessonQuery(null);
     };
+
+    useEffect(() => {
+        window.addEventListener(NAVIGATE_HOME_EVENT, handleHomeClick);
+        return () => window.removeEventListener(NAVIGATE_HOME_EVENT, handleHomeClick);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [router.isReady, router.query]);
 
     const handleLessonClick = (index: number) => {
         setIdxState(index);
@@ -307,6 +314,7 @@ export default function Guide({ valSync }: GuideProps) {
                                 content={MDGuides}
                                 isLoading={isLoading}
                                 onScrolledToBottom={handleTheoryEndReached}
+                                exportTitle={LTS[idxState].name}
                             />
                         </>
                     )}

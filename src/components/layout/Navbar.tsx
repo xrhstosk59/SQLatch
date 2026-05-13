@@ -26,6 +26,8 @@ import {
     generateShareURL,
 } from '../../utils/fileOperations';
 
+const NAVIGATE_HOME_EVENT = 'sqlatch:navigate-home';
+
 export default function NavBar() {
     const router = useRouter();
     const useBL = useBlocklyContext();
@@ -106,7 +108,8 @@ export default function NavBar() {
 
     const onClickHomeButton = (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
-        router.replace('/', undefined, { shallow: true });
+        router.replace({ pathname: router.pathname, query: {} }, undefined, { shallow: true });
+        window.dispatchEvent(new Event(NAVIGATE_HOME_EVENT));
     };
 
     // Keyboard shortcuts

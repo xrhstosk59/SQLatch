@@ -77,8 +77,9 @@
 
 .finalTimerTime {
     color: #ffffff;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-        'Courier New', monospace;
+    font-family:
+        ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+        monospace;
     font-size: 2rem;
     font-weight: 800;
     line-height: 1;
@@ -275,6 +276,13 @@
     gap: 12px;
 }
 
+.answerBoxActions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
 .answerTextarea {
     width: 100%;
     min-height: 160px;
@@ -295,6 +303,28 @@
     color: rgba(255, 255, 255, 0.7);
 }
 
+.lockedSolution {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 14px 0;
+    padding: 12px;
+    border: 1px dashed rgba(255, 193, 7, 0.5);
+    border-radius: 10px;
+    background: rgba(255, 193, 7, 0.08);
+}
+
+.lockedSolutionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.lockedSolutionHint {
+    color: rgba(255, 255, 255, 0.72);
+}
+
 @media (max-width: 576px) {
     .link {
         font-size: medium;
@@ -312,6 +342,19 @@
     }
 
     .answerBoxHeader {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .answerBoxActions {
+        justify-content: stretch;
+    }
+
+    .answerBoxActions button {
+        flex: 1 1 auto;
+    }
+
+    .lockedSolutionHeader {
         flex-direction: column;
         align-items: stretch;
     }

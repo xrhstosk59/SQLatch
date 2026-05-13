@@ -7,6 +7,8 @@ import ExerciseAnswerBox from '../guide/ExerciseAnswerBox';
 import GuideContent from '../guide/GuideContent';
 import styles from '../../styles/scenario.module.css';
 
+const QUERY_ATTEMPT_EVENT = 'sqlatch:query-attempt';
+
 interface ScenarioProps {
     md: string;
     scenPath: string;
@@ -63,6 +65,12 @@ const getScenarioIntroTaskContent = (scenPath: string): ScenarioIntroTaskContent
     return null;
 };
 
+const getScenarioTitle = (scenPath: string): string => {
+    if (scenPath.includes('Scenario1')) return 'Σενάριο 1 - Ομαδική ή ατομική εργασία';
+    if (scenPath.includes('Scenario2')) return 'Σενάριο 2 - Ομαδική ή ατομική εργασία';
+    return 'Σενάριο SQLatch';
+};
+
 const Scenario = ({
     md,
     scenPath,
@@ -76,16 +84,19 @@ const Scenario = ({
 
     const [idx, setIdx] = useState(0);
     const [validatedList, setValidatedList] = useState<boolean[]>([]);
+    const [attemptedList, setAttemptedList] = useState<boolean[]>([]);
     const [valid, setValid] = useState(false);
     const [inIntro, setInIntro] = useState(true);
     const prevValSyncRef = useRef(valSync);
     const introTaskContent = idx === 0 ? getScenarioIntroTaskContent(scenPath) : null;
+    const scenarioTitle = getScenarioTitle(scenPath);
 
     useEffect(() => {
         console.log('-- Scenario: Initializing --');
         setInIntro(true);
         setIdx(0);
         setValidatedList([]);
+        setAttemptedList([]);
         setValid(false);
         prevValSyncRef.current = valSync; // Reset ref on scenario change
 
@@ -99,6 +110,22 @@ const Scenario = ({
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [scenPath]);
+
+    useEffect(() => {
+        if (inIntro) return;
+
+        const markCurrentStepAttempted = () => {
+            setAttemptedList((prev) => {
+                if (prev[idx]) return prev;
+                const next = [...prev];
+                next[idx] = true;
+                return next;
+            });
+        };
+
+        window.addEventListener(QUERY_ATTEMPT_EVENT, markCurrentStepAttempted);
+        return () => window.removeEventListener(QUERY_ATTEMPT_EVENT, markCurrentStepAttempted);
+    }, [idx, inIntro]);
 
     useEffect(() => {
         // Only react to valSync changes, not to idx changes
@@ -168,7 +195,7 @@ const Scenario = ({
             {inIntro ? (
                 <>
                     <Container style={{ maxWidth: 'none', paddingLeft: 0, paddingRight: 0 }}>
-                        <GuideContent content={md} isLoading={false} />
+                        <GuideContent content={md} isLoading={false} exportTitle={scenarioTitle} />
                     </Container>
                     <Container
                         style={{
@@ -229,10 +256,11 @@ const Scenario = ({
                                 <p className={styles.taskText}>{introTaskContent.noteText}</p>
                                 <ExerciseAnswerBox
                                     answerKey={introTaskContent.answerKey}
-                                    label="Σημειώσεις για το σενάριο"
+                                    label="Σημειώσεις ατόμου ή ομάδας"
                                     placeholder={introTaskContent.placeholder}
-                                    helper="Οι σημειώσεις αποθηκεύονται τοπικά σε αυτόν τον browser, ώστε να μπορείς να τις συμπληρώνεις σταδιακά."
+                                    helper="Οι σημειώσεις αποθηκεύονται τοπικά σε αυτόν τον browser και μπορούν να κατέβουν σε DOCX."
                                     rows={7}
+                                    exportTitle={scenarioTitle}
                                 />
                             </section>
 
@@ -255,7 +283,16 @@ const Scenario = ({
                         }}
                     >
                         {validatedList.filter(Boolean).length !== totalVids ? (
-                            <Button variant="secondary" onClick={() => onClickShowSolution()}>
+                            <Button
+                                variant="secondary"
+                                onClick={() => onClickShowSolution()}
+                                disabled={!attemptedList[idx]}
+                                title={
+                                    attemptedList[idx]
+                                        ? 'Δείξε τη λύση για έλεγχο'
+                                        : 'Τρέξε πρώτα τη δική σου προσπάθεια'
+                                }
+                            >
                                 Δείξε τη λύση για έλεγχο
                             </Button>
                         ) : (

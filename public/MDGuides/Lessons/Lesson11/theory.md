@@ -6,12 +6,12 @@
 
 Η βασική δομή είναι η εξής:
 
-* <span style="color:aquamarine">SELECT</span> * <span style="color:aquamarine">FROM</span> employees <span style="color:aquamarine">WHERE</span> salary > 500;
+* <span style="color:aquamarine">SELECT</span> * <span style="color:aquamarine">FROM</span> books <span style="color:aquamarine">WHERE</span> pages > 200;
 
-Στο παραπάνω παράδειγμα, εμφανίζονται μόνο οι εργαζόμενοι που έχουν μισθό μεγαλύτερο από 500.
+Στο παραπάνω παράδειγμα, εμφανίζονται μόνο τα βιβλία που έχουν περισσότερες από 200 σελίδες.
 
 Άλλο παράδειγμα:
 
-* <span style="color:aquamarine">SELECT</span> firstname, lastname <span style="color:aquamarine">FROM</span> employees <span style="color:aquamarine">WHERE</span> id = 1;
+* <span style="color:aquamarine">SELECT</span> title, author <span style="color:aquamarine">FROM</span> books <span style="color:aquamarine">WHERE</span> category = 'Ιστορία';
 
-Εδώ εμφανίζονται μόνο το όνομα και το επώνυμο του εργαζομένου με <span style="color:coral">id = 1</span>.
+Εδώ εμφανίζονται μόνο ο τίτλος και ο συγγραφέας των βιβλίων που ανήκουν στην κατηγορία <span style="color:coral">Ιστορία</span>.
