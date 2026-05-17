@@ -9,6 +9,7 @@ import React, {
     useRef,
 } from 'react';
 import sqlite3InitModule, { Database, Sqlite3Static } from '@sqlite.org/sqlite-wasm';
+import { getSQLClientValidationError } from '../utils/sqlValidation';
 
 interface SQLiteContextType {
     initSQL: () => void;
@@ -98,6 +99,13 @@ export function SQLiteProvider({ children }: SQLiteProviderProps) {
             }
 
             try {
+                const validationError = getSQLClientValidationError(query);
+                if (validationError) {
+                    updateError(validationError);
+                    updateRecentResult([]);
+                    return [];
+                }
+
                 // Split multiple statements by semicolon
                 const statements = query
                     .split(';')

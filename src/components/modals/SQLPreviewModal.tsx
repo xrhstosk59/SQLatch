@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import BaseModal, { ModalFooterActions } from '../common/BaseModal';
+import { getSQLClientValidationError } from '../../utils/sqlValidation';
 
 interface SQLPreviewModalProps {
     show: boolean;
@@ -9,13 +10,14 @@ interface SQLPreviewModalProps {
 }
 
 function SQLPreviewModal({ show, onHide, onConfirm, sqlCode }: SQLPreviewModalProps) {
+    const validationError = getSQLClientValidationError(sqlCode);
     const footer = (
         <ModalFooterActions
             onCancel={onHide}
             onConfirm={onConfirm}
             confirmText="Εκτέλεση"
             confirmVariant="success"
-            confirmDisabled={!sqlCode}
+            confirmDisabled={!sqlCode || validationError.length > 0}
         />
     );
 
@@ -36,6 +38,11 @@ function SQLPreviewModal({ show, onHide, onConfirm, sqlCode }: SQLPreviewModalPr
             >
                 {sqlCode || 'Δεν βρέθηκαν blocks στο workspace!'}
             </pre>
+            {validationError && (
+                <p style={{ marginTop: '10px', marginBottom: 0, color: '#b00020' }}>
+                    {validationError}
+                </p>
+            )}
         </BaseModal>
     );
 }
