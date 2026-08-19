@@ -12,7 +12,6 @@ import { useValidation } from '../../modules/Validator';
 import { LTS } from '../../config/lessons';
 import { useKeyboardShortcut } from '../../hooks/useKeyboardShortcut';
 import { downloadBlocklyWorkspacePng } from '../../utils/blocklyWorkspaceImage';
-import { ZoomToFitControl } from '@blockly/zoom-to-fit';
 import {
     ContinuousToolbox,
     ContinuousFlyout,
@@ -29,6 +28,7 @@ import SQLPreviewModal from '../modals/SQLPreviewModal';
 import ErrorToast from '../ui/ErrorToast';
 import ValidationToast from '../ui/ValidationToast';
 import SuccessToast from '../ui/SuccessToast';
+import { FullscreenControl } from './FullscreenControl';
 
 const TIMER_AUTO_PAUSE_EVENT = 'final-assignment-timer:auto-pause';
 const TIMER_AUTO_RESUME_EVENT = 'final-assignment-timer:auto-resume';
@@ -142,7 +142,7 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
                 metricsManager: ContinuousMetrics,
             },
             theme: DarkTheme,
-            media: 'https://unpkg.com/blockly/media/', // Use CDN that supports CORS
+            media: '/blockly-media/',
             sounds: false, // Disable sounds to avoid CORS issues
             zoom: {
                 controls: true,
@@ -163,9 +163,9 @@ export default function BlocklyField({ valSync, setValSync }: BlocklyFieldProps)
         });
         useBL.setWorkspace(primaryWorkspace.current);
 
-        /* Initialize Zoom-to-fit */
-        const zoomToFit = new ZoomToFitControl(primaryWorkspace.current);
-        zoomToFit.init();
+        /* Initialize fullscreen control */
+        const fullscreenControl = new FullscreenControl(primaryWorkspace.current);
+        fullscreenControl.init();
 
         /* Load from parameters */
         try {

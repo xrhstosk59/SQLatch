@@ -3,6 +3,52 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+/* Keep Blockly's right-side controls centered with a consistent 12px gap. */
+.blocklyTrash {
+    translate: 7.5px 0;
+}
+
+.blocklyZoomReset {
+    translate: 0 5px;
+}
+
+.blocklyZoomIn {
+    translate: 0 6px;
+}
+
+.blocklyZoomOut {
+    translate: 0 16px;
+}
+
+.blocklyFullscreenControl {
+    translate: 0 8px;
+}
+
+#blocklyDiv:fullscreen {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    background: #1e1e1e;
+}
+
+#blocklyDiv:fullscreen::backdrop {
+    background: #1e1e1e;
+}
+
+#blocklyDiv.blocklyViewportFullscreen {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    background: #1e1e1e;
+}
+
+body.blocklyFullscreenActive {
+    overflow: hidden;
+}
+
 /* Modal content styling for markdown in dark theme */
 .modal .bg-dark p,
 .modal .bg-dark ul,

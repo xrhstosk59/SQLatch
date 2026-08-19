@@ -11,7 +11,6 @@
     "dependencies": {
         "@blockly/continuous-toolbox": "^7.0.3",
         "@blockly/theme-dark": "^8.0.1",
-        "@blockly/zoom-to-fit": "^7.0.3",
         "@sqlite.org/sqlite-wasm": "^3.51.2-build4",
         "blockly": "^12.3.1",
         "bootstrap": "^5.3.8",
